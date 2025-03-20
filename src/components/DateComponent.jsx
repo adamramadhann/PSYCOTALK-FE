@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { FiCheck, FiX } from 'react-icons/fi'
 
-const DateComponent = ({ onDateSelected, doctorId }) => {
+const DateComponent = ({ onDateSelected, doctorId, handleSubmit }) => {
   const [selectedDate, setSelectedDate] = useState(null)
   const [fiveDays, setFiveDays] = useState([])
   const [selectedTime, setSelectedTime] = useState(null)
@@ -35,6 +35,7 @@ const DateComponent = ({ onDateSelected, doctorId }) => {
     setSelectedDate(date)
     setSelectedTime(null)
     onDateSelected(date.fullDate, null)
+    console.log(selectedDate)
   }
 
   const handleTimeSelection = ( time) => {
@@ -68,7 +69,6 @@ const DateComponent = ({ onDateSelected, doctorId }) => {
 
   return (
     <div className="space-y-6">
-      {/* Date Picker */}
       <div className="grid grid-cols-5 gap-3">
         {fiveDays.map(val => (
           <button
@@ -107,8 +107,6 @@ const DateComponent = ({ onDateSelected, doctorId }) => {
           </button>
         ))}
       </div>
-
-      {/* Time Picker */}
       {selectedDate && (
         <div className="space-y-4">
           <h3 className="text-lg font-semibold text-gray-800">
@@ -130,6 +128,7 @@ const DateComponent = ({ onDateSelected, doctorId }) => {
               </button>
             ))}
           </div>
+        <button onClick={handleSubmit} className='w-full py-2 my-5 bg-green-500' >Booking</button>
         </div>
       )}
     </div>
