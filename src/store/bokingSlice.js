@@ -15,6 +15,7 @@ const bookingSlice = createSlice({
             state.date = state.date.map(book => (
                 book.id === action.payload ? { ...book, read : true} : book
             ))
-        }
+        },
+        
     }
 })

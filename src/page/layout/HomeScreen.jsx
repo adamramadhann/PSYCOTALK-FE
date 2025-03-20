@@ -6,36 +6,8 @@ import { FaRegStar } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
 import { Link } from 'react-router-dom'; 
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProfile } from '../../store/profileSLice';
-
-const HomeScreen = () => {
-    const dispatch = useDispatch();
-    const { data: profile, loading, error } = useSelector((state) => state.profile);
-
-
-    useEffect(() => {
-        dispatch(fetchProfile());
-    }, [dispatch]);
-
-    console.log('ini profuile',profile?.profile)
-
-
-    const API_BASE_URL = "http://localhost:8000";
-    
-    const teksBtn = [
-        {
-            teks : 'type 1'
-        },
-        {
-            teks : 'type 2'
-        },
-        {
-            teks : 'type 3'
-        },
-        {
-            teks : 'type 4'
-        },
-    ]
+import { getDoctProfile, getProfileAuth } from '../../hook/fetchApi';
+import { useQuery } from "@tanstack/react-query";
 
     const cardInfo = [
         {
@@ -85,17 +57,45 @@ const HomeScreen = () => {
             star :  FaRegStar
         }, 
     ];
+
+const HomeScreen = () => {
+    const { data : profile, isLoading, isError } = useQuery({
+        queryKey: ["profile"],
+        queryFn: getProfileAuth,
+    });
+    
+    const { data : docProf } = useQuery({
+        queryKey: ["profile doc"],
+        queryFn: getDoctProfile,
+
+    })
+
+    const API_BASE_URL = "http://localhost:8000";
+    
+    const teksBtn = [
+        {
+            teks : 'type 1'
+        },
+        {
+            teks : 'type 2'
+        },
+        {
+            teks : 'type 3'
+        },
+        {
+            teks : 'type 4'
+        },
+    ]
     
   return (
-    // <DateComponent/>
     <div className='w-full h-full p-5 space-y-10 ' >
         <div className='flex justify-between items-center' >
                 <div className='flex items-center gap-5' > 
-                    <img src={`${API_BASE_URL}${profile?.profile?.avatar}`} alt="profile" className='w-14 rounded-full h-14' />
+                    <img src={`${API_BASE_URL}${profile?.profile?.avatar}`} alt="profile" className='w-14 rounded-full h-14' /> 
                     <span>
-                        <h1 className='text-base font-semibold' >{profile?.name}</h1>
-                        <p className='text-sm' >{profile?.email}</p>
-                    </span>
+                        <h1 className='text-base font-semibold' >{profile?.name || 'adam'}</h1>
+                        <p className='text-sm' >{profile?.email || 'adam@gmail.com'}</p>
+                    </span> 
                 </div>
                 <div className='relative' >
                     <Link to={'/notif'} ><IoMdNotificationsOutline size={35}/></Link>
@@ -140,12 +140,13 @@ const HomeScreen = () => {
             <h1>All Doctors</h1>
             <button>See All</button>
         </span>
+        <div className='xl:grid grid-cols-2 gap-10' >
             {
-                doctors.map(val => (
+                docProf?.map(val => (
                     <div className='overflow-x-auto flex gap-5 pb-3' >
                         <div className='flex w-full items-center gap-4 p-4 bg-white shadow-md rounded-lg'>
-                            <div className='flex-shrink-0'>
-                                <img src={docMan1} alt="doctor" className='w-24  object-cover ' />
+                            <div className='flex-shrink-0 '>
+                                <img src={`${API_BASE_URL}${val?.profile?.avatar}`}alt="doctor" className='w-24 h-24 rounded-full object-cover ' />
                             </div>
                             <div className='flex-1'>
                                 <div className='flex items-center justify-between'>
@@ -153,10 +154,10 @@ const HomeScreen = () => {
                                     <FaRegHeart size={20} className='text-red-500  cursor-pointer' /> 
                                 </div>
                                 <p className='text-sm text-gray-500 mt-1'>
-                                    Jorem ipsum dolor, consectetur adipiscing elit. Nunc v libero et velit interdum, ac mattis.
+                                    {val?.profile?.bio}
                                 </p>
                                 <div className='flex items-center justify-between mt-3'>
-                                    <Link to={'/appointment'} className='px-4 py-1  text-white rounded-md shadow-md bg-[#0B8FAC]  transition'>
+                                    <Link to={`/appointment`} state={{ doctorId : val.id}} className='px-4 py-1  text-white rounded-md shadow-md bg-[#0B8FAC]  transition'>
                                         Book
                                     </Link>
                                     <span className='flex items-center gap-3' >
@@ -170,7 +171,8 @@ const HomeScreen = () => {
                 ))
             }
         </div>
-        <div className='h-10' ></div>
+        </div>
+        <div className  ='h-10' ></div>
     </div>
   )
 }
