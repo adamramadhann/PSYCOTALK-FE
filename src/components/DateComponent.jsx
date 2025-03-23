@@ -6,7 +6,6 @@ const DateComponent = ({ onDateSelected, doctorId, handleSubmit }) => {
   const [fiveDays, setFiveDays] = useState([])
   const [selectedTime, setSelectedTime] = useState(null)
   
-  // Dummy waktu konsultasi
   const timeSlots = ['09:00', '10:30', '13:00', '15:30', '17:00']
 
   const generateDays = () => {
@@ -34,7 +33,7 @@ const DateComponent = ({ onDateSelected, doctorId, handleSubmit }) => {
     if(date.isPast) return
     setSelectedDate(date)
     setSelectedTime(null)
-    onDateSelected(date.fullDate, null)
+    onDateSelected({dateTime : null})
     console.log(selectedDate)
   }
 

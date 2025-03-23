@@ -10,9 +10,14 @@ import { bookings } from '../../hook/fetchApi'
 const Appointment = () => {
   const [selectedDate, setSelectedDate] = useState()
   const location = useLocation()
-  const { doctorId } = location.state || { doctorId : null}
+  const { doctorId, dataDoc } = location.state || { doctorId : null}
+
+  const doctorData = dataDoc?.find(val => val.id === doctorId)
+  console.log('ini data doc by id', doctorData);
+  
 
   console.log('ini doctor id',doctorId)
+  console.log('ini doctor ',dataDoc)
 
   const bookingMutation = useMutation({
     mutationKey : ['bookings'],
@@ -37,8 +42,9 @@ const Appointment = () => {
       alert('Silakan pilih tanggal terlebih dahulu.');
       return;
     }
-    bookingMutation.mutate({ doctorId, dateTime : new Date(selectedDate)})
+    bookingMutation.mutate({ doctorId, dateTime : selectedDate?.dateTime})
   }
+
 
 
   return (
@@ -55,7 +61,7 @@ const Appointment = () => {
         </div>
         <div className="flex-1">
           <div className="flex justify-between items-center mb-2">
-            <h2 className="text-2xl font-bold text-gray-800">Addam Ramadhan</h2>
+            <h2 className="text-2xl font-bold text-gray-800">{doctorData?.name}</h2>
             <span className="flex items-center bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">
               <FiDollarSign className="mr-1" /> $12.00
             </span>
@@ -94,7 +100,7 @@ const Appointment = () => {
           <FiCalendar className="mr-2 text-blue-500" />
           SELECT DATE & TIME
         </h3>
-        <DateComponent onDateSelected={handleSelectedDate} handleSubmit={handleSubmit} />
+        <DateComponent onDateSelected={handleSelectedDate} doctorId={doctorId} handleSubmit={handleSubmit} />
       </div>
       <p className="text-sm text-center mb-20 text-gray-500 mt-6">
         Need help? Contact our support team at support@example.com

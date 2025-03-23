@@ -6,6 +6,9 @@ import docMan2 from './image/istockphoto-138205019-612x612-removebg-preview 1.pn
 import docWoman1 from './image/image_1_3_-removebg-preview 1.png'
 import docWoman2 from './image/istockphoto-1366374033-170667a-removebg-preview 1.png'
 import image from './image/image.png'
+import users from './image/user.png'
+import doc from './image/doc.png'
+
 
 export {
     iconMedica,
@@ -15,5 +18,7 @@ export {
     docMan2,
     docWoman1,
     docWoman2,
-    image
+    image,
+    users,
+    doc
 }

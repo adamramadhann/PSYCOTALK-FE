@@ -3,6 +3,7 @@ import { login, register, resetPassword } from "../api/axiosInstance"
 import { useDispatch } from "react-redux"
 import { setUser } from "../store/authSLice"
 
+
 export const useRegister = () => {
     return useMutation({
         mutationKey : ['register'],
@@ -21,7 +22,6 @@ export const useLogin = () => {
         mutationFn : login,
         onSuccess : (data) => {
             dispatch(setUser(data))
-            alert('login success')
         },
         onError: (error) => {
             alert(error.message)

@@ -13,7 +13,7 @@ const BottomBar = () => {
             <NavLink to={'/'} >
                 <VscHome className='text-white' size={30} />
             </NavLink>
-            <NavLink>
+            <NavLink to={'/history'} >
                 <IoMdTime className='text-white' size={30} />
             </NavLink>
             <NavLink to={'/post'} >

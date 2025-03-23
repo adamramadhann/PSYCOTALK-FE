@@ -9,6 +9,7 @@ import { getProfileAuth } from "../../hook/fetchApi";
 import { useQuery } from "@tanstack/react-query";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { CiSearch } from "react-icons/ci";
+import {  users } from "../../assets/importImage";
 
 const Profile = () => {
     const dispatch = useDispatch();
@@ -39,21 +40,25 @@ const Profile = () => {
 
     const handleLogOut = () => {
         dispatch(logout())
-        navigate('/login')
+        navigate( '/login')
     }
+
+    console.log('ini data profile',profile)
 
 
     return (
       <div className="w-full h-full overflow-hidden relative p-3">
         <TopTitle title="Profile" />
-        <div className=" xl:flex w-full h-full  items-center justify-center" >
-          <div className="flex flex-col items-center xl:shadow-[0_0_15px_rgba(0,0,0,0.2)]  xl:max-w-3xl xl:p-5 xl:h-[600px]  w-full h-full">
-            {profile?.profile?.avatar && (
-              <img
-                src={`${API_BASE_URL}${profile.profile.avatar}`}
-                className="rounded-full w-28 h-28 object-cover"
-                alt="User avatar"
-              />
+        <div className=" xl:flex w-full h-full mt-20 justify-center" >
+          <div className="flex flex-col items-center py-10 xl:shadow-[0_0_15px_rgba(0,0,0,0.2)]  xl:max-w-3xl xl:p-5 xl:h-[600px]  w-full h-full">
+            {profile?.profile?.avatar ?  (
+                <img
+                  src={`${API_BASE_URL}${profile.profile.avatar}`}
+                  alt="profile"
+                  className="w-14 rounded-full h-14"
+                />
+            ) : (
+              <img src={users} alt="user" />
             )}
 
             <div className="text-center mt-5 space-y-1">
