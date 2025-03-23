@@ -1,6 +1,5 @@
 import React from 'react'
 import BottomBar from '../../components/BottomBar'
-import TopTitle from '../../components/TopTitle'
 import { Outlet } from 'react-router-dom'
 
 const Layout = () => {

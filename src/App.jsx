@@ -12,6 +12,7 @@ import HomeScreen from './page/layout/HomeScreen'
 import Notofication from './page/layout/Notofication'
 import Postingan from './page/layout/Postingan'
 import Appointment from './page/layout/Appointment'
+import History from './page/layout/History'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -43,6 +44,7 @@ const App = () => {
           <Route path='/notif' element={<Notofication/>} />
           <Route path='/post' element={<Postingan/>} />
           <Route path='/appointment' element={<Appointment/>} />
+          <Route path='/history' element={<History/>} />
         </Route>
       )}
     </Routes>

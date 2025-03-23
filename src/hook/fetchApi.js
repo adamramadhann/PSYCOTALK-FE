@@ -9,10 +9,11 @@ export const getProfileAuth = async () => {
 }
 
 export const getDoctProfile = async () => {
-        const response = await ax.get('/getDoc')
-        console.log('ini data profile doc',response.data)
-        return response.data
-}
+        const response = await ax.get('/getDocProfile');
+        console.log('ini data profile doc', response.data?.doctor);  
+        return response.data?.doctor;  
+    };
+    
 
 
 // booking

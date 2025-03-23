@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useRegister } from "../hook/useAuth";
 
 const Register = () => {
-  const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const [form, setForm] = useState({ name: "", email: "", password: "", role : 'user' });
   const { mutate: registerUser, isPending, error } = useRegister();
 
   const handleChange = (e) => {
@@ -14,7 +14,8 @@ const Register = () => {
     e.preventDefault();
     registerUser(form, {
       onSuccess : () => {
-        setForm({ name : '', email : '', password : ''})
+        setForm({ name : '', email : '', password : '', role :''})
+        error = null
       }
     });
   };

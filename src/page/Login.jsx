@@ -77,13 +77,6 @@ const Login = () => {
       <p className="text-center text-sm pb-5">
         Don’t have an account? <Link to={'/register'} className="text-[#0B8FAC] font-semibold">Sign Up</Link>
       </p>
-      {/* {
-        showError && (
-          <div className='fixed w-full h-full flex flex-col items-center justify-center top-1/2 left-1/2 -translate-1/2 bg-black/20 ' >
-            <p className='text-red-500' >{error?.message}</p>
-        </div>
-        )
-      } */}
     </div>
   )
 }
