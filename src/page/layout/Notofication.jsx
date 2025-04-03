@@ -64,6 +64,8 @@ const Notification = () => {
         fetch();
     }, [dispatch]);
 
+    console.log('ini acc', isAcc)
+
     return (
         <div className="w-full relative h-screen space-y-5 p-5 bg-gray-50">
             <TopTitle title={"Notification"} />
