@@ -4,12 +4,12 @@ import { doc } from '../../assets/importImage'
 import { useDispatch, useSelector } from 'react-redux';
 import { getNotification } from '../../hook/notification';
 import { setNotification } from '../../store/notificationSlice';
+import { bookings } from '../../hook/booking';
 
 const History = () => {
   const dispatch = useDispatch()
   const { data: notification = [], loading, error } = useSelector((state) => state.notif);
-  console.log('ini data notification', notification)
-
+  
   const dataBook = notification.map(val => {
 
     const status = val.booking.status;
@@ -31,6 +31,7 @@ const History = () => {
     }
 
     return {
+        name : val.name,
         status : val.booking.status,
         message : messageStatus,
         date : val.booking.dateTime ? new Date(val.booking.dateTime).toLocaleDateString("id-ID", {
@@ -72,6 +73,7 @@ const History = () => {
     }
 
     data()
+    bookings()
   } , [dispatch])
 
   return (
