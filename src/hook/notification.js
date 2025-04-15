@@ -19,4 +19,14 @@ export const getNotification = async () => {
             console.error(error)
             throw new Error(error.message)
         }
-    }   
+    }  
+    
+    export const deleteNotification = async (id) => {
+        try {
+            const res = await ax.delete(`/deletedNotif/${id}`)
+            console.log(res)
+            return res.data
+        } catch (error) {
+            console.error(error.message)
+        }
+    }

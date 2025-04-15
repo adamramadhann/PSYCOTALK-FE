@@ -2,6 +2,9 @@ import { useMutation } from "@tanstack/react-query"
 import { login, register, resetPassword } from "../api/axiosInstance"
 import { useDispatch } from "react-redux"
 import { setUser } from "../store/authSLice"
+// import { useNavigate } from "react-router-dom"
+
+// const navigate = useNavigate()
 
 
 export const useRegister = () => {
