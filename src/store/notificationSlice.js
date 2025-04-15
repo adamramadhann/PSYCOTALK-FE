@@ -18,9 +18,12 @@ const notificationSlice = createSlice({
                 notif.id === action.payload ? { ...notif, read: true } : notif
             );
             state.unreadCount = state.data.filter(notif => !notif.read).length;
+        },
+        deletedNotif : (state, action) => {
+            state.data = state.data.filter(book => book.id !== action.payload)  
         }
     }
 });
 
-export const { setNotification, markAsRead } = notificationSlice.actions;
+export const { setNotification, markAsRead, deletedNotif } = notificationSlice.actions;
 export default notificationSlice.reducer;

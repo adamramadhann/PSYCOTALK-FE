@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 import { VscHome } from "react-icons/vsc";
 import { IoMdTime } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
-import { LuMessageSquareReply } from "react-icons/lu";
+import { AiOutlineMessage } from "react-icons/ai";
 
 
 const BottomBar = () => {
@@ -15,9 +15,6 @@ const BottomBar = () => {
             </NavLink>
             <NavLink to={'/history'} >
                 <IoMdTime className='text-white' size={30} />
-            </NavLink>
-            <NavLink to={'/post'} >
-                <LuMessageSquareReply className='text-white' size={30} />
             </NavLink>
             <NavLink to={'/profile'} >
                 <CgProfile className='text-white' size={30} />

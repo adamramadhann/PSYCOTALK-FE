@@ -75,7 +75,7 @@ const DateComponent = ({ onDateSelected, doctorId, handleSubmit }) => {
             onClick={() => handleDateSelection(val)}
             disabled={val.isPast}
             aria-label={`Pilih tanggal ${val.fullDate}`}
-            className={`p-3 border-2 rounded-xl transition-all flex flex-col items-center
+            className={`p-3 border-2 rounded-xl cursor-pointer transition-all flex flex-col items-center
               ${val.isPast 
                 ? 'bg-gray-100 border-gray-200 text-gray-400 cursor-not-allowed' 
                 : 'hover:border-blue-400 hover:bg-blue-50 border-gray-200'}
@@ -97,12 +97,6 @@ const DateComponent = ({ onDateSelected, doctorId, handleSubmit }) => {
             <span className="text-xs font-medium text-gray-500">
               {val.monthDate}
             </span>
-            
-            {selectedDate?.fullDate === val.fullDate && (
-              <div className="absolute -top-2 -right-2 bg-blue-500 rounded-full p-1">
-                <FiCheck className="text-white w-3 h-3" />
-              </div>
-            )}
           </button>
         ))}
       </div>
@@ -116,7 +110,7 @@ const DateComponent = ({ onDateSelected, doctorId, handleSubmit }) => {
               <button
                 key={index}
                 onClick={() => handleTimeSelection(time)}
-                className={`p-3 rounded-lg border-2 transition-all
+                className={`p-3 rounded-lg cursor-pointer border-2 transition-all
                   ${selectedTime === time 
                     ? 'border-blue-500 bg-blue-50 ring-2 ring-blue-200' 
                     : 'border-gray-200 hover:border-blue-400 hover:bg-blue-50'}
@@ -127,7 +121,7 @@ const DateComponent = ({ onDateSelected, doctorId, handleSubmit }) => {
               </button>
             ))}
           </div>
-        <button onClick={handleSubmit} className='w-full py-2 my-5 bg-green-500' >Booking</button>
+        <button onClick={handleSubmit} className='w-full py-2 my-5 bg-teal-500 text-white rounded-md' >Booking</button>
         </div>
       )}
     </div>

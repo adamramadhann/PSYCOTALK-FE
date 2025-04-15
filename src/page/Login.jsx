@@ -24,9 +24,9 @@ const Login = () => {
         setSHowError(true)
       },
       onSuccess: (data) => {
+        navigate('/')
         setForm({ email: '', password: '' });
         dispatch(setUser(data.token))
-        navigate('/')
       },
     })
   }
@@ -40,6 +40,7 @@ const Login = () => {
   
       return () => clearTimeout(timeout)  
     }
+    
   }, [error])
   
 

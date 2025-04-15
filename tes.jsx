@@ -1,32 +1,66 @@
-const formattedData = notification?.map((val) => {
-    if (!val.createdAt || !val.booking) return null; // Pastikan ada booking
-
-    const date = new Date(val.createdAt);
-
-    // Ambil status booking
-    const status = val.booking.status;
-
-    // Buat message baru berdasarkan status booking
-    let customMessage;
-    switch (status) {
-        case "pending":
-            customMessage = "Your booking is pending approval.";
-            break;
-        case "approved":
-            customMessage = "Your booking has been approved!";
-            break;
-        case "rejected":
-            customMessage = "Your booking has been rejected.";
-            break;
-        default:
-            customMessage = val.message; // Gunakan default message jika tidak ada yang cocok
+async updatedProfile(req = request, res = response) {
+  try {
+    const { id } = req.user;
+    const { name, bio, category } = req.body;
+    const role = req.user.role;
+    
+    // Siapkan data untuk update
+    const updateData = {};
+    if (name) updateData.name = name;
+    
+    // Handle file upload
+    let avatar;
+    if (req.file) {
+      avatar = `/uploads/${req.file.filename}`;
+      // Tambahkan avatar ke data user jika perlu update avatar
+      updateData.avatar = avatar;
     }
-
-    return {
-        id: val.id,
-        message: customMessage, // Ganti message dengan customMessage
-        date: date.toLocaleDateString("id-ID", { day: "2-digit", month: "2-digit", year: "numeric" }),
-        time: date.toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" }),
-        booking: val.booking, // Simpan data booking
-    };
-}).filter(Boolean);
+    
+    // Update tabel user
+    await db.user.update({
+      where: { id: parseInt(id) },
+      data: updateData
+    });
+    
+    // Siapkan data untuk profile
+    const profileData = {};
+    if (bio) profileData.bio = bio;
+    if (category) profileData.category = category;
+    if (avatar) profileData.avatar = avatar;
+    
+    // Update tabel profile
+    const profile = await db.profile.upsert({
+      where: { userId: parseInt(id) },
+      update: profileData,
+      create: {
+        userId: parseInt(id),
+        bio: bio || '',
+        avatar: avatar || '',
+        category: category || null,
+        role: role || "user"
+      }
+    });
+    
+    // Ambil data terbaru untuk response
+    const updatedUser = await db.user.findUnique({
+      where: { id: parseInt(id) },
+      include: {
+        profile: true
+      }
+    });
+    
+    return res.status(200).json({
+      message: "Profile updated successfully",
+      user: {
+        id: updatedUser.id,
+        name: updatedUser.name,
+        email: updatedUser.email
+      },
+      profile: updatedUser.profile
+    });
+    
+  } catch (error) {
+    console.error("Error updating profile:", error);
+    res.status(500).json({ message: 'Internal server error', error: error.message });
+  }
+}

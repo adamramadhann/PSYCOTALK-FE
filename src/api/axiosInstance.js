@@ -6,7 +6,6 @@ import store from "../store/store";
 
 export const ax = axios.create({
     baseURL : import.meta.env.VITE_API_BACKEND,
-    headers: { "Content-Type": "application/json" },
 })
 
 ax.interceptors.request.use((config) => {

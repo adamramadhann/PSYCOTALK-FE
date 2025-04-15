@@ -1,107 +1,127 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import TopTitle from '../../components/TopTitle'
 import { doc } from '../../assets/importImage'
 import { useDispatch, useSelector } from 'react-redux';
-import { getNotification } from '../../hook/notification';
 import { setNotification } from '../../store/notificationSlice';
-import { bookings } from '../../hook/booking';
+import { bookings, deletedBok } from '../../hook/booking';
+import { deletedBoks, setBook } from '../../store/bokingSlice';
 
 const History = () => {
   const dispatch = useDispatch()
-  const { data: notification = [], loading, error } = useSelector((state) => state.notif);
-  
-  const dataBook = notification.map(val => {
+  const [filter, setFilter] = useState('all')
 
-    const status = val.booking.status;
-    console.log('ini status terbaru', status)
-    
+  const { data: Bookings = [], loading, error } = useSelector((state) => state.booking);
+
+  const dataBook = Bookings.map(val => {
+    const status = val.status;
     let messageStatus;
+
     switch(status) {
-      case 'padding' : 
-        messageStatus = 'your bookings is paddings approval'
-        break;
-      case 'approved' : 
-        messageStatus = 'your booking has been approved'
-        break; 
-      case 'rejected' : 
-        messageStatus = 'your bookings has been rejected'
-        break; 
-      default : 
-        messageStatus = val.message
+      case 'pending': messageStatus = 'Your booking is pending approval'; break;
+      case 'approved': messageStatus = 'Your booking has been approved'; break;
+      case 'rejected': messageStatus = 'Your booking has been rejected'; break;
+      default: messageStatus = val.message || 'No message';
     }
 
     return {
-        name : val.name,
-        status : val.booking.status,
-        message : messageStatus,
-        date : val.booking.dateTime ? new Date(val.booking.dateTime).toLocaleDateString("id-ID", {
-          day : '2-digit',
-          month : '2-digit',
-          year : 'numeric'
-        }) : 'tanggal tidak tersedia'
+      id: val.id,
+      name: val.doctor?.name || 'Unknown Doctor',
+      status: val.status,
+      message: messageStatus,
+      date: val.dateTime ? new Date(val.dateTime).toLocaleDateString("id-ID", {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+      }) : 'Tanggal tidak tersedia'
     }
   })
 
-  console.log('data boking map', dataBook)
+  const filterData = filter === 'all'
+    ? dataBook
+    : dataBook.filter(val => val.status === filter)
 
+  const buttonStyles = {
+    approved: 'bg-teal-500 hover:bg-teal-500',
+    rejected: 'bg-teal-500 hover:bg-teal-500',
+    pending: 'bg-teal-500 hover:bg-teal-500',
+  }
 
-  const dataFilter = Array.from({ length : 5}, () => [
-    {
-      name : 'Dr. Adam',
-      status : 'Approved , 00-00-00',
-      message : 'succes bookings',
-    },
-    {
-      name : 'Dr. Adam',
-      status : 'rejectedd , 00-00-00',
-      message : 'rejected bookings',
-    },
-  ]).flat()
+  const activeButtonStyles = {
+    approved: 'bg-teal-600',
+    rejected: 'bg-teal-600',
+    pending: 'bg-teal-600',
+  }
 
-  const filterData = dataFilter.filter(val => val.status.includes('Approved'))
+  const handleDelete = async (id) => {
+    try {
+      // await deletedBok(id);
+      dispatch(deletedBoks(id));    
+      alert('deleted succes')
+    } catch (error) {
+      console.error(error.message);
+      alert('deleted failed')
+    }
+  };
+  
 
-  useEffect(() => {
-    const data = async () => {
+    useEffect(() => {
+    const fetchData = async () => {
       try {
-       const datas =  await getNotification()
-       dispatch(setNotification(datas || []))
-        console.info('ini data notif', datas)
+        const datas = await bookings()
+        dispatch(setBook(datas || []))
       } catch (error) {
         console.error(error.message)
-        throw new Error(error.message)
       }
     }
 
-    data()
-    bookings()
-  } , [dispatch])
+    fetchData()
+  }, [dispatch])
+
 
   return (
-    <div className='w-full h-full' >
-        <TopTitle title={'History'} />
-        <div className='flex flex-col' >
-            <div className='w-full flex items-center' >
-                <button className='flex-1 py-2 bg-teal-500 text-white' >Approved</button>
-                <button className='flex-1 py-2 bg-red-600 text-white' >Rejected</button>
-            </div>
-            <div className='grid w-full xl:grid-cols-4 gap-10 p-10' >
-              {
-                filterData.map(val => (
-                  <div className="w-full relative rounded-md flex flex-col xl:max-w-2xl bg-white shadow-[0_0_15px_rgba(0,0,0,0.2)] py-5 p-3 justify-between">
-                      <div className="flex items-center gap-7">
-                        <img src={doc} alt="doc" className="w-12 h-12" />
-                        <span className=" space-y-2">
-                            <h1 className="text-xl" >Dr. Adam</h1>
-                            <h1 className=" text-xs top-2 right-2">{val.status}</h1>
-                        </span>
-                      </div>
-                      <p className="text-sm mt-5">succes bookings</p>
-                      <button  className="text-red-500 px-5 py-1 text-xl font-black absolute top-2 right-2" >X</button>
-                  </div>
-                ))
-              }
-            </div>
+    <div className='w-full h-full px-4'>
+      <TopTitle title={'History'} />
+
+      <div className='flex flex-col pb-20'>
+        <div className='w-full gap-3 sticky top-0 z-10 pt-5 flex items-cente'>
+          {['approved', 'rejected', 'pending'].map(type => (
+            <button
+              key={type}
+              onClick={() => setFilter(type)}
+              className={`flex-1 py-3 capitalize rounded-md text-sm text-white font-medium transition-all duration-200 border-r border-white last:border-none ${
+                filter === type
+                  ? activeButtonStyles[type]
+                  : buttonStyles[type]
+              }`}
+            >
+              {type}
+            </button>
+          ))}
         </div>
+
+        {/* Card List */}
+        <h1 className='font-semibold text-lg mb-5 mt-10' >Status Booking</h1>
+        <div className='grid w-full xl:grid-cols-4 gap-10 '>
+          {filterData.map((val, index) => (
+            <div key={index} className="w-full relative rounded-xl flex flex-col xl:max-w-2xl bg-white shadow-md border border-gray-200 py-6 px-4 justify-between transition-all duration-200 hover:shadow-lg">
+              <div className="flex items-center gap-5">
+                <div className='w-16 h-16 rounded-full shadow-md flex items-center justify-center' >
+                  <img src={doc} alt="doc" className="w-14 h-14 rounded-full" />
+                </div>
+                <div>
+                  <h1 className="text-lg font-semibold text-gray-800">Dr.{val.name}</h1>
+                  <div className="flex items-end gap-3 text-xs text-gray-500">
+                    <span>{val.status}</span>
+                    <span className='text-[10px]' >{val.date}</span>
+                  </div>
+                </div>
+              </div>
+              <p className="text-sm text-gray-700 mt-4">{val.message}</p>
+              <button onClick={() => handleDelete(val.id)} className="text-red-500 px-4 py-1 text-xl font-bold absolute top-2 right-2">×</button>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   )
 }

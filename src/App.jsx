@@ -13,6 +13,8 @@ import Notofication from './page/layout/Notofication'
 import Postingan from './page/layout/Postingan'
 import Appointment from './page/layout/Appointment'
 import History from './page/layout/History'
+import DoctorBook from './page/layout/DoctorBook'
+import DetailProfile from './page/layout/DetailProfile'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -45,6 +47,7 @@ const App = () => {
           <Route path='/post' element={<Postingan/>} />
           <Route path='/appointment' element={<Appointment/>} />
           <Route path='/history' element={<History/>} />
+          <Route path='/profile/profDetail' element={<DetailProfile/>} />
         </Route>
       )}
     </Routes>

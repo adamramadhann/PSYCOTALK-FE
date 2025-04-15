@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { doc, docMan1, docMan2, docWoman1, docWoman2, Facebook, users } from '../../assets/importImage'
 import { IoMdNotificationsOutline } from "react-icons/io";
+import { Link } from 'react-router-dom'; 
+import { useSelector } from 'react-redux';
+import {  getDoctProfile, getDoctProfileAll, getProfileAuth } from '../../hook/fetchApi';
+import { useQuery } from "@tanstack/react-query";
 import { CiSearch } from "react-icons/ci";
 import { FaRegStar } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
-import { Link } from 'react-router-dom'; 
-import { useSelector } from 'react-redux';
-import {  getDoctProfile, getProfileAuth } from '../../hook/fetchApi';
-import { useQuery } from "@tanstack/react-query";
 
     const cardInfo = [
         {
@@ -36,131 +36,241 @@ import { useQuery } from "@tanstack/react-query";
         }
     ];
 
-const HomeScreen = () => {
-    const { data : profile, isLoading, isError } = useQuery({
-        queryKey: ["profile"],
-        queryFn: getProfileAuth,
-    });
-    const { data: notification = [], loading, error } = useSelector((state) => state.notif);
-    
-    const { data : docProf } = useQuery({
-        queryKey: ["profile doc"],
-        queryFn: getDoctProfile,
-    })
+    const mentalHealthArticles = [
+        {
+          id: 1,
+          title: "Mengenal Apa Itu Kesehatan Mental",
+          summary: "Kesehatan mental mencakup kondisi emosional, psikologis, dan sosial seseorang yang memengaruhi cara berpikir dan bertindak.",
+          image: "https://images.unsplash.com/photo-1493612276216-ee3925520721?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80", // Ilustrasi otak dan hati
+          link: "https://www.halodoc.com/kesehatan/kesehatan-mental"
+        },
+        {
+          id: 2,
+          title: "Tanda-Tanda Kamu Perlu Bicara dengan Psikolog",
+          summary: "Cemas berlebihan, sulit tidur, atau merasa hampa bisa jadi tanda kamu perlu berbicara dengan profesional.",
+          image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80", // Wanita berbicara dengan terapis
+          link: "https://www.halodoc.com/artikel/kenali-7-tanda-seseorang-perlu-segera-pergi-ke-psikolog"
+        },
+        {
+          id: 3,
+          title: "Self-Care: Lebih dari Sekadar Me Time",
+          summary: "Self-care adalah bentuk perhatian diri, mulai dari cukup tidur hingga memberi batasan pada pekerjaan.",
+          image: "https://images.unsplash.com/photo-1545205597-3d9d02c29597?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80", // Wanita relaksasi dengan lilin
+          link: "https://www.osfhealthcare.org/blog/self-care/"
+        },
+        {
+          id: 4,
+          title: "Bagaimana Stres Mempengaruhi Tubuh dan Pikiran",
+          summary: "Stres kronis berdampak negatif pada kesehatan jantung, imun tubuh, dan pikiran.",
+          image: "https://images.unsplash.com/photo-1518459031867-a89b944bffe4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80", // Pria memegang kepala stres
+          link: "https://hellosehat.com/mental/stres/dampak-stres-pada-tubuh-anda/"
+        },
+        {
+          id: 5,
+          title: "Pentingnya Dukungan Sosial dalam Penyembuhan Mental",
+          summary: "Teman dan keluarga bisa berperan besar dalam proses pemulihan kesehatan mental.",
+          image: "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80", // Grup saling mendukung
+          link: "https://deepapsikologi.com/efektivitas-dukungan-sosial-untuk-membangun-kesehatan-mental-pada-generasi-z"
+        },
+        {
+          id: 6,
+          title: "Burnout Bukan Malas: Kenali dan Atasi",
+          summary: "Burnout adalah kelelahan emosional akibat tekanan terus-menerus dalam pekerjaan atau kehidupan.",
+          image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80", // Pekerja lelah di meja
+          link: "https://believeperform.com/product/10-ways-to-combat-work-burnout/"
+        },
+        {
+          id: 7,
+          title: "Kenapa Tidak Apa-Apa untuk Merasa Tidak Baik-Baik Saja",
+          summary: "Emosi negatif adalah bagian alami dari hidup. Mengenali dan menerimanya adalah langkah penyembuhan.",
+          image: "https://images.unsplash.com/photo-1491349174775-aaafddd81942?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80", // Wanita duduk sendirian
+          link: "https://danacita.co.id/blog/menerima-emosi-negatif-dalam-diri/"
+        },
+        {
+          id: 8,
+          title: "Membangun Kebiasaan Sehat untuk Mental Lebih Kuat",
+          summary: "Kebiasaan seperti olahraga, journaling, dan istirahat cukup sangat bermanfaat untuk mental.",
+          image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80", // Yoga di alam
+          link: "https://unair.ac.id/infografik-amankah-self-diagnosis-terhadap-kesehatan-mental/"
+        }
+      ];
+      
 
-    const API_BASE_URL = "http://localhost:8000";
-    
-    const teksBtn = [
-        {
-            teks : 'type 1'
-        },
-        {
-            teks : 'type 2'
-        },
-        {
-            teks : 'type 3'
-        },
-        {
-            teks : 'type 4'
-        },
-    ]
+    const HomeScreen = () => {
+        const scrollRef = useRef(null);
+        const [activeIndex, setActiveIndex] = useState(0);
+        const { data : profile, isLoading, isError } = useQuery({
+            queryKey: ["profile"],
+            queryFn: getProfileAuth,
+        });
+        const [active, setActive] = useState('All')
+        
+        const { data : docProf } = useQuery({
+            queryKey: ["profile doc"],
+            queryFn: getDoctProfileAll,
+        })
 
-    console.log('ini dara profile ', docProf)
+        console.log('ini data prof nya', docProf)
+        
+        const API_BASE_URL = "http://localhost:8000";
+
+        const { data: notification = [], loading, error } = useSelector((state) => state.notif);  
+        
+        const scrollTo = (index) => {
+            const curent = scrollRef.current;
+            const width = curent.offsetWidth;
+
+            curent.scrollTo({
+                left : index * width,
+                behavior: 'smooth'
+            })
+        }
     
-  return (
-    <div className='w-full h-full p-5 space-y-10 ' >
-        <div className='flex justify-between items-center' >
-                <div className='flex items-center gap-5' > 
-                <img
-                    src={profile?.profile?.avatar ? `${API_BASE_URL}${profile.profile.avatar}` : users}
-                    alt="profile"
-                    className="w-14 rounded-full h-14"
-                    />
-                <span>
-                    <h1 className='text-base font-semibold' >{profile?.name || 'adam'}</h1>
-                    <p className='text-sm' >{profile?.email || 'adam@gmail.com'}</p>
-                </span> 
-                </div>
-                <div className='relative' >
-                    <Link to={'/notif'} ><IoMdNotificationsOutline size={35}/></Link>
-                    {
-                        notification.length ? ( <span className='w-3 h-3 rounded-full bg-red-500 block absolute top-1 right-1' ></span> ) : null
-                    }
-                </div>
-        </div>
-        <div className='flex items-center px-3 py-1 gap-1 rounded-full border ' >
-            <CiSearch size={20} />
-            <input type="search" name="" id="" placeholder='search doctor' className='w-full outline-none' />
-        </div>
-        <div className='w-full overflow-x-auto flex sm:flex-col xl:grid xl:grid-cols-2  gap-5'>
-            {
-                cardInfo.map(val => (
-                    <div className={`w-full flex-none ${val.bgColor} flex relative items-center gap-5 h-[130px]  overflow-hidden rounded-md`}>
-                        <span className='w-[60%] absolute left-4 space-y-2'>
-                            <h1 className='text-sm text-white font-bold'>{val.title}</h1>
-                            <p className='text-xs text-white text-justify'>{val.description}</p>
-                        </span>
-                        <img 
-                            src={val.image} 
-                            alt="doc1" 
-                            className='absolute -right-1 h-full w-auto object-cover object-bottom flex-shrink-0' 
-                        />
-                    </div>
-                ))
-            }
-        </div>
-        <div className='w-full space-y-5' >
-            <span className='flex items-center justify-between' >
-                <h1>Catagories</h1>
-            </span>
-            <div className='grid grid-cols-2 overflow-hidden xl:flex gap-5 pb-3' >
-                {
-                    teksBtn.map(val => (
-                        <button className='px-10 rounded-md xl:flex-1  py-3 xl:w-[10%] flex-none bg-teal-500 text-white text-lg' >{val.teks}</button>
-                    ))
-                }
-            </div>
-        </div>
-        <div className='w-full space-y-5' >
-        <span className='flex items-center justify-between ' >
-            <h1>All Doctors</h1>
-            <button>See All</button>
-        </span>
-        <div className='xl:grid grid-cols-2 gap-10' >
-            {
-                docProf?.map(val => (
-                    <div className='overflow-x-auto flex gap-5 pb-3' >
-                        <div className='flex w-full items-center gap-4 p-4 bg-white shadow-md rounded-lg'>
-                            <div className='flex-shrink-0 '>
-                                <img src={val.profile?.avatar ? `${API_BASE_URL}${val?.profile?.avatar}` : doc }alt="doctor" className='xl:w-24 xl:h-24 h-20 object-top w-20 rounded-full object-cover ' />
-                            </div>
-                            <div className='flex-1'>
-                                <div className='flex items-center justify-between'>
-                                    <h1 className='text-lg font-semibold'>{val.name}</h1>
-                                    <FaRegHeart size={20} className='text-red-500  cursor-pointer' /> 
-                                </div>
-                                <p className='text-sm text-gray-500 xl:mt-1'>
-                                {val?.profile?.bio ? <p>{val.profile.bio}</p> : <p>doctor hasn't created a bio yet</p>}
-                                </p>
-                                <div className='flex items-center justify-between mt-3'>
-                                    <Link to={`/appointment`} state={{ doctorId : val.id, dataDoc : docProf}} className='px-4 xl:py- p-0.5  text-white rounded-md shadow-md bg-[#0B8FAC]  transition'>
-                                        Book
-                                    </Link>
-                                    <span className='flex items-center gap-3' >
-                                        <FaRegStar size={20}  className='text-yellow-500' />
-                                        5.5
-                                    </span>
-                                </div>
-                            </div>
+        const teksBtn = [
+            { teks : 'All' },
+            { teks : 'Male' },
+            { teks : 'Famale' },
+        ]
+
+        useEffect(() => {
+            console.log('ini data doc prof nya', docProf)
+            const handleScroll = () => {
+              const scrollLeft = scrollRef.current.scrollLeft;
+              const width = scrollRef.current.offsetWidth;
+        
+              const index = Math.round(scrollLeft / width);
+              setActiveIndex(index);
+            };
+        
+            const ref = scrollRef.current;
+            ref.addEventListener('scroll', handleScroll);
+        
+            return () => ref.removeEventListener('scroll', handleScroll);
+            
+          }, []);
+        
+        
+        return (
+            <div className='w-full h-full  space-y-3 ' >
+                <div className=' w-full z-50 bg-white px-5 py-3 md:shadow-md border border-gray-300 rounded-b-3xl flex ' >
+                    <div className=' w-full flex justify-between relative items-center' >
+                        <div className='flex items-center gap-3' > 
+                            <img
+                                src={profile?.profile?.avatar ? `${API_BASE_URL}${profile.profile.avatar}` : users}
+                                alt="profile"
+                                className="w-16 md:w-[70px] md:h-[70px] rounded-full shadow-md h-16"
+                                />
+                            <span>
+                                <p className='text-xs md:text-sm  text-gray-500' >Hi,Welcome Back,</p>
+                                <h1 className='text-base md:text-lg  text-gray-600 font-semibold' >{profile?.name || 'Name'}</h1>
+                            </span> 
+                        </div>  
+                        <h1 className='absolute hidden xl:block  xl:text-xl text-gray-600 top-1/2 left-1/2 -translate-1/2' >Welcome the My app, <b>{profile?.name || 'friend'}</b></h1>
+                        <div className='relative' >
+                            <Link to={'/notif'} ><IoMdNotificationsOutline size={35}/></Link>
+                            { notification.length ? ( <span className='w-3 h-3 rounded-full bg-red-500 block absolute top-1 right-1' ></span> ) : null }
                         </div>
                     </div>
-                ))
-            }
-        </div>
-        </div>
-        <div className  ='h-10' ></div>
-    </div>
-  )
-}
+                </div>
+                <div className='w-full h-full space-y-10 p-5' >
+                <div className='flex items-center md:hidden justify-end ' >
+                    <div className='flex items-center xl:w-[20%] w-full px-3 py-4 xl:py-2 gap-1 rounded-full shadow-md bg-white' >
+                        <CiSearch className='w-10 xl:w-5' />
+                        <input type="search" name="" id="" placeholder='search doctor' className='w-full text-base outline-none' />
+                    </div>
+                </div>
+                <div className='flex flex-col gap-3' >
+                <div ref={scrollRef} className='w-full overflow-hidden flex sm:flex-col xl:grid xl:grid-cols-2 md:gap-5'>
+                        {
+                            cardInfo.map(val => (
+                                <div className={`w-full flex-none ${val.bgColor} flex relative items-center gap-5 h-[130px]  overflow-hidden rounded-md`}>
+                                    <span className='w-[60%] absolute left-4 space-y-2'>
+                                        <h1 className='text-sm md:text-base text-white font-bold'>{val.title}</h1>
+                                        <p className='text-xs md:text-sm text-white text-justify'>{val.description}</p>
+                                    </span>
+                                    <img 
+                                        src={val.image} 
+                                        alt="doc1" 
+                                        className={`absolute h-full w-auto object-cover object-bottom flex-shrink-0 ${val.title !== 'THERAPY SESSIONS' ? '-right-5' : '-right-1'}`} 
+                                    />
+                                </div>
+                            ))
+                        }
+                    </div>
+                    <div className='flex items-center gap-3 justify-center xl:hidden md:hidden' >
+                        {  
+                            cardInfo.map((_, i) => (
+                                <span 
+                                    key={i}
+                                    onClick={() => scrollTo(i)}
+                                    className={`h-3 w-3 rounded-full transition-all block duration-300 ${i === activeIndex ? 'bg-teal-700 scale-75' : 'bg-teal-500'}`}
+                                />
+                            ))
+                        }
+                    </div>
+                </div>
+                <div className='w-full' >
+                <div className='space-y-8' >
+                    <div className='w-full mt-5 space-y-5' > 
+                    <span className='flex items-center md:hidden xl:text-2xl text-lg font-semibold justify-between ' >
+                        <h1>Gender</h1>
+                    </span>
+                        <div className='grid grid-cols-3 overflow-hidden xl:flex gap-5 pb-3' >
+                            {
+                                teksBtn.map(val => (
+                                    <button onClick={() => setActive(val.teks)} className={`rounded-md cursor-pointer xl:flex-1  py-2 xl:w-[10%] flex-none text-white text-lg ${active === val.teks ? 'bg-teal-600' : 'bg-teal-500'}`} >{val.teks}</button>
+                                ))
+                            }
+                        </div>
+                    </div>
+                    {/* doctor */}
+                    <div className='w-full space-y-5' >
+                    <span className='flex items-center xl:text-2xl text-lg font-semibold justify-between ' >
+                        <h1>All Doctors</h1>
+                    </span>
+                    <div className='md:flex items-center hidden  justify-end ' >
+                        <div className='flex items-center xl:w-[20%] w-full px-3 py-2 xl:py-2 gap-1 rounded-full border' >
+                            <CiSearch className='w-4 xl:w-5' />
+                            <input type="search" name="" id="" placeholder='search doctor' className='w-full text-sm outline-none' />
+                        </div>
+                    </div>
+                    <div className='grid xl:grid-cols-3 gap-8 md:mt-10 w-full ' >
+                        {
+                            docProf?.map(val => (
+                                <div className='overflow-x-auto shadow-md border border-gray-200 rounded-lg bg-white flex gap-5 pb-3' >
+                                    <div className='flex w-full items-center gap-4 p-4 '>
+                                        <div className='flex-shrink-0 h-full '>
+                                            <img src={val.profile?.avatar ? `${API_BASE_URL}${val?.profile?.avatar}` : doc }alt="doctor" className='xl:w-24 xl:h-24 h-full object-top w-20 rounded-md object-cover ' />
+                                        </div>
+                                        <div className='flex-1'>
+                                            <div className='flex items-center justify-between'>
+                                                <h1 className='text-lg md:text-lg font-semibold'>{val.name}</h1>
+                                                <FaRegHeart size={20} className='text-red-500  cursor-pointer' /> 
+                                            </div>
+                                            <p className='text-xs md:text-sm text-gray-500 xl mb-1'>
+                                            {val?.profile?.bio ? <p>{val.profile.bio}</p> : <p>Mental Health</p>}
+                                            </p>
+                                            <div className='flex items-center mt-3 justify-between gap-5 '>
+                                                <Link to={`/appointment`} state={{ doctorId : val.id, dataDoc : docProf}} className='w-full p-1 md:p-1.5 text-center text-sm text-white rounded-md shadow-sm bg-[#0B8FAC]  transition'>
+                                                    Book
+                                                </Link>
+                                                <div className='flex items-center md:text-lg text-green-700 ' >
+                                                    $12.00
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+                        }
+                    </div>
+                    </div>
+                </div>
+                <div className='h-14 md:h-0' ></div>
+                </div>
+                </div>
+            </div>
+        )
+    }
 
 export default HomeScreen
