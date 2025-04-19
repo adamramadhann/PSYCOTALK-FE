@@ -26,6 +26,8 @@ const DetailProfile = () => {
       formData.append('name', data.name)
       formData.append('email', data.email)
       formData.append('bio', data.bio)
+      formData.append('gender', data.gender)
+      formData.append('about', data.about)
       if (selectedFile) {
         formData.append('avatar', selectedFile)
       }
@@ -54,17 +56,21 @@ const DetailProfile = () => {
       setProfile(data.profile)
       setValue('name', data.name)
       setValue('email', data.email)
-      setValue('bio', data.profile.bio)
-      setValue('avatar', data.profile.avatar)
-      setPreview(`${API_BASE_URL}${data.profile.avatar}`)
+      setValue('bio', data.bio)
+      setValue('gender', data.gender)
+      setValue('about', data.about)
+      setValue('avatar', data.avatar)
+      setPreview(`${API_BASE_URL}${data.avatar}`)
     }
+
+    console.log(preview)
 
     fetchProfile()
   }, [setValue])
 
   return (
     <div className="w-full min-h-[100dvh] xl:h-full bg-gray-50 py-6 px-4 flex justify-center items-start">
-      <div className="w-full max-w-xl bg-white md:p-6 md:fixed top-1/2 left-1/2 md:-translate-1/2 rounded-2xl md:border border-gray-200 md:shadow-md">
+      <div className="w-full max-w-xl bg-white md:p-6 md:fixed top-1/2 left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 rounded-2xl md:border border-gray-200 md:shadow-md">
         <TopTitle title="Detail Profile" />
         <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-6">
           {/* Avatar Section */}
@@ -98,7 +104,7 @@ const DetailProfile = () => {
             />
           </div>
 
-          {/* Input Fields */}
+          {/* Name Field */}
           <div className="space-y-5">
             <div className="flex flex-col gap-1">
               <label htmlFor="name" className="text-sm font-semibold">Name:</label>
@@ -111,6 +117,7 @@ const DetailProfile = () => {
               {errors.name && <span className="text-sm text-red-500">{errors.name.message}</span>}
             </div>
 
+            {/* Email Field */}
             <div className="flex flex-col gap-1">
               <label htmlFor="email" className="text-sm font-semibold">Email:</label>
               <input
@@ -120,8 +127,35 @@ const DetailProfile = () => {
                 disabled
                 className="rounded-md py-2.5 px-3 border bg-gray-100 text-gray-500 cursor-not-allowed"
               />
+              {errors.email && <span className="text-sm text-red-500">{errors.email.message}</span>}
             </div>
 
+            {/* Gender Field */}
+            <div className="flex flex-col gap-1">
+              <label htmlFor="gender" className="text-sm font-semibold">Gender:</label>
+              <select
+                {...register('gender', { required: 'Gender wajib diisi' })}
+                className="rounded-md py-2.5 px-3 border focus:ring-2 focus:ring-blue-500 outline-none"
+              >
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+              {errors.gender && <span className="text-sm text-red-500">{errors.gender.message}</span>}
+            </div>
+
+            {/* About Field */}
+            <div className="flex flex-col gap-1">
+              <label htmlFor="about" className="text-sm font-semibold">About:</label>
+              <textarea
+                {...register('about', { required: 'About wajib diisi' })}
+                rows={2}
+                placeholder="About you"
+                className="rounded-md py-2.5 px-3 border resize-none focus:ring-2 focus:ring-blue-500 outline-none"
+              />
+              {errors.about && <span className="text-sm text-red-500">{errors.about.message}</span>}
+            </div>
+
+            {/* Bio Field */}
             <div className="flex flex-col gap-1">
               <label htmlFor="bio" className="text-sm font-semibold">Bio:</label>
               <textarea
@@ -134,6 +168,7 @@ const DetailProfile = () => {
             </div>
           </div>
 
+          {/* Submit Button */}
           <button
             type="submit"
             className="w-full bg-teal-500 text-white py-2.5 rounded-md font-medium hover:bg-teal-600 transition-all"
@@ -141,6 +176,7 @@ const DetailProfile = () => {
             Save
           </button>
         </form>
+        <div className='h-20' ></div>
       </div>
     </div>
   )
