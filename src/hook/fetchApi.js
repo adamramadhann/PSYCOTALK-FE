@@ -18,7 +18,7 @@ export const getDoctProfile = async () => {
 export const getDoctProfileAll = async () => {
         const response = await ax.get('/getDoc');
         console.log('ini data doc all', response.data);  
-        return response.data;  
+        return response.data.doctors;  
     };
     
 // booking

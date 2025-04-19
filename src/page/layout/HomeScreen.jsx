@@ -9,33 +9,34 @@ import { CiSearch } from "react-icons/ci";
 import { FaRegStar } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
 
-    const cardInfo = [
-        {
-            title: 'THERAPY SESSIONS',
-            description: 'Therapy sessions with experienced psychologists to help manage emotions and stress.',
-            bgColor: 'bg-[#E91E63]',
-            image: docMan1
-        },
-        {
-            title: 'MENTAL HEALTH SUPPORT',
-            description: 'Mental health support services to help you live a better life.',
-            bgColor: 'bg-[#FFB400]',
-            image: docWoman2
-        },
-        {
-            title: 'MENTAL HEALTH SUPPORT',
-            description: 'Mental health support services to help you live a better life.',
-            bgColor: 'bg-[#0B8FAC]',
-            image: docWoman2
-        },
-        {
-            title: 'SELF-IMPROVEMENT PROGRAM',
-            description: 'A self-improvement program to enhance your quality of life and happiness.',
-            bgColor: 'bg-[#4CAF50]',
-            image: docMan2
-        }
-    ];
-
+const cardInfo = [
+    {
+      title: 'Mental Health Support',
+      description: 'Comprehensive support to help you manage anxiety, depression, and emotional distress.',
+      gradient: 'from-[#00BCD4] to-[#0097A7]',
+      image: docMan1
+    },
+            {
+            title: 'Emotional Wellness',
+            description: 'Enhance your emotional intelligence and build resilience through guided therapy.',
+            gradient: 'from-[#FFB400] to-[#FFA000]',
+            image: docWoman1
+            },
+    {
+      title: 'Relationship & Family Therapy',
+      description: 'Strengthen your relationships and resolve conflicts with professional guidance.',
+      gradient: 'from-[#7E57C2] to-[#5E35B1]',
+      image: docWoman2
+    },
+    {
+      title: 'Self-Development Programs',
+      description: 'Programs tailored to help you grow, achieve goals, and improve overall life satisfaction.',
+      gradient: 'from-[#4CAF50] to-[#388E3C]',
+      image: docMan2
+    }
+  ];
+  
+  
     const mentalHealthArticles = [
         {
           id: 1,
@@ -133,7 +134,7 @@ import { FaRegHeart } from "react-icons/fa";
         ]
 
         useEffect(() => {
-            console.log('ini data doc prof nya', docProf)
+            getDoctProfileAll()
             const handleScroll = () => {
               const scrollLeft = scrollRef.current.scrollLeft;
               const width = scrollRef.current.offsetWidth;
@@ -148,17 +149,19 @@ import { FaRegHeart } from "react-icons/fa";
             return () => ref.removeEventListener('scroll', handleScroll);
             
           }, []);
+
+          console.log('ini terupdate', docProf)
         
         
         return (
             <div className='w-full h-full  space-y-3 ' >
                 <div className=' w-full z-50 bg-white px-5 py-3 md:shadow-md border border-gray-300 rounded-b-3xl flex ' >
                     <div className=' w-full flex justify-between relative items-center' >
-                        <div className='flex items-center gap-3' > 
+                        <div className='flex items-center gap-2' > 
                             <img
-                                src={profile?.profile?.avatar ? `${API_BASE_URL}${profile.profile.avatar}` : users}
+                                src={profile?.avatar ? `${API_BASE_URL}${profile.avatar}` : users}
                                 alt="profile"
-                                className="w-16 md:w-[70px] md:h-[70px] rounded-full shadow-md h-16"
+                                className="w-14 md:w-[70px] md:h-[70px] rounded-full shadow-md h-14"
                                 />
                             <span>
                                 <p className='text-xs md:text-sm  text-gray-500' >Hi,Welcome Back,</p>
@@ -183,37 +186,37 @@ import { FaRegHeart } from "react-icons/fa";
                 <div ref={scrollRef} className='w-full overflow-hidden flex sm:flex-col xl:grid xl:grid-cols-2 md:gap-5'>
                         {
                             cardInfo.map(val => (
-                                <div className={`w-full flex-none ${val.bgColor} flex relative items-center gap-5 h-[130px]  overflow-hidden rounded-md`}>
-                                    <span className='w-[60%] absolute left-4 space-y-2'>
-                                        <h1 className='text-sm md:text-base text-white font-bold'>{val.title}</h1>
-                                        <p className='text-xs md:text-sm text-white text-justify'>{val.description}</p>
+                                <div className={`w-full flex-none bg-gradient-to-r  ${val.gradient} flex relative p-5 gap-5 h-[170px]  overflow-hidden rounded-md`}>
+                                    <span className=' space-y-4'>
+                                        <h1 className=' text-base text-white font-bold'>{val.title}</h1>
+                                        <p className='text-sm text-white'>{val.description}</p>
                                     </span>
-                                    <img 
+                                    {/* <img 
                                         src={val.image} 
                                         alt="doc1" 
-                                        className={`absolute h-full w-auto object-cover object-bottom flex-shrink-0 ${val.title !== 'THERAPY SESSIONS' ? '-right-5' : '-right-1'}`} 
-                                    />
+                                        className={`absolute h-full object-cover -bottom-2.5 object-bottom flex-shrink-0 ${val.title === 'Self-Development Programs' && val.title === 'Emotional Wellness'  ? '-bottom-7 -right-4 w-[160px]' : '-right-2'}`} 
+                                    /> */}
                                 </div>
                             ))
                         }
-                    </div>
-                    <div className='flex items-center gap-3 justify-center xl:hidden md:hidden' >
-                        {  
-                            cardInfo.map((_, i) => (
-                                <span 
-                                    key={i}
-                                    onClick={() => scrollTo(i)}
-                                    className={`h-3 w-3 rounded-full transition-all block duration-300 ${i === activeIndex ? 'bg-teal-700 scale-75' : 'bg-teal-500'}`}
-                                />
-                            ))
-                        }
-                    </div>
+                </div>
+                <div className='flex items-center gap-3 justify-center xl:hidden md:hidden' >
+                    {  
+                        cardInfo.map((_, i) => (
+                            <span 
+                                key={i}
+                                onClick={() => scrollTo(i)}
+                                className={`h-3 w-3 rounded-full transition-all block duration-300 ${i === activeIndex ? 'bg-teal-700 scale-75' : 'bg-teal-500'}`}
+                            />
+                        ))
+                    }
+                </div>
                 </div>
                 <div className='w-full' >
                 <div className='space-y-8' >
                     <div className='w-full mt-5 space-y-5' > 
                     <span className='flex items-center md:hidden xl:text-2xl text-lg font-semibold justify-between ' >
-                        <h1>Gender</h1>
+                        <h1  className='text-xl' >Gender</h1>
                     </span>
                         <div className='grid grid-cols-3 overflow-hidden xl:flex gap-5 pb-3' >
                             {
@@ -226,7 +229,7 @@ import { FaRegHeart } from "react-icons/fa";
                     {/* doctor */}
                     <div className='w-full space-y-5' >
                     <span className='flex items-center xl:text-2xl text-lg font-semibold justify-between ' >
-                        <h1>All Doctors</h1>
+                        <h1 className='text-xl' >All Doctors</h1>
                     </span>
                     <div className='md:flex items-center hidden  justify-end ' >
                         <div className='flex items-center xl:w-[20%] w-full px-3 py-2 xl:py-2 gap-1 rounded-full border' >
@@ -234,39 +237,38 @@ import { FaRegHeart } from "react-icons/fa";
                             <input type="search" name="" id="" placeholder='search doctor' className='w-full text-sm outline-none' />
                         </div>
                     </div>
-                    <div className='grid xl:grid-cols-3 gap-8 md:mt-10 w-full ' >
+                    <div className='grid grid-cols-1 md:grid-cols-3 gap-8 md:mt-10 w-full ' >
                         {
                             docProf?.map(val => (
-                                <div className='overflow-x-auto shadow-md border border-gray-200 rounded-lg bg-white flex gap-5 pb-3' >
-                                    <div className='flex w-full items-center gap-4 p-4 '>
-                                        <div className='flex-shrink-0 h-full '>
-                                            <img src={val.profile?.avatar ? `${API_BASE_URL}${val?.profile?.avatar}` : doc }alt="doctor" className='xl:w-24 xl:h-24 h-full object-top w-20 rounded-md object-cover ' />
+                                <div className=' shadow-md border border-gray-200 mx-auto relative rounded-lg w-[95%]  bg-white flex flex-col pb-2 items-center ' >
+                                        <div className='flex-shrink-0 w-full rounded-t-lg h-[250px]'>
+                                            <img src={val.profile?.avatar ? `${API_BASE_URL}${val?.profile?.avatar}` : doc }alt="doctor" className=' h-full rounded-t-lg object-top w-full rounded-md object-cover ' />
                                         </div>
-                                        <div className='flex-1'>
+                                        <div className='flex-1  w-full p-3'>
                                             <div className='flex items-center justify-between'>
-                                                <h1 className='text-lg md:text-lg font-semibold'>{val.name}</h1>
-                                                <FaRegHeart size={20} className='text-red-500  cursor-pointer' /> 
+                                                <h1 className='text-xl font-semibold'>Dr. {val.name}</h1>
+                                                <FaRegHeart size={20} className='text-red-500 absolute top-3 right-3 cursor-pointer' /> 
                                             </div>
-                                            <p className='text-xs md:text-sm text-gray-500 xl mb-1'>
+                                            <p className='text-xs md:text-  text-gray-500 xl mb-3'>
                                             {val?.profile?.bio ? <p>{val.profile.bio}</p> : <p>Mental Health</p>}
                                             </p>
-                                            <div className='flex items-center mt-3 justify-between gap-5 '>
-                                                <Link to={`/appointment`} state={{ doctorId : val.id, dataDoc : docProf}} className='w-full p-1 md:p-1.5 text-center text-sm text-white rounded-md shadow-sm bg-[#0B8FAC]  transition'>
-                                                    Book
-                                                </Link>
-                                                <div className='flex items-center md:text-lg text-green-700 ' >
+                                            <p className='text-sm text-gray-500' >Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque, fuga.</p>
+                                            <div className='flex items-center w-full mt-5 justify-between gap-5 '>
+                                                <p className='flex items-center md:text-lg text-green-700 ' >
                                                     $12.00
-                                                </div>
+                                                </p>
+                                                <Link to={`/appointment`} state={{ doctorId : val.id, dataDoc : docProf}} className='px-10 p-2 md:p-1.5 text-center text-sm text-white rounded-md shadow-sm bg-[#0B8FAC]  transition'>
+                                                    Book Now
+                                                </Link>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
                             ))
                         }
                     </div>
                     </div>
                 </div>
-                <div className='h-14 md:h-0' ></div>
+                <div className='h-24' ></div>
                 </div>
                 </div>
             </div>

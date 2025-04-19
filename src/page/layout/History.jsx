@@ -53,9 +53,10 @@ const History = () => {
   }
 
   const handleDelete = async (id) => {
+    if(!confirm('yakin ingin menhapus history ??')) return
     try {
-      // await deletedBok(id);
-      dispatch(deletedBoks(id));    
+      await deletedBok(id) 
+      dispatch(deletedBoks(id));   
       alert('deleted succes')
     } catch (error) {
       console.error(error.message);

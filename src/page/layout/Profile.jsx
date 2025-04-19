@@ -47,7 +47,7 @@ const Profile = () => {
         {/* Profile Picture */}
         <div className="flex justify-center mt-6">
           <img
-            src={profile?.profile?.avatar ? `${API_BASE_URL}${profile.profile.avatar}` : users}
+            src={profile?.avatar ? `${API_BASE_URL}${profile.avatar}` : users}
             alt="profile"
             className="w-32 h-32 object-cover rounded-full border-4 border-white shadow"
             onError={(e) => (e.target.src = users)}

@@ -57,6 +57,8 @@ const Notification = () => {
     const selectedBooking = booking.find((b) => b.id === selectedBookingId);
 
     const handleDeleted = async ( id ) => {
+        if(! confirm("yakin ingin menghapus notification ??")) return 
+
         try {
             await deleteNotification(id)
             dispatch(deletedNotif(id))
