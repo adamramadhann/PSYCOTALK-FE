@@ -80,50 +80,49 @@ const History = () => {
 
 
   return (
-    <div className='w-full h-full px-4'>
+      <div className='w-full h-full relative px-4'>
       <TopTitle title={'History'} />
+        <div className='flex flex-col pb-20'>
+          <div className='w-full gap-3 sticky top-0 z-10 pt-5 flex items-cente'>
+            {['approved', 'rejected', 'pending'].map(type => (
+              <button
+                key={type}
+                onClick={() => setFilter(type)}
+                className={`flex-1 py-3 capitalize rounded-md text-sm text-white font-medium transition-all duration-200 border-r border-white last:border-none ${
+                  filter === type
+                    ? activeButtonStyles[type]
+                    : buttonStyles[type]
+                }`}
+              >
+                {type}
+              </button>
+            ))}
+          </div>
 
-      <div className='flex flex-col pb-20'>
-        <div className='w-full gap-3 sticky top-0 z-10 pt-5 flex items-cente'>
-          {['approved', 'rejected', 'pending'].map(type => (
-            <button
-              key={type}
-              onClick={() => setFilter(type)}
-              className={`flex-1 py-3 capitalize rounded-md text-sm text-white font-medium transition-all duration-200 border-r border-white last:border-none ${
-                filter === type
-                  ? activeButtonStyles[type]
-                  : buttonStyles[type]
-              }`}
-            >
-              {type}
-            </button>
-          ))}
-        </div>
-
-        {/* Card List */}
-        <h1 className='font-semibold text-lg mb-5 mt-10' >Status Booking</h1>
-        <div className='grid w-full xl:grid-cols-4 gap-10 '>
-          {filterData.map((val, index) => (
-            <div key={index} className="w-full relative rounded-xl flex flex-col xl:max-w-2xl bg-white shadow-md border border-gray-200 py-6 px-4 justify-between transition-all duration-200 hover:shadow-lg">
-              <div className="flex items-center gap-5">
-                <div className='w-16 h-16 rounded-full shadow-md flex items-center justify-center' >
-                  <img src={doc} alt="doc" className="w-14 h-14 rounded-full" />
-                </div>
-                <div>
-                  <h1 className="text-lg font-semibold text-gray-800">Dr.{val.name}</h1>
-                  <div className="flex items-end gap-3 text-xs text-gray-500">
-                    <span>{val.status}</span>
-                    <span className='text-[10px]' >{val.date}</span>
+          {/* Card List */}
+          <h1 className='font-semibold text-lg mb-5 mt-10' >{filterData.length ? "Status Booking" : "Boking notfound"}</h1>
+          <div className='grid w-full xl:grid-cols-4 gap-10 '>
+            {filterData.map((val, index) => (
+              <div key={index} className="w-full relative rounded-xl flex flex-col xl:max-w-2xl bg-white shadow-md border border-gray-200 py-6 px-4 justify-between transition-all duration-200 hover:shadow-lg">
+                <div className="flex items-center gap-5">
+                  <div className='w-16 h-16 rounded-full shadow-md flex items-center justify-center' >
+                    <img src={doc} alt="doc" className="w-14 h-14 rounded-full" />
+                  </div>
+                  <div>
+                    <h1 className="text-lg font-semibold text-gray-800">Dr.{val.name}</h1>
+                    <div className="flex items-end gap-3 text-xs text-gray-500">
+                      <span>{val.status}</span>
+                      <span className='text-[10px]' >{val.date}</span>
+                    </div>
                   </div>
                 </div>
+                <p className="text-sm text-gray-700 mt-4">{val.message}</p>
+                <button onClick={() => handleDelete(val.id)} className="text-red-500 px-4 py-1 text-xl font-bold absolute top-2 right-2">×</button>
               </div>
-              <p className="text-sm text-gray-700 mt-4">{val.message}</p>
-              <button onClick={() => handleDelete(val.id)} className="text-red-500 px-4 py-1 text-xl font-bold absolute top-2 right-2">×</button>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
-    </div>
+    </div> 
   )
 }
 
