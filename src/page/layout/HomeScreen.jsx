@@ -9,33 +9,32 @@ import { CiSearch } from "react-icons/ci";
 import { FaRegStar } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
 
-const cardInfo = [
-    {
-      title: 'Mental Health Support',
-      description: 'Comprehensive support to help you manage anxiety, depression, and emotional distress.',
-      gradient: 'from-[#00BCD4] to-[#0097A7]',
-      image: docMan1
-    },
-            {
-            title: 'Emotional Wellness',
-            description: 'Enhance your emotional intelligence and build resilience through guided therapy.',
-            gradient: 'from-[#FFB400] to-[#FFA000]',
-            image: docWoman1
-            },
-    {
-      title: 'Relationship & Family Therapy',
-      description: 'Strengthen your relationships and resolve conflicts with professional guidance.',
-      gradient: 'from-[#7E57C2] to-[#5E35B1]',
-      image: docWoman2
-    },
-    {
-      title: 'Self-Development Programs',
-      description: 'Programs tailored to help you grow, achieve goals, and improve overall life satisfaction.',
-      gradient: 'from-[#4CAF50] to-[#388E3C]',
-      image: docMan2
-    }
-  ];
-  
+    const cardInfo = [
+        {
+        title: 'Mental Health Support',
+        description: 'Comprehensive support to help you manage anxiety, depression, and emotional distress.',
+        gradient: 'from-[#00BCD4] to-[#0097A7]',
+        image: docMan1
+        },
+        {
+        title: 'Emotional Wellness',
+        description: 'Enhance your emotional intelligence and build resilience through guided therapy.',
+        gradient: 'from-[#FFB400] to-[#FFA000]',
+        image: docWoman1
+        },
+        {
+        title: 'Relationship & Family Therapy',
+        description: 'Strengthen your relationships and resolve conflicts with professional guidance.',
+        gradient: 'from-[#7E57C2] to-[#5E35B1]',
+        image: docWoman2
+        },
+        {
+        title: 'Self-Development Programs',
+        description: 'Programs tailored to help you grow, achieve goals, and improve overall life satisfaction.',
+        gradient: 'from-[#4CAF50] to-[#388E3C]',
+        image: docMan2
+        }
+    ];
   
     const mentalHealthArticles = [
         {
@@ -94,11 +93,12 @@ const cardInfo = [
           image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80", // Yoga di alam
           link: "https://unair.ac.id/infografik-amankah-self-diagnosis-terhadap-kesehatan-mental/"
         }
-      ];
+    ];
       
 
     const HomeScreen = () => {
         const scrollRef = useRef(null);
+        const [dataDoc, setDataDoc] = useState("All")
         const [activeIndex, setActiveIndex] = useState(0);
         const { data : profile, isLoading, isError } = useQuery({
             queryKey: ["profile"],
@@ -129,9 +129,16 @@ const cardInfo = [
     
         const teksBtn = [
             { teks : 'All' },
-            { teks : 'Male' },
-            { teks : 'Famale' },
+            { teks : 'female' },
+            { teks : 'male' }
         ]
+
+        const filterDataDoctor = docProf?.filter((val) => {
+            if(dataDoc === 'ALl') return true
+            if(dataDoc === 'male') return val?.gender === "male" 
+            if(dataDoc === 'female') return val?.gender === "female"
+            return true 
+        })
 
         useEffect(() => {
             getDoctProfileAll()
@@ -150,7 +157,6 @@ const cardInfo = [
             
           }, []);
 
-          console.log('ini terupdate', docProf)
         
         
         return (
@@ -161,7 +167,8 @@ const cardInfo = [
                             <img
                                 src={profile?.avatar ? `${API_BASE_URL}${profile.avatar}` : users}
                                 alt="profile"
-                                className="w-14 md:w-[70px] md:h-[70px] rounded-full shadow-md h-14"
+                                onClick={() => alert('click berhasil')}
+                                className="w-14 md:w-[70px] md:h-[70px] cursor-pointer rounded-md shadow-md h-14"
                                 />
                             <span>
                                 <p className='text-xs md:text-sm  text-gray-500' >Hi,Welcome Back,</p>
@@ -175,7 +182,7 @@ const cardInfo = [
                         </div>
                     </div>
                 </div>
-                <div className='w-full h-full space-y-10 p-5' >
+                <div className='w-full  h-full space-y-10 p-5' > 
                 <div className='flex items-center md:hidden justify-end ' >
                     <div className='flex items-center xl:w-[20%] w-full px-3 py-4 xl:py-2 gap-1 rounded-full shadow-md bg-white' >
                         <CiSearch className='w-10 xl:w-5' />
@@ -186,16 +193,16 @@ const cardInfo = [
                 <div ref={scrollRef} className='w-full overflow-hidden flex sm:flex-col xl:grid xl:grid-cols-2 md:gap-5'>
                         {
                             cardInfo.map(val => (
-                                <div className={`w-full flex-none bg-gradient-to-r  ${val.gradient} flex relative p-5 gap-5 h-[170px]  overflow-hidden rounded-md`}>
-                                    <span className=' space-y-4'>
-                                        <h1 className=' text-base text-white font-bold'>{val.title}</h1>
-                                        <p className='text-sm text-white'>{val.description}</p>
+                                <div className={`w-full bg-white/10 backdrop-blur-md border border-white/30 flex-none bg-gradient-to-r ${val.gradient} flex relative p-5 gap-5 h-[170px]  overflow-hidden rounded-md`}>
+                                    <span className='w-[70%] space-y-4'>
+                                        <h1 className=' text-base md:text-xl text-white font-bold'>{val.title}</h1>
+                                        <p className='text-sm md:text-base text-white'>{val.description}</p>
                                     </span>
-                                    {/* <img 
+                                    <img 
                                         src={val.image} 
                                         alt="doc1" 
-                                        className={`absolute h-full object-cover -bottom-2.5 object-bottom flex-shrink-0 ${val.title === 'Self-Development Programs' && val.title === 'Emotional Wellness'  ? '-bottom-7 -right-4 w-[160px]' : '-right-2'}`} 
-                                    /> */}
+                                        className={`absolute h-full object-cover -bottom-4 object-bottom flex-shrink-0 ${ val.title === 'Self-Development Programs'  ? '-bottom-8 -right-4 w-[160px]' : '-right-2'}`} 
+                                    />
                                 </div>
                             ))
                         }
@@ -221,7 +228,7 @@ const cardInfo = [
                         <div className='grid grid-cols-3 overflow-hidden xl:flex gap-5 pb-3' >
                             {
                                 teksBtn.map(val => (
-                                    <button onClick={() => setActive(val.teks)} className={`rounded-md cursor-pointer xl:flex-1  py-2 xl:w-[10%] flex-none text-white text-lg ${active === val.teks ? 'bg-teal-600' : 'bg-teal-500'}`} >{val.teks}</button>
+                                    <button onClick={() =>{ setActive(val.teks); setDataDoc(val.teks)}} className={`rounded-md cursor-pointer xl:flex-1  py-2 xl:w-[10%] flex-none text-white text-lg ${active === val.teks ? 'bg-teal-600' : 'bg-teal-500'}`} >{val.teks}</button>
                                 ))
                             }
                         </div>
@@ -237,32 +244,32 @@ const cardInfo = [
                             <input type="search" name="" id="" placeholder='search doctor' className='w-full text-sm outline-none' />
                         </div>
                     </div>
-                    <div className='grid grid-cols-1 md:grid-cols-3 gap-8 md:mt-10 w-full ' >
+                    <div className='grid grid-cols-1 xl:grid-cols-4 md:grid-cols-3 gap-8 md:mt-10 w-full ' >
                         {
-                            docProf?.map(val => (
+                            filterDataDoctor?.map(val => (
                                 <div className=' shadow-md border border-gray-200 mx-auto relative rounded-lg w-[95%]  bg-white flex flex-col pb-2 items-center ' >
-                                        <div className='flex-shrink-0 w-full rounded-t-lg h-[250px]'>
-                                            <img src={val.profile?.avatar ? `${API_BASE_URL}${val?.profile?.avatar}` : doc }alt="doctor" className=' h-full rounded-t-lg object-top w-full rounded-md object-cover ' />
+                                    <div className='flex-shrink-0 w-full rounded-t-lg h-[250px]'>
+                                        <img src={val?.avatar ? `${API_BASE_URL}${val?.avatar}` : doc }alt="doctor" className=' h-full rounded-t-lg object-top w-full rounded-md object-cover ' />
+                                    </div>
+                                    <div className='flex-1  w-full p-3'>
+                                        <div className='flex items-center justify-between'>
+                                            <h1 className='text-xl font-semibold'>Dr. {val.name}</h1>
+                                            <FaRegHeart size={20} className='text-red-500 absolute top-3 right-3 cursor-pointer' /> 
                                         </div>
-                                        <div className='flex-1  w-full p-3'>
-                                            <div className='flex items-center justify-between'>
-                                                <h1 className='text-xl font-semibold'>Dr. {val.name}</h1>
-                                                <FaRegHeart size={20} className='text-red-500 absolute top-3 right-3 cursor-pointer' /> 
-                                            </div>
-                                            <p className='text-xs md:text-  text-gray-500 xl mb-3'>
-                                            {val?.profile?.bio ? <p>{val.profile.bio}</p> : <p>Mental Health</p>}
+                                        <p className='text-xs md:text-  text-gray-500 xl mb-3'>
+                                        {val?.bio ? <p>{val.bio}</p> : <p>Mental Health</p>}
+                                        </p>
+                                        <p className='text-sm text-gray-500' >Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque, fuga.</p>
+                                        <div className='flex items-center w-full mt-5 justify-between gap-5 '>
+                                            <p className='flex items-center md:text-lg text-green-700 ' >
+                                                $12.00
                                             </p>
-                                            <p className='text-sm text-gray-500' >Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque, fuga.</p>
-                                            <div className='flex items-center w-full mt-5 justify-between gap-5 '>
-                                                <p className='flex items-center md:text-lg text-green-700 ' >
-                                                    $12.00
-                                                </p>
-                                                <Link to={`/appointment`} state={{ doctorId : val.id, dataDoc : docProf}} className='px-10 p-2 md:p-1.5 text-center text-sm text-white rounded-md shadow-sm bg-[#0B8FAC]  transition'>
-                                                    Book Now
-                                                </Link>
-                                            </div>
+                                            <Link to={`/appointment`} state={{ doctorId : val.id, dataDoc : docProf}} className='px-10 py-2 md:px-7 text-center text-sm text-white rounded-md shadow-sm bg-[#0B8FAC]  transition'>
+                                                Book Now
+                                            </Link>
                                         </div>
                                     </div>
+                                </div>
                             ))
                         }
                     </div>

@@ -70,16 +70,15 @@ const DetailProfile = () => {
 
   return (
     <div className="w-full min-h-[100dvh] xl:h-full bg-gray-50 py-6 px-4 flex justify-center items-start">
-      <div className="w-full max-w-xl bg-white md:p-6 md:fixed top-1/2 left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 rounded-2xl md:border border-gray-200 md:shadow-md">
+      <div className="w-full  bg-white md:p-6 max-w-4xl rounded-2xl md:border border-gray-200 md:shadow-md">
         <TopTitle title="Detail Profile" />
         <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-6">
-          {/* Avatar Section */}
           <div className="flex justify-center">
-            <div className="relative">
+            <div className="relative ">
               <img
                 src={preview}
                 alt="profile"
-                className="w-32 h-32 object-cover rounded-full border-4 border-white shadow cursor-pointer"
+                className="w-32 h-32 md:w-44 md:h-44 object-cover rounded-full border-4 border-white shadow cursor-pointer"
                 onClick={() => fileInputRef.current?.click()}
                 onError={(e) => {
                   e.target.src = doc
@@ -104,17 +103,31 @@ const DetailProfile = () => {
             />
           </div>
 
-          {/* Name Field */}
           <div className="space-y-5">
-            <div className="flex flex-col gap-1">
-              <label htmlFor="name" className="text-sm font-semibold">Name:</label>
-              <input
-                {...register('name', { required: 'Name wajib diisi' })}
-                type="text"
-                placeholder="Name"
-                className="rounded-md py-2.5 px-3 border focus:ring-2 focus:ring-blue-500 outline-none"
-              />
-              {errors.name && <span className="text-sm text-red-500">{errors.name.message}</span>}
+            
+            <div className='flex items-center gap-3 ' >
+              <div className="flex flex-1 flex-col gap-1">
+                <label htmlFor="name" className="text-sm font-semibold">Name:</label>
+                <input
+                  {...register('name', { required: 'Name wajib diisi' })}
+                  type="text"
+                  placeholder="Name"
+                  className="rounded-md py-2.5 px-3 border focus:ring-2 focus:ring-blue-500 outline-none"
+                />
+                {errors.name && <span className="text-sm text-red-500">{errors.name.message}</span>}
+              </div>
+
+              <div className="flex flex-1 flex-col gap-1">
+                <label htmlFor="gender" className="text-sm font-semibold">Gender:</label>
+                <select
+                  {...register('gender', { required: 'Gender wajib diisi' })}
+                  className="rounded-md py-2.5 px-2 border focus:ring-2 focus:ring-blue-500 outline-none"
+                >
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+                {errors.gender && <span className="text-sm text-red-500">{errors.gender.message}</span>}
+              </div>
             </div>
 
             {/* Email Field */}
@@ -128,19 +141,6 @@ const DetailProfile = () => {
                 className="rounded-md py-2.5 px-3 border bg-gray-100 text-gray-500 cursor-not-allowed"
               />
               {errors.email && <span className="text-sm text-red-500">{errors.email.message}</span>}
-            </div>
-
-            {/* Gender Field */}
-            <div className="flex flex-col gap-1">
-              <label htmlFor="gender" className="text-sm font-semibold">Gender:</label>
-              <select
-                {...register('gender', { required: 'Gender wajib diisi' })}
-                className="rounded-md py-2.5 px-3 border focus:ring-2 focus:ring-blue-500 outline-none"
-              >
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-              </select>
-              {errors.gender && <span className="text-sm text-red-500">{errors.gender.message}</span>}
             </div>
 
             {/* About Field */}
@@ -176,7 +176,6 @@ const DetailProfile = () => {
             Save
           </button>
         </form>
-        <div className='h-20' ></div>
       </div>
     </div>
   )

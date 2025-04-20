@@ -83,7 +83,7 @@ const Notification = () => {
     }, [dispatch]);
 
     return (
-        <div className="w-full relative h-screen scrollable-container space-y-5 p-5 bg-gray-50">
+        <div className="w-full relative h-full scrollable-container space-y-5 p-5 bg-gray-50">
             <TopTitle title="Notification" />
             <div className="w-full h-[85%] overflow-y-auto scrollable-container space-y-5">
                 <div className="flex items-center justify-between">
