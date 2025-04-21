@@ -28,6 +28,8 @@ const Appointment = () => {
     }
   })
 
+  console.log(doctorData)
+
 
   const handleSelectedDate = async (data) => {
     setSelectedDate(data)
@@ -51,9 +53,9 @@ const Appointment = () => {
          <div className="flex  md:flex-row items-center gap-4 mt-8 mb-6 p-4 rounded-xl transition-all hover:bg-gray-100">
           <div className="relative md:h-28">
             <img
-              src={doctorData.profile?.avatar ? `${API_BASE_URL}${doctorData?.profile?.avatar}` : doc}
+              src={doctorData?.avatar ? `${API_BASE_URL}${doctorData?.avatar}` : doc}
               alt="doctor"
-              className="w-32 h-24 md:w-28 md:h-28 object-cover border-4 rounded-md border-white shadow-md "
+              className="w-32 h-24 md:w-28 md:h-28 object-cover object-top border-4 rounded-md border-white shadow-md "
             />
           </div>
           <div className="flex-1 flex flex-col justify-between md:h-28">
@@ -73,9 +75,7 @@ const Appointment = () => {
         <div className="mb-6 p-5 bg-white rounded-xl shadow-md border border-gray-200">
           <h3 className="text-lg xl:text-xl font-semibold mb-2">About Me</h3>
           <p className="text-gray-700 text-sm xl:text-base leading-relaxed">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Quisquam voluptates temporibus explicabo architecto enim
-            repellendus minus natus. Eius, autem!
+            {doctorData.about}
           </p>
         </div>
 

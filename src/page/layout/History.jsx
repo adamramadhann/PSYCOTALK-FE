@@ -5,10 +5,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setNotification } from '../../store/notificationSlice';
 import { bookings, deletedBok } from '../../hook/booking';
 import { deletedBoks, setBook } from '../../store/bokingSlice';
+import { CiMenuKebab } from "react-icons/ci";
 
 const History = () => {
-  const dispatch = useDispatch()
-  const [filter, setFilter] = useState('all')
+  const dispatch = useDispatch();
+  const [filter, setFilter] = useState('all');
+  const API_BASE_URL = "http://localhost:8000";
 
   const { data: Bookings = [], loading, error } = useSelector((state) => state.booking);
 
@@ -16,18 +18,31 @@ const History = () => {
     const status = val.status;
     let messageStatus;
 
-    switch(status) {
-      case 'pending': messageStatus = 'Your booking is pending approval'; break;
-      case 'approved': messageStatus = 'Your booking has been approved'; break;
-      case 'rejected': messageStatus = 'Your booking has been rejected'; break;
-      default: messageStatus = val.message || 'No message';
+    switch (status) {
+      case 'pending':
+        messageStatus = 'Your booking request has been successfully submitted and is currently awaiting confirmation from the doctor.';
+        break;
+      case 'approved':
+        messageStatus = 'Your booking has been approved. Please be prepared to attend your consultation at the scheduled time.';
+        break;
+      case 'rejected':
+        messageStatus = 'We regret to inform you that your booking request has been rejected. You may try submitting another request or choosing a different time slot that is more suitable.';
+        break;
+      default:
+        messageStatus = val.message || 'There is currently no additional information available regarding your booking.';
     }
+    
 
     return {
       id: val.id,
       name: val.doctor?.name || 'Unknown Doctor',
       status: val.status,
       message: messageStatus,
+      avatar : val?.doctor?.avatar,
+      about : val.doctor.about,
+      gender : val.doctor.gender,
+      bio : val.doctor.bio,
+      categories : val.doctor.categories,
       date: val.dateTime ? new Date(val.dateTime).toLocaleDateString("id-ID", {
         day: '2-digit',
         month: '2-digit',
@@ -35,6 +50,11 @@ const History = () => {
       }) : 'Tanggal tidak tersedia'
     }
   })
+
+  console.log("ini data history", dataBook);
+  
+
+  
 
   const filterData = filter === 'all'
     ? dataBook
@@ -70,6 +90,7 @@ const History = () => {
       try {
         const datas = await bookings()
         dispatch(setBook(datas || []))
+        console.log("data boking history", datas)
       } catch (error) {
         console.error(error.message)
       }
@@ -100,24 +121,27 @@ const History = () => {
           </div>
 
           {/* Card List */}
-          <h1 className='font-semibold text-lg mb-5 mt-10' >{filterData.length ? "Status Booking" : "Boking notfound"}</h1>
-          <div className='grid w-full xl:grid-cols-4 gap-10 '>
+          <h1 className='font-semibold md:text-xl text-lg mb-5 mt-10' >{filterData.length ? "History Booking" : "Boking notfound"}</h1>
+          <div className='grid w-full xl:grid-cols-3 md:grid-cols-2 gap-10 '>
             {filterData.map((val, index) => (
-              <div key={index} className="w-full relative rounded-xl flex flex-col xl:max-w-2xl bg-white shadow-md border border-gray-200 py-6 px-4 justify-between transition-all duration-200 hover:shadow-lg">
-                <div className="flex items-center gap-5">
-                  <div className='w-16 h-16 rounded-full shadow-md flex items-center justify-center' >
-                    <img src={doc} alt="doc" className="w-14 h-14 rounded-full" />
+              <div
+              className="w-full relative rounded-xl flex flex-col xl:max-w-2xl bg-white shadow-md border border-gray-200 py-5 px-4 justify-between transition-all duration-300 ease-in-out hover:shadow-xl  "
+            >            
+                <div className="flex items-center gap-3">
+                  <div className='w-20 h-20 rounded-md shadow-md flex items-center justify-center' >
+                    <img src={val?.avatar ? `${API_BASE_URL}${val?.avatar}` : doc} alt="doc" className="w-14 h-full object-cover rounded-full" />
                   </div>
-                  <div>
-                    <h1 className="text-lg font-semibold text-gray-800">Dr.{val.name}</h1>
-                    <div className="flex items-end gap-3 text-xs text-gray-500">
-                      <span>{val.status}</span>
-                      <span className='text-[10px]' >{val.date}</span>
+                  <div className='w-full h-20' >
+                    <h1 className="text-xl font-semibold text-teal-800">Dr. {val.name}</h1>
+                    <p className='text-sm text-gray-500' >{val.categories}</p>
+                    <div className="flex items-center mt-3 gap-2 text-sm text-gray-500">
+                      <span className='' >Date Booking :</span>
+                      <span className='' > {val.date}</span>
                     </div>
                   </div>
                 </div>
-                <p className="text-sm text-gray-700 mt-4">{val.message}</p>
-                <button onClick={() => handleDelete(val.id)} className="text-red-500 px-4 py-1 text-xl font-bold absolute top-2 right-2">×</button>
+                <p className="text-base text-gray-600 mt-6">{val.message}</p>
+                <button className=" hover:text-red-500 text-gray-500 w-7 h-7 text-center rounded-full text-base transition-all duration-100 active:scale-75   shadow-[0_5px_8px_rgba(0,0,0,0.2)] active:shadow-neutral-50 flex items-center justify-center font-bold absolute top-2 right-2">x</button>
               </div>
             ))}
           </div>

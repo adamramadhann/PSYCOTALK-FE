@@ -8,6 +8,8 @@ import { useQuery } from "@tanstack/react-query";
 import { CiSearch } from "react-icons/ci";
 import { FaRegStar } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
+import { LuSquareMenu } from "react-icons/lu";
+import { CgCloseR } from "react-icons/cg";
 
     const cardInfo = [
         {
@@ -100,6 +102,7 @@ import { FaRegHeart } from "react-icons/fa";
         const scrollRef = useRef(null);
         const [dataDoc, setDataDoc] = useState("All")
         const [activeIndex, setActiveIndex] = useState(0);
+        const [isOpen, setIsOpen] = useState(false)
         const { data : profile, isLoading, isError } = useQuery({
             queryKey: ["profile"],
             queryFn: getProfileAuth,
@@ -161,7 +164,7 @@ import { FaRegHeart } from "react-icons/fa";
         
         return (
             <div className='w-full h-full  space-y-3 ' >
-                <div className=' w-full z-50 bg-white px-5 py-3 md:shadow-md border border-gray-300 rounded-b-3xl flex ' >
+                <div className=' w-full fixed top-0 z-50 bg-white px-5 py-3 md:shadow-md rounded-md border-gray-300 border rounded-b-3xl flex ' >
                     <div className=' w-full flex justify-between relative items-center' >
                         <div className='flex items-center gap-2' > 
                             <img
@@ -177,7 +180,15 @@ import { FaRegHeart } from "react-icons/fa";
                         </div>  
                         <h1 className='absolute hidden xl:block  xl:text-xl text-gray-600 top-1/2 left-1/2 -translate-1/2' >Welcome the My app, <b>{profile?.name || 'friend'}</b></h1>
                         <div className='relative' >
-                            <Link to={'/notif'} ><IoMdNotificationsOutline size={35}/></Link>
+                            <button onClick={() => setIsOpen(val => !val)} className={`text-2xl ${isOpen ? 'transition-all duration-1000' : 'transition-all duration-1000'}`} >
+                                {
+                                    isOpen ? <CgCloseR/> : <LuSquareMenu/>
+                                }
+                            </button> 
+                                <div className={`absolute transition-all duration-300 ease-in-out text-xs -bottom-[70px] z-50 grid -left-20 bg-white rounded-md w-[100px] px-2 ${isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95  pointer-events-none"}`} >
+                                    <Link className='hover:bg-blue-400 w-ful hover:rounded-md border-b text-x py-2 text-center hover:text-white' to={'/notif'} >Notification</Link>
+                                    <Link to={'/profile/profDetail'} className='py-2 hover:bg-blue-400 w-ful hover:rounded-md' >Profile</Link>
+                                </div> 
                             { notification.length ? ( <span className='w-3 h-3 rounded-full bg-red-500 block absolute top-1 right-1' ></span> ) : null }
                         </div>
                     </div>
@@ -201,7 +212,7 @@ import { FaRegHeart } from "react-icons/fa";
                                     <img 
                                         src={val.image} 
                                         alt="doc1" 
-                                        className={`absolute h-full object-cover -bottom-4 object-bottom flex-shrink-0 ${ val.title === 'Self-Development Programs'  ? '-bottom-8 -right-4 w-[160px]' : '-right-2'}`} 
+                                        className={`absolute h-full object-cover -bottom-4 object-bottom flex-shrink-0 ${ val.title === 'Self-Development Programs'  ? '-bottom-8 -right-4 w-[160px]' : '-right-5'}`} 
                                     />
                                 </div>
                             ))
@@ -247,19 +258,19 @@ import { FaRegHeart } from "react-icons/fa";
                     <div className='grid grid-cols-1 xl:grid-cols-4 md:grid-cols-3 gap-8 md:mt-10 w-full ' >
                         {
                             filterDataDoctor?.map(val => (
-                                <div className=' shadow-md border border-gray-200 mx-auto relative rounded-lg w-[95%]  bg-white flex flex-col pb-2 items-center ' >
-                                    <div className='flex-shrink-0 w-full rounded-t-lg h-[250px]'>
+                                <div className=' shadow-md border-gray-200 mx-auto relative rounded-lg w-[95%]  bg-white flex flex-col pb-2 items-center ' >
+                                    <div className='flex-shrink-0 w-full rounded-t-lg shadow-sm h-[250px]'>
                                         <img src={val?.avatar ? `${API_BASE_URL}${val?.avatar}` : doc }alt="doctor" className=' h-full rounded-t-lg object-top w-full rounded-md object-cover ' />
                                     </div>
-                                    <div className='flex-1  w-full p-3'>
+                                    <div className='flex-1 w-full p-3'>
                                         <div className='flex items-center justify-between'>
                                             <h1 className='text-xl font-semibold'>Dr. {val.name}</h1>
-                                            <FaRegHeart size={20} className='text-red-500 absolute top-3 right-3 cursor-pointer' /> 
+                                            {/* <FaRegHeart size={20} className='text-red-500 absolute top-3 right-3 cursor-pointer' />  */}
                                         </div>
-                                        <p className='text-xs md:text-  text-gray-500 xl mb-3'>
-                                        {val?.bio ? <p>{val.bio}</p> : <p>Mental Health</p>}
+                                        <p className='text-sm md:text-  text-gray-500 xl mb-3'>
+                                        {val?.categories ? <p>{val.categories}</p> : <p>categories notfound</p>}
                                         </p>
-                                        <p className='text-sm text-gray-500' >Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque, fuga.</p>
+                                        <p className='text-base text-gray-500' >{val?.bio}</p>
                                         <div className='flex items-center w-full mt-5 justify-between gap-5 '>
                                             <p className='flex items-center md:text-lg text-green-700 ' >
                                                 $12.00

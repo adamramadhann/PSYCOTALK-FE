@@ -78,7 +78,7 @@ const DetailProfile = () => {
               <img
                 src={preview}
                 alt="profile"
-                className="w-32 h-32 md:w-44 md:h-44 object-cover rounded-full border-4 border-white shadow cursor-pointer"
+                className="w-32 h-32 md:w-44 md:h-44 object-cover rounded-md border-4 border-white shadow cursor-pointer"
                 onClick={() => fileInputRef.current?.click()}
                 onError={(e) => {
                   e.target.src = doc
