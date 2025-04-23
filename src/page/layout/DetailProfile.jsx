@@ -1,9 +1,23 @@
-import React, { useEffect, useRef, useState } from 'react'
+ import React, { useEffect, useRef, useState } from 'react'
 import { doc } from '../../assets/importImage'
 import TopTitle from '../../components/TopTitle'
 import { useMutation } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { editedProfile, getProfileAuth } from '../../hook/fetchApi'
+
+// efect input peer
+{/* <div className="flex flex-1 flex-col gap-1">
+  <label htmlFor="name" className="text-sm border-b relative font-semibold">
+  <input
+    {...register('name', { required: 'Name wajib diisi' })}
+    type="text"
+    placeholder="Name"
+    className="rounded-md peer outline-0 w-full py-2.5 border"
+  />
+  <span className='w-0 h-[2px] bg-gray-400 absolute left-1/2 -translate-x-1/2 bottom-0 peer-focus:w-full peer-focus:bg-teal-500 transition-all duration-300' ></span>
+  </label>
+  {errors.name && <span className="text-sm text-red-500">{errors.name.message}</span>}
+</div> */}
 
 const DetailProfile = () => {
   const API_BASE_URL = "http://localhost:8000"

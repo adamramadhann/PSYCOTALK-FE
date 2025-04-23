@@ -8,6 +8,7 @@ import docWoman2 from './image/container/Pediatrician-cuate.png'
 import image from './image/image.png'
 import users from './image/user.png'
 import doc from './image/doc.png'
+import bgImages from './image/bgImage.png'
 
 
 export {
@@ -20,5 +21,6 @@ export {
     docWoman2,
     image,
     users,
-    doc
+    doc,
+    bgImages
 }

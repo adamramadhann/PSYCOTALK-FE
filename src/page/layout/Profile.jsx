@@ -40,7 +40,7 @@ const Profile = () => {
   ];
 
   return (
-    <div className="w-full min-h-[100dvh] xl:h-full bg-gray-50 py-6 px-4 flex justify-center items-start">
+    <div className="w-full min-h-[100dvh] xl:h-full bg-gray-50 px-4 flex justify-center items-start">
       <div className="w-full max-w-xl bg-white md:p-6 md:fixed top-1/2 left-1/2 md:-translate-1/2 rounded-2xl md:border border-gray-200 md:shadow-md">
         <TopTitle title="Profile" />
 
@@ -86,7 +86,7 @@ const Profile = () => {
         {/* Logout */}
         <button
           onClick={handleLogOut}
-          className="mt-8 w-full bg-red-50 text-red-600 py-2.5 rounded-md font-medium hover:bg-red-100 transition-all"
+          className="mt-8 w-full bg-red-50 text-red-600 py-2.5 rounded-md font-medium cursor-pointer transition-all"
         >
           Log Out
         </button>
