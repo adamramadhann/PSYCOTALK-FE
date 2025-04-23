@@ -40,19 +40,20 @@ const App = () => {
           <Route path="/forgotPassword" element={<ForgotPassword />} />
         </>
       ) : (
-        <Route path="/" element={<Layout />} >
-          <Route index element={<HomeScreen/>} />
-          <Route path='/profile' element={<Profile/>} />
-          <Route path='/notif' element={<Notofication/>} />
-          <Route path='/post' element={<Postingan/>} />
-          <Route path='/appointment' element={<Appointment/>} />
-          <Route path='/history' element={<History/>} />
+        <>
+          <Route path="/" element={<Layout />} >
+            <Route index element={<HomeScreen/>} />
+            <Route path='/profile' element={<Profile/>} />
+            <Route path='/notif' element={<Notofication/>} />
+            <Route path='/post' element={<Postingan/>} />
+            <Route path='/appointment' element={<Appointment/>} />
+            <Route path='/history' element={<History/>} />
+          </Route>
           <Route path='/profile/profDetail' element={<DetailProfile/>} />
-        </Route>
+        </>
       )}
     </Routes>
   )
-
 }
 
 export default App

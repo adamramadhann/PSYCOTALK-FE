@@ -9,3 +9,7 @@
   .scrollable-container::-webkit-scrollbar {
     display: none;                /* Chrome, Safari, Opera */
   }
+
+  .bg-image {
+    background-image: url('/src/assets/image/bgImage.png');
+  }

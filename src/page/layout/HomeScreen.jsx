@@ -137,14 +137,13 @@ import { CgCloseR } from "react-icons/cg";
         ]
 
         const filterDataDoctor = docProf?.filter((val) => {
-            if(dataDoc === 'ALl') return true
+            if(dataDoc === 'All') return true
             if(dataDoc === 'male') return val?.gender === "male" 
             if(dataDoc === 'female') return val?.gender === "female"
             return true 
         })
 
         useEffect(() => {
-            getDoctProfileAll()
             const handleScroll = () => {
               const scrollLeft = scrollRef.current.scrollLeft;
               const width = scrollRef.current.offsetWidth;
@@ -163,16 +162,18 @@ import { CgCloseR } from "react-icons/cg";
         
         
         return (
-            <div className='w-full h-full  space-y-3 ' >
-                <div className=' w-full fixed top-0 z-50 bg-white px-5 py-3 md:shadow-md rounded-md border-gray-300 border rounded-b-3xl flex ' >
+            <div className='w-full h-[100dvh]  space-y-3 ' >    
+                {/* Header */}
+                <div className=' w-full z-50 bg-white px-5 py-3 md:shadow-md rounded-md border-gray-300 border rounded-b-3xl flex ' >
                     <div className=' w-full flex justify-between relative items-center' >
                         <div className='flex items-center gap-2' > 
-                            <img
-                                src={profile?.avatar ? `${API_BASE_URL}${profile.avatar}` : users}
-                                alt="profile"
-                                onClick={() => alert('click berhasil')}
-                                className="w-14 md:w-[70px] md:h-[70px] cursor-pointer rounded-md shadow-md h-14"
+                            <Link to={'/profile/profDetail'} >
+                                <img
+                                    src={profile?.avatar ? `${API_BASE_URL}${profile.avatar}` : users}
+                                    alt="profile"
+                                    className="w-14 md:w-[70px] md:h-[70px] object-cover cursor-pointer rounded-full shadow-md h-14"
                                 />
+                            </Link>
                             <span>
                                 <p className='text-xs md:text-sm  text-gray-500' >Hi,Welcome Back,</p>
                                 <h1 className='text-base md:text-lg  text-gray-600 font-semibold' >{profile?.name || 'Name'}</h1>
@@ -180,7 +181,7 @@ import { CgCloseR } from "react-icons/cg";
                         </div>  
                         <h1 className='absolute hidden xl:block  xl:text-xl text-gray-600 top-1/2 left-1/2 -translate-1/2' >Welcome the My app, <b>{profile?.name || 'friend'}</b></h1>
                         <div className='relative' >
-                            <button onClick={() => setIsOpen(val => !val)} className={`text-2xl ${isOpen ? 'transition-all duration-1000' : 'transition-all duration-1000'}`} >
+                            {/* <button onClick={() => setIsOpen(val => !val)} className={`text-2xl ${isOpen ? 'transition-all duration-1000' : 'transition-all duration-1000'}`} >
                                 {
                                     isOpen ? <CgCloseR/> : <LuSquareMenu/>
                                 }
@@ -188,18 +189,21 @@ import { CgCloseR } from "react-icons/cg";
                                 <div className={`absolute transition-all duration-300 ease-in-out text-xs -bottom-[70px] z-50 grid -left-20 bg-white rounded-md w-[100px] px-2 ${isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95  pointer-events-none"}`} >
                                     <Link className='hover:bg-blue-400 w-ful hover:rounded-md border-b text-x py-2 text-center hover:text-white' to={'/notif'} >Notification</Link>
                                     <Link to={'/profile/profDetail'} className='py-2 hover:bg-blue-400 w-ful hover:rounded-md' >Profile</Link>
-                                </div> 
+                                </div>  */}
+                                <Link className='hover:bg-blue-400 w-ful hover:rounded-md border-b text-x py-2 text-cente' to={'/notif'} ><IoMdNotificationsOutline size={30} /></Link>
                             { notification.length ? ( <span className='w-3 h-3 rounded-full bg-red-500 block absolute top-1 right-1' ></span> ) : null }
                         </div>
                     </div>
                 </div>
                 <div className='w-full  h-full space-y-10 p-5' > 
+                {/* serch */}
                 <div className='flex items-center md:hidden justify-end ' >
                     <div className='flex items-center xl:w-[20%] w-full px-3 py-4 xl:py-2 gap-1 rounded-full shadow-md bg-white' >
                         <CiSearch className='w-10 xl:w-5' />
                         <input type="search" name="" id="" placeholder='search doctor' className='w-full text-base outline-none' />
                     </div>
                 </div>
+                {/* card info */}
                 <div className='flex flex-col gap-3' >
                 <div ref={scrollRef} className='w-full overflow-hidden flex sm:flex-col xl:grid xl:grid-cols-2 md:gap-5'>
                         {
@@ -230,63 +234,91 @@ import { CgCloseR } from "react-icons/cg";
                     }
                 </div>
                 </div>
+                {/* section Articel */}
+                <div className="space-y-6 ">
+                    <div className="flex items-center justify-between">
+                        <h1 className="text-2xl font-bold text-gray-800">Mental Health Articles</h1>
+                    </div>
+                   <div className='md:grid-cols-3 grid w-full gap-5' >
+                    {mentalHealthArticles.map((val) => (
+                            <div
+                            key={val.id}
+                            className="rounded-2xl shadow-md overflow-hidden bg-white transition hover:shadow-lg"
+                            >
+                            <img
+                                src={val.image}
+                                alt={val.title}
+                                className="w-full h-[200px] object-cover"
+                            />
+                            <div className="p-4 space-y-2">
+                                <h2 className="text-xl font-semibold text-gray-900">{val.title}</h2>
+                                <p className="text-gray-600 text-sm leading-relaxed line-clamp-3">
+                                {val.summary}
+                                </p>
+                                {/* Optional: Tambahkan tanggal atau button read more */}
+                                <div className="text-right">
+                                <Link to={val.link} className="text-blue-600 text-sm hover:underline">Read more</Link>
+                                </div>
+                            </div>
+                            </div>
+                        ))}
+                   </div>
+                </div>
+                {/* doctor */}
                 <div className='w-full' >
-                <div className='space-y-8' >
-                    <div className='w-full mt-5 space-y-5' > 
-                    <span className='flex items-center md:hidden xl:text-2xl text-lg font-semibold justify-between ' >
-                        <h1  className='text-xl' >Gender</h1>
-                    </span>
-                        <div className='grid grid-cols-3 overflow-hidden xl:flex gap-5 pb-3' >
+                    <div className='space-y-8' >
+                        <div className='w-full mt-5 space-y-5' >  
+                        <span className='flex items-center xl:text-2xl text-lg font-semibold justify-between ' >
+                            <h1 className='text-xl' >Doctors</h1>
+                        </span>
+                            <div className='grid grid-cols-3 overflow-hidden xl:flex gap-5 pb-3' >
+                                {
+                                    teksBtn.map(val => (
+                                        <button onClick={() =>{ setActive(val.teks); setDataDoc(val.teks)}} className={`rounded-md cursor-pointer xl:flex-1  py-2 xl:w-[10%] flex-none text-white text-lg ${active === val.teks ? 'bg-teal-600' : 'bg-teal-500'}`} >{val.teks}</button>
+                                    ))
+                                }
+                            </div>
+                        </div>
+                        {/* doctor */}
+                        <div className='w-full space-y-5' >
+                        <div className='md:flex items-center hidden  justify-end ' >
+                            <div className='flex items-center md:w-[20%] w-full px-3 py-2 xl:py-2 gap-1 rounded-full border' >
+                                <CiSearch className='w-4 xl:w-5' />
+                                <input type="search" name="" id="" placeholder='search doctor' className='w-full text-sm outline-none' />
+                            </div>
+                        </div>
+                        <div className='grid grid-cols-1 xl:grid-cols-4 md:grid-cols-3 gap-8 md:mt-10 w-full ' >
                             {
-                                teksBtn.map(val => (
-                                    <button onClick={() =>{ setActive(val.teks); setDataDoc(val.teks)}} className={`rounded-md cursor-pointer xl:flex-1  py-2 xl:w-[10%] flex-none text-white text-lg ${active === val.teks ? 'bg-teal-600' : 'bg-teal-500'}`} >{val.teks}</button>
+                                filterDataDoctor?.map(val => (
+                                    <div className=' shadow-md border-gray-200 mx-auto relative rounded-lg w-[95%]  bg-white flex flex-col pb-2 items-center ' >
+                                        <div className='flex-shrink-0 w-full rounded-t-lg shadow-sm h-[250px]'>
+                                            <img src={val?.avatar ? `${API_BASE_URL}${val?.avatar}` : doc }alt="doctor" className=' h-full rounded-t-lg object-top w-full rounded-md object-cover ' />
+                                        </div>
+                                        <div className='flex-1 w-full p-3'>
+                                            <div className='flex items-center justify-between'>
+                                                <h1 className='text-xl font-semibold'>Dr. {val.name}</h1>
+                                                {/* <FaRegHeart size={20} className='text-red-500 absolute top-3 right-3 cursor-pointer' />  */}
+                                            </div>
+                                            <p className='text-sm md:text-  text-gray-500 xl mb-3'>
+                                            {val?.categories ? <p>{val.categories}</p> : <p>categories notfound</p>}
+                                            </p>
+                                            <p className='text-base text-gray-500' >{val?.bio}</p>
+                                            <div className='flex items-center w-full mt-5 justify-between gap-5 '>
+                                                <p className='flex items-center md:text-lg text-green-700 ' >
+                                                    $12.00
+                                                </p>
+                                                <Link to={`/appointment`} state={{ doctorId : val.id, dataDoc : docProf}} className='px-10 py-2 md:px-7 text-center text-sm text-white rounded-md shadow-sm bg-[#0B8FAC]  transition'>
+                                                    Book Now
+                                                </Link>
+                                            </div>
+                                        </div>
+                                    </div>
                                 ))
                             }
                         </div>
-                    </div>
-                    {/* doctor */}
-                    <div className='w-full space-y-5' >
-                    <span className='flex items-center xl:text-2xl text-lg font-semibold justify-between ' >
-                        <h1 className='text-xl' >All Doctors</h1>
-                    </span>
-                    <div className='md:flex items-center hidden  justify-end ' >
-                        <div className='flex items-center xl:w-[20%] w-full px-3 py-2 xl:py-2 gap-1 rounded-full border' >
-                            <CiSearch className='w-4 xl:w-5' />
-                            <input type="search" name="" id="" placeholder='search doctor' className='w-full text-sm outline-none' />
                         </div>
                     </div>
-                    <div className='grid grid-cols-1 xl:grid-cols-4 md:grid-cols-3 gap-8 md:mt-10 w-full ' >
-                        {
-                            filterDataDoctor?.map(val => (
-                                <div className=' shadow-md border-gray-200 mx-auto relative rounded-lg w-[95%]  bg-white flex flex-col pb-2 items-center ' >
-                                    <div className='flex-shrink-0 w-full rounded-t-lg shadow-sm h-[250px]'>
-                                        <img src={val?.avatar ? `${API_BASE_URL}${val?.avatar}` : doc }alt="doctor" className=' h-full rounded-t-lg object-top w-full rounded-md object-cover ' />
-                                    </div>
-                                    <div className='flex-1 w-full p-3'>
-                                        <div className='flex items-center justify-between'>
-                                            <h1 className='text-xl font-semibold'>Dr. {val.name}</h1>
-                                            {/* <FaRegHeart size={20} className='text-red-500 absolute top-3 right-3 cursor-pointer' />  */}
-                                        </div>
-                                        <p className='text-sm md:text-  text-gray-500 xl mb-3'>
-                                        {val?.categories ? <p>{val.categories}</p> : <p>categories notfound</p>}
-                                        </p>
-                                        <p className='text-base text-gray-500' >{val?.bio}</p>
-                                        <div className='flex items-center w-full mt-5 justify-between gap-5 '>
-                                            <p className='flex items-center md:text-lg text-green-700 ' >
-                                                $12.00
-                                            </p>
-                                            <Link to={`/appointment`} state={{ doctorId : val.id, dataDoc : docProf}} className='px-10 py-2 md:px-7 text-center text-sm text-white rounded-md shadow-sm bg-[#0B8FAC]  transition'>
-                                                Book Now
-                                            </Link>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))
-                        }
-                    </div>
-                    </div>
-                </div>
-                <div className='h-24' ></div>
+                    <div className='h-24' ></div>
                 </div>
                 </div>
             </div>

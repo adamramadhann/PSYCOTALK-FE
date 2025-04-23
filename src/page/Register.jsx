@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useRegister } from "../hook/useAuth";
+import { users } from "../assets/importImage";
 
 const Register = () => {
-  const [form, setForm] = useState({ name: "", email: "", password: "", role : 'user' });
+  const [form, setForm] = useState({ name: "", email: "", password: "", role: "user", gender : '', avatar : '' });
   const { mutate: registerUser, isPending, error } = useRegister();
+  const [] = useState(users)
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -13,73 +15,108 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     registerUser(form, {
-      onSuccess : () => {
-        setForm({ name : '', email : '', password : '', role :''})
-        error = null
-      }
+      onSuccess: () => {
+        setForm({ name: "", email: "", password: "", role: "user", gender : '', avatar : '' });
+      },
     });
   };
 
   return (
-    <div className="w-screen min-h-screen sm:h-[100dvh] flex flex-col items-center p-5 justify-between">
-      <h1 className="text-[#0B8FAC] text-center text-2xl">Create New Account</h1>
+    <div className="w-screen min-h-screen bg-image sm:h-[100dvh] object-fill flex flex-col items-center justify-center p-3">
+      <div className="bg-white/10 rounded-md backdrop-blur-sm w-full space-y-5 max-w-2xl p-3">
+        <h1 className="text-[#540b03] font-bold text-center text-4xl mt-2">Sign Up</h1>
 
-      {/* Form */}
-      <div className="w-full max-w-md mx-auto">
-        <form className="w-full space-y-5 mt-5" onSubmit={handleSubmit}>
-          <label className="text-lg grid gap-2">
-            fullname
-            <input
-              type="text"
-              name="name"
-              value={form.name}
-              onChange={handleChange}
-              className="py-3 px-2 font-semibold w-full text-base rounded-lg border"
-              placeholder="Enter your name"
-            />
-          </label>
+        <div className="w-full max-w-md mx-auto">
+          <form className="w-full space-y-5 mt-5" onSubmit={handleSubmit}>
+            <div className="relative ">
+                <img
+                  src={users}
+                  alt="profile"
+                  className="w-32 h-32 md:w-44 md:h-44 object-cover cursor-pointer"
+                  onClick={() => fileInputRef.current?.click()}
+                  onError={(e) => {
+                    e.target.src = users
+                  }}
+                />
+                <div
+                  className="absolute bottom-0 right-0 p-1 bg-teal-500 text-white rounded-full cursor-pointer shadow"
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                </div>
+              </div>
+              <label className="text-lg grid font-semibold text-white md:text-[#8D2C22] gap-2">
+                Full Name
+                <input
+                  type="text"
+                  name="name"
+                  value={form.name}
+                  onChange={handleChange}
+                  className="py-4 px-2 w-full text-base border-gray-200 border rounded-lg text-[#8B302D] bg-white"
+                  placeholder="Enter your name"
+                />
+              </label>
+              <label className="text-lg grid font-semibold text-white md:text-[#8D2C22] gap-2">
+                Gender
+                <select
+                  type="text"
+                  name="name"
+                  value={form.gender}
+                  onChange={handleChange}
+                  className="py-4 px-2 w-full text-base border-gray-200 border rounded-lg text-[#8B302D] bg-white"
+                  placeholder="Enter your name"
+                >
+                  <option value="male">Male</option>
+                  <option value="famale">Famale</option>
+                </select>
+              </label>
 
-          <label className="text-lg grid gap-2">
-            Email
-            <input
-              type="email"
-              name="email"
-              value={form.email}
-              onChange={handleChange}
-              className="py-3 px-2 font-semibold w-full text-base rounded-lg border"
-              placeholder="Enter your email"
-            />
-          </label>
+              <label className="text-lg grid font-semibold text-white md:text-[#8D2C22] gap-2">
+                Email
+                <input
+                  type="email"
+                  name="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  className="py-4 px-2 w-full text-base border-gray-200 border rounded-lg text-[#8B302D] bg-white"
+                  placeholder="Enter your email"
+                />
+              </label>
 
-          <label className="text-lg grid gap-2">
-            Password
-            <input
-              type="password"
-              name="password"
-              value={form.password}
-              onChange={handleChange}
-              className="py-3 px-2 font-semibold w-full text-base rounded-lg border"
-              placeholder="Enter your password"
-            />
-          </label>
+              <label className="text-lg grid font-semibold text-white md:text-[#8D2C22] gap-2">
+                Password
+                <input
+                  type="password"
+                  name="password"
+                  value={form.password}
+                  onChange={handleChange}
+                  className="py-4 px-2 w-full text-base border-gray-200 border rounded-lg text-[#8B302D] bg-white"
+                  placeholder="Enter your password"
+                />
+              </label>
 
-          <button
-            type="submit"
-            className="w-full py-3 text-lg bg-[#0B8FAC] mt-5 text-white rounded-md"
-            disabled={isPending}
-          >
-            {isPending ? "Signing Up..." : "Sign Up"}
-          </button>
-          {error && <p className="text-red-500 text-sm mt-2">{error.message}</p>}
-        </form>
+              <button
+                type="submit"
+                className="w-full py-3 text-lg bg-[#8D2C22] mt-5 text-white rounded-md"
+                disabled={isPending}
+              >
+                {isPending ? "Signing Up..." : "Sign Up"}
+              </button>
+
+              {error && <p className="text-red-500 text-sm mt-2">{error.message}</p>}
+          </form>
+        </div>
+
+        <p className="text-center text-sm pb-5">
+          Already have an account?{" "}
+          <Link to={"/login"} className="text-[#0B8FAC] font-semibold">
+            Sign In
+          </Link>
+        </p>
       </div>
-
-      <p className="text-center text-sm pb-5">
-        Already have an account?{" "}
-        <Link to={"/login"} className="text-[#0B8FAC] font-semibold">
-          Sign In
-        </Link>
-      </p>
     </div>
   );
 };

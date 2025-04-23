@@ -119,7 +119,7 @@ const Notification = () => {
             </div>
 
             {selectedBookingId && selectedBooking && (
-                <div className="absolute w-full h-full bg-black/20 p-10 flex items-center justify-center top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                <div className="fixed w-full h-full bg-black/20 p-10 flex items-center justify-center top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
                     <div className="w-full relative flex flex-col xl:max-w-2xl bg-white rounded-md py-10 shadow-md p-3">
                         <div className="flex items-center gap-7">
                             <img src={doc} alt="Doctor" className="w-12 h-12" />
