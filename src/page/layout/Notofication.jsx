@@ -7,13 +7,16 @@ import { deletedNotif, setNotification } from "../../store/notificationSlice";
 import { doc } from "../../assets/importImage";
 import { bookings } from "../../hook/booking";
 import { setBook } from "../../store/bokingSlice";
+import ModalComponent from "../../components/ModalComponent";
 
 const Notification = () => {
     const [selectedBookingId, setSelectedBookingId] = useState(null);
-    const dispatch = useDispatch();
-
     const { data: notification = [], loading, error } = useSelector((state) => state.notif);
     const { data: booking = [] } = useSelector((state) => state.booking);
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isModalOpenSucces, setIsModalOpenSucces] = useState(false)
+    const [idModal, setIdModal] = useState(null)
+    const dispatch = useDispatch();
 
     const formattedData = notification
         ?.filter(val => val.createdAt && val.booking)
@@ -55,14 +58,24 @@ const Notification = () => {
         });
 
     const selectedBooking = booking.find((b) => b.id === selectedBookingId);
+    
+    const modalOpens = (e) => {
+        setIdModal(e)
+        setIsModalOpen(true)
+    }
 
     const handleDeleted = async ( id ) => {
-        if(! confirm("yakin ingin menghapus notification ??")) return 
-
+        console.log('ini id nyaa',id)
         try {
-            await deleteNotification(id)
-            dispatch(deletedNotif(id))
-            alert('deleted succes')
+            await deleteNotification(idModal)
+            dispatch(deletedNotif(idModal))
+            setIsModalOpenSucces(true)
+
+            setTimeout(() => {
+                setIsModalOpenSucces(false)
+            }, 1000)
+
+            setIsModalOpen(false)
         } catch (error) {
             console.error(error.message)
         }
@@ -97,7 +110,7 @@ const Notification = () => {
                     ) : formattedData.length ? (
                         formattedData.map((val) => (
                             <div
-                                onClick={() => setSelectedBookingId(val.bookingId)}
+                                onClick={(e) => setSelectedBookingId(val.bookingId)}
                                 key={val.id}
                                 className="w-full py-5 relative flex items-center shadow-md  rounded-md p-3 justify-between cursor-pointer"
                             >
@@ -106,7 +119,7 @@ const Notification = () => {
                                     <div className="space-y-2 ">
                                         <p className="text-xs md:text-sm">{val.date} - {val.time}</p>
                                         <p className="text-sm md:text-base">{val.message}</p>
-                                        <button onClick={(e) =>{ e.stopPropagation(); handleDeleted(val.id)}} className="absolute top-2 right-2 md:text-base font-black text-white w-5 h-5 md:h-6 md:w-6 text-sm rounded-full bg-red-500" >X</button>
+                                        <button onClick={(e) => {modalOpens(val.id); e.stopPropagation(); }} className="absolute top-2 right-2 md:text-base font-black text-white border w-5 h-5 md:h-6 md:w-6 text-sm rounded-full bg-red-500" >X</button>
                                     </div>
                                 </div>
                             </div>
@@ -117,7 +130,7 @@ const Notification = () => {
                 </div>
                 <div className="h-5" ></div>
             </div>
-
+            {/* card detail */}
             {selectedBookingId && selectedBooking && (
                 <div className="fixed w-full h-full bg-black/20 p-10 flex items-center justify-center top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
                     <div className="w-full relative flex flex-col xl:max-w-2xl bg-white rounded-md py-10 shadow-md p-3">
@@ -145,6 +158,53 @@ const Notification = () => {
                     </div>
                 </div>
             )}
+            {/* component modal */}
+            {
+                isModalOpen && (
+                    <ModalComponent 
+                        onClick={handleDeleted} 
+                        close={() => setIsModalOpen(false)} 
+                        name={'Deleted'} 
+                        judul={'Konfrimed'}
+                        backgroundColor={'bg-red-500 rounded-md hover:bg-red-600'}
+                        message={' Apakah kamu yakin ingin menghapus data ini? Tindakan ini tidak dapat dibatalkan.'}
+                    />
+                ) 
+            }
+            {
+                isModalOpenSucces && (
+                    <ModalComponent judul={'succes'} message={'Deleted berhasil'} />
+                ) 
+            }
+            {
+                selectedBookingId && selectedBooking && (
+                    <div className="fixed w-full h-full bg-black/20 p-10 flex items-center justify-center top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                        <div className="w-full relative flex flex-col xl:max-w-2xl bg-white rounded-md py-10 shadow-md p-3">
+                            <div className="flex items-center gap-7">
+                                <img src={doc} alt="Doctor" className="w-12 h-12" />
+                                <div className="space-y-2">
+                                    <h1 className="text-xl">{selectedBooking.doctor?.name || "Unknown Doctor"}</h1>
+                                    <p className="text-xs">
+                                        {selectedBooking.status},{" "}
+                                        {new Date(selectedBooking.dateTime).toLocaleString("id-ID")}
+                                    </p>
+                                </div>
+                            </div>
+                            <p className="text-sm mt-5">
+                                {selectedBooking.status === "pending" && "Your booking is pending approval."}
+                                {selectedBooking.status === "approved" && "Your booking has been approved!"}
+                                {selectedBooking.status === "rejected" && "Your booking has been rejected."}
+                            </p>
+                            <button
+                                onClick={() => setSelectedBookingId(null)}
+                                className="text-red-500 xl:px-5 xl:py-1 xl:text-xl font-black absolute top-2 right-3 cursor-pointer"
+                            >
+                                X
+                            </button>
+                        </div>
+                    </div>
+                )
+            }
         </div>
     );
 };

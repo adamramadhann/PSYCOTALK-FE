@@ -6,10 +6,13 @@ import { setNotification } from '../../store/notificationSlice';
 import { bookings, deletedBok } from '../../hook/booking';
 import { deletedBoks, setBook } from '../../store/bokingSlice';
 import { CiMenuKebab } from "react-icons/ci";
+import ModalComponent from '../../components/ModalComponent';
 
 const History = () => {
   const dispatch = useDispatch();
   const [filter, setFilter] = useState('all');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [idIsModalOpen, setIdIsModalOpen] = useState(null);
   const API_BASE_URL = "http://localhost:8000";
 
   const { data: Bookings = [], loading, error } = useSelector((state) => state.booking);
@@ -72,12 +75,16 @@ const History = () => {
     pending: 'bg-teal-600',
   }
 
+  const handleOpenModal = (e) => {
+    setIdIsModalOpen(e)
+    setIsModalOpen(true)
+  }
+
   const handleDelete = async (id) => {
-    if(!confirm('yakin ingin menhapus history ??')) return
     try {
-      await deletedBok(id) 
-      dispatch(deletedBoks(id));   
-      alert('deleted succes')
+      await deletedBok(idIsModalOpen) 
+      dispatch(deletedBoks(idIsModalOpen));   
+      setIsModalOpen(false)
     } catch (error) {
       console.error(error.message);
       alert('deleted failed')
@@ -141,11 +148,23 @@ const History = () => {
                   </div>
                 </div>
                 <p className="text-base text-gray-600 mt-6">{val.message}</p>
-                <button className=" hover:text-red-500 text-gray-500 w-7 h-7 text-center rounded-full text-base transition-all duration-100 active:scale-75   shadow-[0_5px_8px_rgba(0,0,0,0.2)] active:shadow-neutral-50 flex items-center justify-center font-bold absolute top-2 right-2">x</button>
+                <button onClick={() => handleOpenModal(val.id)} className=" hover:text-red-500 text-gray-500 w-7 h-7 text-center rounded-full text-base transition-all duration-100 active:scale-75   shadow-[0_5px_8px_rgba(0,0,0,0.2)] active:shadow-neutral-50 flex items-center justify-center font-bold absolute top-2 right-2">x</button>
               </div>
             ))}
           </div>
         </div>
+        {
+            isModalOpen && (
+                <ModalComponent 
+                    onClick={handleDelete} 
+                    close={() => setIsModalOpen(false)} 
+                    name={'Deleted'} 
+                    judul={'Konfrimed'}
+                    backgroundColor={'bg-red-500 rounded-md hover:bg-red-600'}
+                    message={' Apakah kamu yakin ingin menghapus data ini? Tindakan ini tidak dapat dibatalkan.'}
+                />
+            ) 
+        }
     </div> 
   )
 }

@@ -1,19 +1,30 @@
-import React from 'react'
+import React from 'react';
 
-const ModalComponent = ({ click, name }) => {
+const ModalComponent = ({ close, name , onClick, judul, message, backgroundColor }) => {
   return (
-    <div className='w-screen h-screen px-10 md:p-0 flex items-center justify-center bg-black/20' >
-        <div className='w-full max-w-xl relative rounded-md p-5 h-[150px] bg-white' >
-            <h1>Deleted</h1>
-            <p>Yakin Ingin Menghapus ${name} ini ?</p>
-            <div className='flex items-center mt-5 justify-evenly gap-5 ' >
-                <button className='px-5 py-1 border text-white rounded-md bg-blue-500' >cansel</button>
-                <button className='px-5 py-1 border text-white rounded-md bg-red-500' >Deleted</button>
-            </div>
-            <button onClick={click} className='absolute top-2 right-3 text-sm text-red-500 font-bold ' >X</button>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm px-4">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-6 animate-fade-in">
+        <div className="flex justify-between items-start">
+          <h2 className="text-lg font-semibold text-gray-800">{judul}</h2>
         </div>
+        <p className="mt-4 text-sm text-gray-600"> {message} </p>
+        <div className="mt-6 flex justify-end gap-3">
+          <button
+            onClick={close}
+            className="px-4 py-2 text-sm text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 transition-colors"
+          >
+            Batal
+          </button>
+          <button
+            onClick={onClick}
+            className={`px-4 py-2 text-sm text-white ${backgroundColor} transition-colors`}
+          >
+            {name}
+          </button>
+        </div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default ModalComponent
+export default ModalComponent;

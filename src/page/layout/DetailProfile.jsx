@@ -92,14 +92,14 @@ const DetailProfile = () => {
               <img
                 src={preview}
                 alt="profile"
-                className="w-32 h-32 md:w-44 md:h-44 object-cover rounded-md border-4 border-white shadow cursor-pointer"
+                className="w-32 h-32 md:w-44 md:h-44 object-cover rounded-full border-4 border-white shadow cursor-pointer"
                 onClick={() => fileInputRef.current?.click()}
                 onError={(e) => {
                   e.target.src = doc
                 }}
               />
               <div
-                className="absolute bottom-0 right-0 p-1 bg-teal-500 text-white rounded-full cursor-pointer shadow"
+                className="absolute bottom-0 right-2 p-1 bg-teal-500 text-white rounded-full cursor-pointer shadow"
                 onClick={() => fileInputRef.current?.click()}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
