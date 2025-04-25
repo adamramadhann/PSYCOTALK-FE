@@ -1,22 +1,46 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useRegister } from "../hook/useAuth";
 import { users } from "../assets/importImage";
 
 const Register = () => {
-  const [form, setForm] = useState({ name: "", email: "", password: "", role: "user", gender : '', avatar : '' });
+  const [form, setForm] = useState({ name: "", email: "", password: "", role: "user", gender : '' });
   const { mutate: registerUser, isPending, error } = useRegister();
-  const [] = useState(users)
+  const [avatarFile, setAvatarFile] = useState(null);
+  const [preview, setPreview] = useState(users);
+  const fileInputRef = useRef(null)
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const iamgeUpload = (e) => {
+    const file = e.target.files[0];
+    if(file) {
+      const urlImage = URL.createObjectURL(file)
+      setAvatarFile(file)
+      setPreview(urlImage)
+    }
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    registerUser(form, {
+
+    const formData = new FormData();
+    formData.append("name", form.name);
+    formData.append("email", form.email);
+    formData.append("password", form.password);
+    formData.append("gender", form.gender);
+    formData.append("role", form.role);
+    if (avatarFile) {
+      formData.append("avatar", avatarFile);
+    }
+
+    registerUser(formData, {
       onSuccess: () => {
-        setForm({ name: "", email: "", password: "", role: "user", gender : '', avatar : '' });
+        setForm({ name: "", email: "", password: "", role: "user", gender: "" });
+        setAvatarFile(null);
+        setPreview(users);
       },
     });
   };
@@ -25,21 +49,20 @@ const Register = () => {
     <div className="w-screen min-h-screen bg-image sm:h-[100dvh] object-fill flex flex-col items-center justify-center p-3">
       <div className="bg-white/10 rounded-md backdrop-blur-sm w-full space-y-5 max-w-2xl p-3">
         <h1 className="text-[#540b03] font-bold text-center text-4xl mt-2">Sign Up</h1>
-
         <div className="w-full max-w-md mx-auto">
           <form className="w-full space-y-5 mt-5" onSubmit={handleSubmit}>
-            <div className="relative ">
+            <div className="relative m-auto mt-5 w-32 h-32 ">
                 <img
-                  src={users}
+                  src={preview}
                   alt="profile"
-                  className="w-32 h-32 md:w-44 md:h-44 object-cover cursor-pointer"
+                  className="w-32 h-32 md:w-44 rounded-full md:h-44 object-cover cursor-pointer"
                   onClick={() => fileInputRef.current?.click()}
                   onError={(e) => {
                     e.target.src = users
                   }}
                 />
                 <div
-                  className="absolute bottom-0 right-0 p-1 bg-teal-500 text-white rounded-full cursor-pointer shadow"
+                  className="absolute bottom-1 right-2 p-1 bg-teal-500 text-white rounded-full cursor-pointer shadow"
                   onClick={() => fileInputRef.current?.click()}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -47,6 +70,13 @@ const Register = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                 </div>
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={iamgeUpload}
+                  ref={fileInputRef}
+                />
               </div>
               <label className="text-lg grid font-semibold text-white md:text-[#8D2C22] gap-2">
                 Full Name
@@ -63,7 +93,7 @@ const Register = () => {
                 Gender
                 <select
                   type="text"
-                  name="name"
+                  name="gender"
                   value={form.gender}
                   onChange={handleChange}
                   className="py-4 px-2 w-full text-base border-gray-200 border rounded-lg text-[#8B302D] bg-white"
