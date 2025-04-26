@@ -5,14 +5,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setNotification } from '../../store/notificationSlice';
 import { bookings, deletedBok } from '../../hook/booking';
 import { deletedBoks, setBook } from '../../store/bokingSlice';
-import { CiMenuKebab } from "react-icons/ci";
+import { CiMenuKebab, CiSearch } from "react-icons/ci";
 import ModalComponent from '../../components/ModalComponent';
 
 const History = () => {
   const dispatch = useDispatch();
   const [filter, setFilter] = useState('all');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpenSucces, setIsModalOpenSucces] = useState(false);
   const [idIsModalOpen, setIdIsModalOpen] = useState(null);
+  const [inputValue, setInputValue] = useState('')
+  const [dataInput, setDataInput] = useState([])
   const API_BASE_URL = "http://localhost:8000";
 
   const { data: Bookings = [], loading, error } = useSelector((state) => state.booking);
@@ -80,11 +83,29 @@ const History = () => {
     setIsModalOpen(true)
   }
 
+  const handleSerch = (e) => {
+    const value = e.target.value;
+    setInputValue(value)
+
+    if(value.trim() === '') { 
+      setDataInput(filterData)
+    } else {
+      const data = filterData.filter(val => val.name.toLowerCase().includes(value))
+      setDataInput(data)
+    }
+  }
+
   const handleDelete = async (id) => {
     try {
       await deletedBok(idIsModalOpen) 
       dispatch(deletedBoks(idIsModalOpen));   
       setIsModalOpen(false)
+      
+      setIsModalOpenSucces(true)
+
+      setTimeout(() => {
+        setIsModalOpenSucces(false)
+      }, 1000)
     } catch (error) {
       console.error(error.message);
       alert('deleted failed')
@@ -103,8 +124,11 @@ const History = () => {
       }
     }
 
+    setDataInput(filterData);
+
     fetchData()
-  }, [dispatch])
+  }, [dispatch, filterData]) 
+  
 
 
   return (
@@ -128,9 +152,15 @@ const History = () => {
           </div>
 
           {/* Card List */}
-          <h1 className='font-semibold md:text-xl text-lg mb-5 mt-10' >{filterData.length ? "History Booking" : "Boking notfound"}</h1>
+          <div className='md:flex items-center hidden w-full my-10 justify-between  ' >
+            <h1 className='font-semibold md:text-xl text-lg ' >{filterData.length ? "History Booking" : "Boking notfound"}</h1>
+            <div className='flex items-center md:w-[20%] w-full px-3 py-2 xl:py-2 gap-1 rounded-full border' >
+                <CiSearch className='w-4 xl:w-5' />
+                <input type="search" name="" id="" onChange={handleSerch} placeholder='search doctor' className='w-full text-sm outline-none' />
+            </div>
+          </div> 
           <div className='grid w-full xl:grid-cols-3 md:grid-cols-2 gap-10 '>
-            {filterData.map((val, index) => (
+            {dataInput.map((val, index) => (
               <div
               className="w-full relative rounded-xl flex flex-col xl:max-w-2xl bg-white shadow-md border border-gray-200 py-5 px-4 justify-between transition-all duration-300 ease-in-out hover:shadow-xl  "
             >            
@@ -164,6 +194,11 @@ const History = () => {
                     message={' Apakah kamu yakin ingin menghapus data ini? Tindakan ini tidak dapat dibatalkan.'}
                 />
             ) 
+        }
+        {
+          isModalOpenSucces && (
+              <ModalComponent judul={'succes'} message={'Deleted berhasil'} />
+          ) 
         }
     </div> 
   )

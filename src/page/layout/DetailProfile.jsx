@@ -126,7 +126,7 @@ const DetailProfile = () => {
                   {...register('name', { required: 'Name wajib diisi' })}
                   type="text"
                   placeholder="Name"
-                  className="rounded-md py-2.5 px-3 border focus:ring-2 focus:ring-blue-500 outline-none"
+                  className="rounded-md py-2.5 px-3 border focus:ring-1 transition-all duration-300 focus:ring-teal-500 outline-none"
                 />
                 {errors.name && <span className="text-sm text-red-500">{errors.name.message}</span>}
               </div>
@@ -135,7 +135,7 @@ const DetailProfile = () => {
                 <label htmlFor="gender" className="text-sm font-semibold">Gender:</label>
                 <select
                   {...register('gender', { required: 'Gender wajib diisi' })}
-                  className="rounded-md py-2.5 px-2 border focus:ring-2 focus:ring-blue-500 outline-none"
+                  className="rounded-md py-2.5 px-3 border focus:ring-1 transition-all duration-300 focus:ring-teal-500 outline-none"
                 >
                   <option value="male">Male</option>
                   <option value="female">Female</option>
@@ -152,7 +152,7 @@ const DetailProfile = () => {
                 type="email"
                 placeholder="Email"
                 disabled
-                className="rounded-md py-2.5 px-3 border bg-gray-100 text-gray-500 cursor-not-allowed"
+                className="rounded-md py-2.5 px-3 border focus:ring-1 bg-gray-100 text-gray-500 cursor-not-allowed transition-all duration-300 focus:ring-teal-500 outline-none"
               />
               {errors.email && <span className="text-sm text-red-500">{errors.email.message}</span>}
             </div>
@@ -164,7 +164,7 @@ const DetailProfile = () => {
                 {...register('about', { required: 'About wajib diisi' })}
                 rows={2}
                 placeholder="About you"
-                className="rounded-md py-2.5 px-3 border resize-none focus:ring-2 focus:ring-blue-500 outline-none"
+                className="rounded-md py-2.5 px-3 border focus:ring-1 transition-all duration-300 focus:ring-teal-500 outline-none"
               />
               {errors.about && <span className="text-sm text-red-500">{errors.about.message}</span>}
             </div>
@@ -176,7 +176,7 @@ const DetailProfile = () => {
                 {...register('bio', { required: 'Bio wajib diisi' })}
                 rows={4}
                 placeholder="Bio"
-                className="rounded-md py-2.5 px-3 border resize-none focus:ring-2 focus:ring-blue-500 outline-none"
+                className="rounded-md py-2.5 px-3 border focus:ring-1 transition-all duration-300 focus:ring-teal-500 outline-none"
               />
               {errors.bio && <span className="text-sm text-red-500">{errors.bio.message}</span>}
             </div>
