@@ -127,12 +127,12 @@ const History = () => {
     setDataInput(filterData);
 
     fetchData()
-  }, [dispatch, filterData]) 
+  }, [dispatch]) 
   
 
 
   return (
-      <div className='w-full h-full relative px-4'>
+      <div className='w-full h-full bg-[#eeee] relative px-4'>
       <TopTitle title={'History'} />
         <div className='flex flex-col pb-20'>
           <div className='w-full gap-3 sticky top-0 z-10 pt-5 flex items-cente'>
@@ -152,7 +152,7 @@ const History = () => {
           </div>
 
           {/* Card List */}
-          <div className='md:flex items-center hidden w-full my-10 justify-between  ' >
+          <div className='md:flex items-center grid gap-5 w-full my-10 md:justify-between  ' >
             <h1 className='font-semibold md:text-xl text-lg ' >{filterData.length ? "History Booking" : "Boking notfound"}</h1>
             <div className='flex items-center md:w-[20%] w-full px-3 py-2 xl:py-2 gap-1 rounded-full border' >
                 <CiSearch className='w-4 xl:w-5' />
@@ -162,7 +162,7 @@ const History = () => {
           <div className='grid w-full xl:grid-cols-3 md:grid-cols-2 gap-10 '>
             {dataInput.map((val, index) => (
               <div
-              className="w-full relative rounded-xl flex flex-col xl:max-w-2xl bg-white shadow-md border border-gray-200 py-5 px-4 justify-between transition-all duration-300 ease-in-out hover:shadow-xl  "
+              className="w-full relative rounded-xl flex flex-col xl:max-w-2xl bg-[#eeee] shadow-md border border-gray-200 py-5 px-4 justify-between transition-all duration-300 ease-in-out hover:shadow-xl  "
             >            
                 <div className="flex items-center gap-3">
                   <div className='w-20 h-20 rounded-md shadow-md flex items-center justify-center' >

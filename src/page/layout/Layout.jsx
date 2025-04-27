@@ -4,8 +4,8 @@ import { Outlet } from 'react-router-dom'
 
 const Layout = () => {
   return (
-    <div className='relative w-screen min-h-screen sm:h-[100dvh]' >
-      <div className='w-full scrollable-container bg-[#eeee] h-full' >
+    <div className='relative w-screen min-h-screen bg-[#eeee]  sm:h-[100dvh]' >
+      <div className='w-full scrollable-container h-full' >
           <Outlet/>
       </div>
       <BottomBar/>

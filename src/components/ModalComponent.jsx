@@ -5,9 +5,9 @@ const ModalComponent = ({ close, name , onClick, judul, message, backgroundColor
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm px-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-6 animate-fade-in">
         <div className="flex justify-between items-start">
-          <h2 className="text-lg font-semibold text-gray-800">{judul}</h2>
+          <h2 className="text-xl font-semibold text-gray-800">{judul}</h2>
         </div>
-        <p className="mt-4 text-sm text-gray-600"> {message} </p>
+        <p className="mt-4 text-base text-gray-600"> {message} </p>
         <div className="mt-6 flex justify-end gap-3">
           <button
             onClick={close}
@@ -17,7 +17,7 @@ const ModalComponent = ({ close, name , onClick, judul, message, backgroundColor
           </button>
           <button
             onClick={onClick}
-            className={`px-4 py-2 text-sm text-white ${backgroundColor} transition-colors`}
+            className={`px-4 py-2 text-sm text-white ${backgroundColor} ${!name && 'hidden'} transition-colors`}
           >
             {name}
           </button>

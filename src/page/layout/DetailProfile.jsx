@@ -4,6 +4,7 @@ import TopTitle from '../../components/TopTitle'
 import { useMutation } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { editedProfile, getProfileAuth } from '../../hook/fetchApi'
+import ModalComponent from '../../components/ModalComponent'
 
 // efect input peer
 {/* <div className="flex flex-1 flex-col gap-1">
@@ -23,6 +24,7 @@ const DetailProfile = () => {
   const API_BASE_URL = "http://localhost:8000"
   const [preview, setPreview] = useState(doc)
   const [profile, setProfile] = useState(null)
+  const [isModalOpen, setOpenModal] = useState(false)
   const [selectedFile, setSelectedFile] = useState(null)
   const fileInputRef = useRef(null)
 
@@ -48,7 +50,7 @@ const DetailProfile = () => {
       return editedProfile(formData)
     },
     onSuccess: () => {
-      alert('Profile updated successfully!')
+      setOpenModal(true)
     }
   })
 
@@ -75,16 +77,14 @@ const DetailProfile = () => {
       setValue('about', data.about)
       setValue('avatar', data.avatar)
       setPreview(`${API_BASE_URL}${data.avatar}`)
-    }
-
-    console.log(preview)
+    } 
 
     fetchProfile()
   }, [setValue])
 
   return (
-    <div className="w-full min-h-[100dvh] xl:h-full bg-gray-50 py-6 px-4 flex justify-center items-start">
-      <div className="w-full  bg-white md:p-6 max-w-4xl rounded-2xl md:border border-gray-200 md:shadow-md">
+    <div className="w-full min-h-[100dvh] xl:h-full bg-[#eeee]  py-6 px-4 flex justify-center items-start">
+      <div className="w-full md:p-6 max-w-4xl rounded-2xl md:border border-gray-200 md:shadow-md">
         <TopTitle title="Detail Profile" />
         <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-6">
           <div className="flex justify-center">
@@ -191,6 +191,11 @@ const DetailProfile = () => {
           </button>
         </form>
       </div>
+      {
+        isModalOpen && (
+          <ModalComponent close={() => setOpenModal(false)} judul={'Success'} message={'Updated success'} />
+        )
+      }
     </div>
   )
 }

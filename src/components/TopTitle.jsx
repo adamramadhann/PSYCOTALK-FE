@@ -4,7 +4,7 @@ import { FaChevronLeft } from "react-icons/fa";
 
 const TopTitle = ({ title }) => {
   return (
-    <div className='w-full h-16 flex items-center ' >
+    <div className='w-full relative bg-[#eeee] h-16 flex items-center ' >
         <Link to={-1} >
              <FaChevronLeft/>
         </Link>
