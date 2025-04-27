@@ -6,9 +6,11 @@ import { FiAlertCircle, FiClock, FiCalendar, FiDollarSign } from 'react-icons/fi
 import { useLocation } from 'react-router-dom'
 import { useMutation } from '@tanstack/react-query'
 import { bookings } from '../../hook/fetchApi'
+import ModalComponent from '../../components/ModalComponent'
 
 const Appointment = () => {
   const [selectedDate, setSelectedDate] = useState()
+  const [isOpenModal, setIsOpenModal] = useState(false)
   const location = useLocation()
   const { doctorId, dataDoc } = location.state || { doctorId : null}
   const API_BASE_URL = "http://localhost:8000";
@@ -20,16 +22,13 @@ const Appointment = () => {
     mutationKey : ['bookings'],
     mutationFn : (data) => bookings(doctorId,  data ),
     onSuccess: (data) => {
-      alert('Booking berhasil!, silahkan lanjutkan pembayaran di rumah sakit medica dan datang maksimal 1 jam sebelum periksa');
+      setIsOpenModal(true)
     },
     onError: (error) => {
       console.error('Booking gagal:', error.message);
       alert('time slot not available');
     }
   })
-
-  console.log(doctorData)
-
 
   const handleSelectedDate = async (data) => {
     setSelectedDate(data)
@@ -115,6 +114,11 @@ const Appointment = () => {
         <p className="text-sm text-center text-gray-500 mt-6">
           Need help? Contact our support team at medica@example.com
         </p>
+        {
+          isOpenModal && (
+            <ModalComponent close={() => setIsOpenModal(false)} judul={'success'} message={'Booking berhasil!, silahkan lanjutkan pembayaran di rumah sakit medica dan datang maksimal 1 jam sebelum periksa'} />
+          )
+        }
         <div className='h-20' ></div>
       </div>
   )
