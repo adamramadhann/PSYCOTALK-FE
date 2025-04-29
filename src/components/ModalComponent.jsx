@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ModalComponent = ({ close, name , onClick, judul, message, backgroundColor }) => {
+const ModalComponent = ({ close, name , onClick, judul, message, backgroundColor, closed }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm px-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-6 animate-fade-in">
@@ -13,7 +13,7 @@ const ModalComponent = ({ close, name , onClick, judul, message, backgroundColor
             onClick={close}
             className="px-4 py-2 text-sm text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 transition-colors"
           >
-            Batal
+            {closed}
           </button>
           <button
             onClick={onClick}
