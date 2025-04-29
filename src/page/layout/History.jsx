@@ -7,6 +7,7 @@ import { bookings, deletedBok } from '../../hook/booking';
 import { deletedBoks, setBook } from '../../store/bokingSlice';
 import { CiMenuKebab, CiSearch } from "react-icons/ci";
 import ModalComponent from '../../components/ModalComponent';
+import { setRole } from '../../store/authSLice';
 
 const History = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,9 @@ const History = () => {
   const API_BASE_URL = "http://localhost:8000";
 
   const { data: Bookings = [], loading, error } = useSelector((state) => state.booking);
+  const user = dispatch(setRole({ role : 'user'}))
+  console.log('ini adalah users ', user.payload.role)
+  console.log('ini input ', dataInput)
 
   const dataBook = Bookings.map(val => {
     const status = val.status;
@@ -41,26 +45,21 @@ const History = () => {
 
     return {
       id: val.id,
-      name: val.doctor?.name || 'Unknown Doctor',
-      status: val.status,
+      name: val.doctor?.name || val?.user?.name || 'Unknown Doctor',
+      status: val.status, 
       message: messageStatus,
-      avatar : val?.doctor?.avatar,
-      about : val.doctor.about,
-      gender : val.doctor.gender,
-      bio : val.doctor.bio,
-      categories : val.doctor.categories,
-      date: val.dateTime ? new Date(val.dateTime).toLocaleDateString("id-ID", {
+      avatar : val?.doctor?.avatar || val?.user?.avatar,
+      about : val?.doctor?.about || val?.user?.about,
+      gender : val?.doctor?.gender || val?.user?.gender,
+      bio : val?.doctor?.bio || val?.user?.bio,
+      categories : val?.doctor?.categories || val?.user?.gender,
+      date: val?.dateTime ? new Date(val.dateTime).toLocaleDateString("id-ID", {
         day: '2-digit',
         month: '2-digit',
         year: 'numeric'
       }) : 'Tanggal tidak tersedia'
     }
   })
-
-  console.log("ini data history", dataBook);
-  
-
-  
 
   const filterData = filter === 'all'
     ? dataBook
@@ -72,8 +71,7 @@ const History = () => {
     pending: 'bg-teal-500 hover:bg-teal-500',
   }
 
-  const activeButtonStyles = {
-    approved: 'bg-teal-600',
+  const activeButtonStyles = {    approved: 'bg-teal-600',
     rejected: 'bg-teal-600',
     pending: 'bg-teal-600',
   }
@@ -90,7 +88,7 @@ const History = () => {
     if(value.trim() === '') { 
       setDataInput(filterData)
     } else {
-      const data = filterData.filter(val => val.name.toLowerCase().includes(value))
+      const data = filterData.filter(val => val.name.toLowerCase().includes(value.toLowerCase()))
       setDataInput(data)
     }
   }
@@ -111,7 +109,7 @@ const History = () => {
       alert('deleted failed')
     }
   };
-  
+
 
     useEffect(() => {
     const fetchData = async () => {
@@ -124,13 +122,10 @@ const History = () => {
       }
     }
 
-    setDataInput(filterData);
-
     fetchData()
+    setDataInput(filterData);
   }, [dispatch]) 
   
-
-
   return (
       <div className='w-full h-full bg-[#eeee] relative px-4'>
       <TopTitle title={'History'} />
@@ -159,35 +154,42 @@ const History = () => {
                 <input type="search" name="" id="" onChange={handleSerch} placeholder='search doctor' className='w-full text-sm outline-none' />
             </div>
           </div> 
-          <div className='grid w-full xl:grid-cols-3 md:grid-cols-2 gap-10 '>
-            {dataInput.map((val, index) => (
-              <div
-              className="w-full relative rounded-xl flex flex-col xl:max-w-2xl bg-[#eeee] shadow-md border border-gray-200 py-5 px-4 justify-between transition-all duration-300 ease-in-out hover:shadow-xl  "
-            >            
-                <div className="flex items-center gap-3">
-                  <div className='w-20 h-20 rounded-md shadow-md flex items-center justify-center' >
-                    <img src={val?.avatar ? `${API_BASE_URL}${val?.avatar}` : doc} alt="doc" className="w-14 h-full object-cover rounded-full" />
-                  </div>
-                  <div className='w-full h-20' >
-                    <h1 className="text-xl font-semibold text-teal-800">Dr. {val.name}</h1>
-                    <p className='text-sm text-gray-500' >{val.categories}</p>
-                    <div className="flex items-center mt-3 gap-2 text-sm text-gray-500">
-                      <span className='' >Date Booking :</span>
-                      <span className='' > {val.date}</span>
+          {
+            user.payload.role === "user" ? (
+              <div className={`grid w-full xl:grid-cols-3 md:grid-cols-2 gap-10  `}>
+                {dataInput.map((val, index) => (
+                  <div
+                  className="w-full relative rounded-xl flex flex-col xl:max-w-2xl bg-[#eeee] shadow-md border border-gray-200 py-5 px-4 justify-between transition-all duration-300 ease-in-out hover:shadow-xl  "
+                >            
+                    <div className="flex items-center gap-3">
+                      <div className='w-20 h-20 rounded-md shadow-md flex items-center justify-center' >
+                        <img src={val?.avatar ? `${API_BASE_URL}${val?.avatar}` : doc} alt="doc" className="w-14 h-full object-cover rounded-full" />
+                      </div>
+                      <div className='w-full h-20' >
+                        <h1 className="text-xl font-semibold text-teal-800">Dr. {val.name}</h1>
+                        <p className='text-sm text-gray-500' >{val.categories}</p>
+                        <div className="flex items-center mt-3 gap-2 text-sm text-gray-500">
+                          <span className='' >Date Booking :</span>
+                          <span className='' > {val.date}</span>
+                        </div>
+                      </div>
                     </div>
+                    <p className="text-base text-gray-600 mt-6">{val.message}</p>
+                    <button onClick={() => handleOpenModal(val.id)} className=" hover:text-red-500 text-gray-500 w-7 h-7 text-center rounded-full text-base transition-all duration-100 active:scale-75   shadow-[0_5px_8px_rgba(0,0,0,0.2)] active:shadow-neutral-50 flex items-center justify-center font-bold absolute top-2 right-2">x</button>
                   </div>
-                </div>
-                <p className="text-base text-gray-600 mt-6">{val.message}</p>
-                <button onClick={() => handleOpenModal(val.id)} className=" hover:text-red-500 text-gray-500 w-7 h-7 text-center rounded-full text-base transition-all duration-100 active:scale-75   shadow-[0_5px_8px_rgba(0,0,0,0.2)] active:shadow-neutral-50 flex items-center justify-center font-bold absolute top-2 right-2">x</button>
+                ))}
               </div>
-            ))}
-          </div>
+            ) : (
+              <p>Histpry notfound</p>
+            )
+          }
         </div>
         {
             isModalOpen && (
                 <ModalComponent 
                     onClick={handleDelete} 
                     close={() => setIsModalOpen(false)} 
+                    closed={'Batal'}
                     name={'Deleted'} 
                     judul={'Konfrimed'}
                     backgroundColor={'bg-red-500 rounded-md hover:bg-red-600'}
@@ -196,8 +198,8 @@ const History = () => {
             ) 
         }
         {
-          isModalOpenSucces && (
-              <ModalComponent judul={'succes'} message={'Deleted berhasil'} />
+          isModalOpenSucces && ( 
+                    <ModalComponent judul={'succes'} closed={'Close'} message={'Deleted berhasil'} backgroundColor={'bg-green-500 rounded-md hover:bg-green-600'} />
           ) 
         }
     </div> 

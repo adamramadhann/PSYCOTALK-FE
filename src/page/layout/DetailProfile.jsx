@@ -193,7 +193,7 @@ const DetailProfile = () => {
       </div>
       {
         isModalOpen && (
-          <ModalComponent close={() => setOpenModal(false)} judul={'Success'} message={'Updated success'} />
+          <ModalComponent close={() => setOpenModal(false)} closed={'CLose'} judul={'Success'} message={'our booking details have been updated successfully. Please review the changes if necessary.'} backgroundColor={'bg-red-500 rounded-md hover:bg-red-600'} />
         )
       }
     </div>

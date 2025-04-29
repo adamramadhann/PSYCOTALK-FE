@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Facebook, google } from '../assets/importImage'
 import { useLogin } from '../hook/useAuth'
 import { useDispatch } from 'react-redux'
-import { setUser } from '../store/authSLice'
+import { setRole, setUser } from '../store/authSLice'
 
 const Login = () => {
   const [form, setForm] = useState({ email : '', password : '' })
@@ -26,7 +26,8 @@ const Login = () => {
       onSuccess: (data) => {
         navigate('/')
         setForm({ email: '', password: '' });
-        dispatch(setUser(data.token))
+        dispatch(setUser({token : data.token}))
+        dispatch(setRole({role : data.role}))
       },
     })
   }

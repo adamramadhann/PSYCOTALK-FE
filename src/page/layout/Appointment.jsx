@@ -111,12 +111,12 @@ const Appointment = () => {
        </div>
 
         {/* Footer Note */}
-        <p className="text-sm text-center text-gray-500 mt-6">
+        <p className="text-sm text-center ßtext-gray-500 mt-6">
           Need help? Contact our support team at medica@example.com
         </p>
         {
           isOpenModal && (
-            <ModalComponent close={() => setIsOpenModal(false)} judul={'success'} message={'Booking berhasil!, silahkan lanjutkan pembayaran di rumah sakit medica dan datang maksimal 1 jam sebelum periksa'} />
+            <ModalComponent closed={'Close'} close={() => setIsOpenModal(false)} judul={'success'} message={'Booking berhasil!, silahkan lanjutkan pembayaran di rumah sakit medica dan datang maksimal 1 jam sebelum periksa'} />
           )
         }
         <div className='h-20' ></div>

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { doc, docMan1, docMan2, docWoman1, docWoman2, Facebook, users } from '../../assets/importImage'
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { Link } from 'react-router-dom'; 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {  getDoctProfile, getDoctProfileAll, getProfileAuth } from '../../hook/fetchApi';
 import { useQuery } from "@tanstack/react-query";
 import { CiSearch } from "react-icons/ci";
@@ -10,6 +10,7 @@ import { FaRegStar } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
 import { LuSquareMenu } from "react-icons/lu";
 import { CgCloseR } from "react-icons/cg";
+import { setRole, setUser } from '../../store/authSLice';
 
     const cardInfo = [
         {
@@ -101,7 +102,7 @@ import { CgCloseR } from "react-icons/cg";
     const HomeScreen = () => {
         const API_BASE_URL = "http://localhost:8000";
         const scrollRef = useRef(null);
-        
+        const dispatch = useDispatch()
         const [dataDoc, setDataDoc] = useState("All")
         const [activeIndex, setActiveIndex] = useState(0);
         const [isOpen, setIsOpen] = useState(false)
@@ -109,9 +110,10 @@ import { CgCloseR } from "react-icons/cg";
         const [activeDocSearch, setActiveDocSearch] = useState(false)
         const [activeDocSearchInput, setActiveDocSearchInput] = useState('')
         const [filteredDoctors, setFilteredDoctors] = useState([])
-
         const [inputValue, setInputValue] = useState('')
         const [dataInput, setDataInput] = useState([])
+
+        const user = dispatch(setRole({ role : setUser.role}))
 
         const { data : profile, isLoading, isError } = useQuery({
             queryKey: ["profile"],
@@ -221,9 +223,9 @@ import { CgCloseR } from "react-icons/cg";
                         </div>
                     </div>
                 </div>
-                <div className='w-full  h-full space-y-10 p-5' > 
+                <div className={`w-full h-full space-y-10 p-5`} > 
                 {/* serch */}
-                <div className='flex items-center md:hidden justify-end ' >
+                <div className={`flex items-center md:hidden justify-end `} >
                     <div className='flex items-center xl:w-[20%] w-full px-3 py-4 xl:py-2 gap-1 rounded-full shadow-md bg-white' >
                         <CiSearch className='w-10 xl:w-5' />
                         <input type="search" name="" id="" onChange={handleChange} placeholder='search doctor' className='w-full text-base outline-none' />
@@ -262,7 +264,7 @@ import { CgCloseR } from "react-icons/cg";
                     ) : (
                         <>
                             {/* card info */}
-                            <div className='flex flex-col gap-3' >
+                            <div className={`flex flex-col gap-3`} >
                                 <div ref={scrollRef} className='w-full overflow-hidden flex sm:flex-col xl:grid xl:grid-cols-2 md:gap-5'>
                                         {
                                             cardInfo.map(val => (
@@ -320,9 +322,10 @@ import { CgCloseR } from "react-icons/cg";
                                         </div>
                                     ))}
                             </div>
+                            <div className='h-24' ></div>
                             </div>
                             {/* doctor */}
-                            <div className='w-full' >
+                            <div className={`w-full ${user.payload.role === 'doctor' && 'hidden'}`} >
                                 <div className='space-y-8' >
                                     <div className='w-full mt-5 space-y-5' >  
                                     <span className='flex items-center xl:text-2xl text-lg font-semibold justify-between ' >
