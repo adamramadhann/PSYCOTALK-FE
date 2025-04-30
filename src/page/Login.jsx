@@ -4,11 +4,14 @@ import { Facebook, google } from '../assets/importImage'
 import { useLogin } from '../hook/useAuth'
 import { useDispatch } from 'react-redux'
 import { setRole, setUser } from '../store/authSLice'
+import ModalComponent from '../components/ModalComponent'
 
 const Login = () => {
   const [form, setForm] = useState({ email : '', password : '' })
   const { mutate : login, error, isPending } = useLogin();
   const [showError, setSHowError] = useState(false)
+  const [isModalSucces, setIsModalSucces] = useState(false);
+  const [isModalError, setIsModalError] = useState(false);
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -22,12 +25,14 @@ const Login = () => {
     login(form, {
       onError : () => {
         setSHowError(true)
+        setIsModalError(true)
       },
       onSuccess: (data) => {
-        navigate('/')
+        setIsModalSucces(true)
         setForm({ email: '', password: '' });
         dispatch(setUser({token : data.token}))
         dispatch(setRole({role : data.role}))
+        navigate('/')
       },
     })
   }
@@ -66,12 +71,12 @@ const Login = () => {
             <label className="text-lg grid font-semibold text-white md:text-[#8D2C22] gap-2" htmlFor="password">
               Password
               <input onChange={handleChange} value={form.password} name='password' type="password" className="py-4 px-2 w-full  border-gray-200 border text-base rounded-lg text-[#8B302D] bg-white" placeholder="Enter your password" />
-              <Link to={'/forgotPassword'} className="text-sm text-end mt-1 font-black text-[#8D2C22] ">Forgot Password?</Link>
+              {/* <Link to={'/forgotPassword'} className="text-sm text-end mt-1 font-black text-[#8D2C22] ">Forgot Password?</Link> */}
             </label>
             <button type='submit' disabled={isPending} className="w-full py-3 text-lg bg-[#8D2C22]  mt-5 text-white rounded-md">{isPending ? "Singing In...." : "Sign In"}</button>
           </form>
         </div>
-        <div className="flex flex-col items-center gap-4">
+        {/* <div className="flex flex-col items-center gap-4">
           <h1 className="text-xl font-semibold">OR</h1>
           <div className="flex items-center gap-5">
             <Link className="w-[60px] h-[60px] flex items-center justify-center rounded-full shadow-md">
@@ -81,10 +86,20 @@ const Login = () => {
               <img className="w-10" src={google} alt="Google" />
             </Link>
           </div>
-        </div>
+        </div> */}
         <p className="text-center text-sm pb-5">
           Don’t have an account? <Link to={'/register'} className="text-[#0B8FAC]  font-semibold">Sign Up</Link>
         </p>
+        {error && (
+          isModalError  && (
+            <ModalComponent close={() => setIsModalError(false)} judul={'Failed'} closed={'close'} message={'Input cnnot be empty !!'} />
+          )
+        )}
+         { 
+            isModalSucces  && (
+              <ModalComponent close={() => setIsModalSucces(false)} judul={'Success'} closed={'close'} message={'Thankyou, registering on your application !'} />
+            )
+          }
       </div>
     </div>
   )

@@ -11,6 +11,7 @@ import { FaRegHeart } from "react-icons/fa";
 import { LuSquareMenu } from "react-icons/lu";
 import { CgCloseR } from "react-icons/cg";
 import { setRole, setUser } from '../../store/authSLice';
+import { jwtDecode } from 'jwt-decode';
 
     const cardInfo = [
         {
@@ -113,7 +114,10 @@ import { setRole, setUser } from '../../store/authSLice';
         const [inputValue, setInputValue] = useState('')
         const [dataInput, setDataInput] = useState([])
 
-        const user = dispatch(setRole({ role : setUser.role}))
+        const token = useSelector((state) => state.user.token);
+        const decoded = token ? jwtDecode   (token) : {};
+        const user = decoded.role;
+        console.log('ini role dari token:', user); 
 
         const { data : profile, isLoading, isError } = useQuery({
             queryKey: ["profile"],
@@ -262,7 +266,7 @@ import { setRole, setUser } from '../../store/authSLice';
                         }
                     </div>
                     ) : (
-                        <>
+                        <div className='w-full h-full flex flex-col gap-16'>
                             {/* card info */}
                             <div className={`flex flex-col gap-3`} >
                                 <div ref={scrollRef} className='w-full overflow-hidden flex sm:flex-col xl:grid xl:grid-cols-2 md:gap-5'>
@@ -295,7 +299,7 @@ import { setRole, setUser } from '../../store/authSLice';
                                 </div>
                             </div>
                             {/* section Articel */}
-                            <div className="space-y-6 ">
+                            <div className={`space-y-6 ${user === 'doctor' && 'pb-22'}`}>
                                 <div className="flex items-center justify-between">
                                     <h1 className="text-2xl font-bold text-gray-800">Mental Health Articles</h1>
                                 </div>
@@ -322,10 +326,10 @@ import { setRole, setUser } from '../../store/authSLice';
                                         </div>
                                     ))}
                             </div>
-                            <div className='h-24' ></div>
+                            {/* <div className='h-24' ></div> */}
                             </div>
                             {/* doctor */}
-                            <div className={`w-full ${user.payload.role === 'doctor' && 'hidden'}`} >
+                            <div className={`w-full ${user === 'doctor' && 'hidden'}`} >
                                 <div className='space-y-8' >
                                     <div className='w-full mt-5 space-y-5' >  
                                     <span className='flex items-center xl:text-2xl text-lg font-semibold justify-between ' >
@@ -416,7 +420,7 @@ import { setRole, setUser } from '../../store/authSLice';
                                 </div>
                                 <div className='h-24' ></div>
                             </div>
-                        </>
+                        </div>
                     )
                 }
                 </div>
