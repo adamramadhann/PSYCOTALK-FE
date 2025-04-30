@@ -11,6 +11,17 @@ export const bookings = async () => {
     }
 }
 
+export const approveUser = async (id, status) => {
+    try {
+        const response = await ax.patch(`/booking/${id}`, { status })
+        console.log(response.data)
+        return response.data
+    } catch (error) {
+        console.error(error.message)
+        throw Error(error)
+    }
+}
+
 
 export const deletedBok = async (id) => {
     try {

@@ -14,13 +14,12 @@ import Postingan from './page/layout/Postingan'
 import Appointment from './page/layout/Appointment'
 import History from './page/layout/History'
 import DetailProfile from './page/layout/DetailProfile'
+import RegisterDoctor from './page/RegisterDoctor'
 
 const App = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const token = useSelector((state) => state.user.token)
-
-  console.log('ini tokens', token?.role)
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token')
@@ -38,6 +37,7 @@ const App = () => {
           <Route path="/" element={<GetStarted />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/registerDoctor" element={<RegisterDoctor />} />
           <Route path="/forgotPassword" element={<ForgotPassword />} />
         </>
       ) : (

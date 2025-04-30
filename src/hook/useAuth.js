@@ -1,7 +1,9 @@
 import { useMutation } from "@tanstack/react-query"
 import { login, register, resetPassword } from "../api/axiosInstance"
 import { useDispatch } from "react-redux"
-import { setUser } from "../store/authSLice"
+import { setRole, setUser } from "../store/authSLice"
+import { jwtDecode } from 'jwt-decode';
+
 // import { useNavigate } from "react-router-dom"
 
 // const navigate = useNavigate()
@@ -10,10 +12,7 @@ import { setUser } from "../store/authSLice"
 export const useRegister = () => {
     return useMutation({
         mutationKey : ['register'],
-        mutationFn : register,
-        onSuccess: () => {
-            alert('register success, check your email')
-        }
+        mutationFn : register, 
     })
 }
 
@@ -24,10 +23,10 @@ export const useLogin = () => {
         mutationKey : ['login'],
         mutationFn : login,
         onSuccess : (data) => {
-            dispatch(setUser(data))
+            const decoded = jwtDecode(data.token)
+            dispatch(setRole({ role : decoded.role, token : data.token}))
         },
         onError: (error) => {
-            alert(error.message)
             console.error("Login failed:", error.response?.data || error.message);
         },
     })

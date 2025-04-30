@@ -2,11 +2,14 @@ import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useRegister } from "../hook/useAuth";
 import { users } from "../assets/importImage";
+import ModalComponent from "../components/ModalComponent";
 
 const Register = () => {
   const [form, setForm] = useState({ name: "", email: "", password: "", role: "user", gender : '' });
   const { mutate: registerUser, isPending, error } = useRegister();
   const [avatarFile, setAvatarFile] = useState(null);
+  const [isModalSucces, setIsModalSucces] = useState(false);
+  const [isModalError, setIsModalError] = useState(false);
   const [preview, setPreview] = useState(users);
   const fileInputRef = useRef(null)
 
@@ -40,8 +43,12 @@ const Register = () => {
       onSuccess: () => {
         setForm({ name: "", email: "", password: "", role: "user", gender: "" });
         setAvatarFile(null);
+        setIsModalSucces(true)
         setPreview(users);
       },
+      onError: () => {
+        setIsModalError(true)
+      }
     });
   };
 
@@ -55,7 +62,7 @@ const Register = () => {
                 <img
                   src={preview}
                   alt="profile"
-                  className="w-32 h-32 md:w-44 rounded-full md:h-44 object-cover cursor-pointer"
+                  className="w-32 h-32 md:w-32 rounded-full md:h-32 object-cover cursor-pointer"
                   onClick={() => fileInputRef.current?.click()}
                   onError={(e) => {
                     e.target.src = users
@@ -136,7 +143,16 @@ const Register = () => {
                 {isPending ? "Signing Up..." : "Sign Up"}
               </button>
 
-              {error && <p className="text-red-500 text-sm mt-2">{error.message}</p>}
+              {error && (
+                isModalError  && (
+                 <ModalComponent close={() => setIsModalError(false)} judul={'Failed'} closed={'close'} message={'Input cnnot be empty !!'} />
+                )
+              )}
+              { 
+                isModalSucces  && (
+                 <ModalComponent close={() => setIsModalSucces(false)} judul={'Success'} closed={'close'} message={'Thankyou, registering on your application !'} />
+                )
+              }
           </form>
         </div>
 
