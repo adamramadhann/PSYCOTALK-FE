@@ -20,6 +20,7 @@ const Notification = () => {
     const dispatch = useDispatch();
 
     const user = dispatch(setRole({ role : 'doctor'}))
+    console.log(user.payload.role)
 
     console.log('ini data notifications selector',notification)
 
@@ -111,53 +112,50 @@ const Notification = () => {
                 <div className="flex items-center justify-between">
                     <h1 className="text-lg md:text-xl font-semibold">Recent Notifications</h1>
                 </div>
-                <div className="space-y-10 mb-10 w-full h-full p-2" >
+                <div className="space-y-12 mb-10 w-full h-full md:p-5" >
                     {loading ? (
                         <p className="text-center text-gray-500">Loading...</p>
                     ) : error ? (
                         <p className="text-center text-red-500">Error: {error}</p>
                     ) : formattedData.length ? (
                         <>
-                            {
-                                user.payload.role === 'doctor' ? (
-                                    notification.map((val) => (
-                                        <div
-                                            onClick={(e) => setSelectedBookingId(val.bookingId)}
-                                            key={val.id}
-                                            className="w-full py-5 relative flex items-center shadow-md  rounded-md p-3 justify-between cursor-pointer"
-                                        >
-                                            <div className="flex items-center gap-7">
-                                                <IoMdNotificationsOutline size={35} />
-                                                <div className="space-y-2 ">
-                                                    <p className="text-xs md:text-sm">{val.createdAt} - {val.time}</p>
-                                                    <p className="text-sm md:text-base">{val.message}</p>
-                                                    <button onClick={(e) => {modalOpens(val.id); e.stopPropagation(); }} className="absolute top-2 right-2 md:text-base font-black text-white border w-5 h-5 md:h-6 md:w-6 text-sm rounded-full bg-red-500" >X</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))
-                                ) : (
+                            { 
                                     formattedData.map((val) => (
                                         <div
                                             onClick={(e) => setSelectedBookingId(val.bookingId)}
                                             key={val.id}
-                                            className="w-full py-5 relative flex items-center shadow-md  rounded-md p-3 justify-between cursor-pointer"
+                                            className="w-full py-5 relative border border-gray-200 bg-white flex items-center shadow-md  rounded-md p-3 justify-between cursor-pointer"
                                         >
                                             <div className="flex items-center gap-7">
                                                 <IoMdNotificationsOutline size={35} />
                                                 <div className="space-y-2 ">
                                                     <p className="text-xs md:text-sm">{val.date} - {val.time}</p>
                                                     <p className="text-sm md:text-base">{val.message}</p>
-                                                    <button onClick={(e) => {modalOpens(val.id); e.stopPropagation(); }} className="absolute top-2 right-2 md:text-base font-black text-white border w-5 h-5 md:h-6 md:w-6 text-sm rounded-full bg-red-500" >X</button>
+                                                    <button onClick={(e) => {modalOpens(val.id); e.stopPropagation(); }} className="absolute top-2 right-2 md:text-base font-black text-white border w-6 h-6 md:h-8 md:w-8 text-sm rounded-full bg-red-500" >X</button>
                                                 </div>
                                             </div>
                                         </div>
-                                    ))
+                                    )
                                 )
                             }
                         </>
                     ) : (
-                        <p className="text-gray-500 text-center">No notifications available</p>
+                        notification.map((val) => (
+                            <div
+                                onClick={(e) => setSelectedBookingId(val.bookingId)}
+                                key={val.id}
+                                className="w-full py-5 relative flex items-center shadow-md  border border-gray-200 bg-white  rounded-md p-3 justify-between cursor-pointer"
+                            >
+                                <div className="flex items-center gap-7">
+                                    <IoMdNotificationsOutline size={35} />
+                                    <div className="space-y-2 ">
+                                        <p className="text-xs md:text-sm">{val.createdAt} - {val.time}</p>
+                                        <p className="text-sm md:text-base">{val.message}</p>
+                                        <button onClick={(e) => {modalOpens(val.id); e.stopPropagation(); }} className="absolute top-2 right-2 md:text-base font-black text-white border w-5 h-5 md:h-7 md:w-7 text-sm rounded-full bg-red-500" >X</button>
+                                    </div>
+                                </div>
+                            </div>
+                        ))
                     )}
                 </div>
                 <div className="h-20" ></div>
