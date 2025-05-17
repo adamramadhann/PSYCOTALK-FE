@@ -17,10 +17,12 @@ const History = () => {
   const [inputValue, setInputValue] = useState('')
   const [dataInput, setDataInput] = useState([])
   const [statusState, setStatusState, ] = useState(false)
-  const API_BASE_URL = "http://localhost:8000";
   const [isModalApprove, setIsModalApprove] = useState(false)
   const [isModalCanseled, setIsModalCanseled] = useState(false)
   const [isModalConfrimed, setIsModalConfrimed] = useState(false)
+
+
+  const API_BASE_URL = "http://localhost:8000";
 
   const { data: Bookings = [], loading, error } = useSelector((state) => state.booking);
   const token = useSelector((state) => state.user.token);
@@ -38,8 +40,8 @@ const History = () => {
       case 'approved':
         messageStatus = 'Your booking has been approved. Please be prepared to attend your consultation at the scheduled time.';
         break;
-      case 'rejected':
-        messageStatus = 'We regret to inform you that your booking request has been rejected. You may try submitting another request or choosing a different time slot that is more suitable.';
+      case 'cancelled':
+        messageStatus = 'We regret to inform you that your booking request has been cancelled. You may try submitting another request or choosing a different time slot that is more suitable.';
         break;
       default:
         messageStatus = val.message || 'There is currently no additional information available regarding your booking.';
@@ -69,14 +71,16 @@ const History = () => {
 
   const buttonStyles = {
     approved: 'bg-teal-500 hover:bg-teal-500',
-    rejected: 'bg-teal-500 hover:bg-teal-500',
+    cancelled: 'bg-teal-500 hover:bg-teal-500',
     pending: 'bg-teal-500 hover:bg-teal-500',
+    completed: 'bg-teal-500 hover:bg-teal-500',
   }
 
   const activeButtonStyles = {    
     approved: 'bg-teal-600',
-    rejected: 'bg-teal-600',
+    cancelled: 'bg-teal-600',
     pending: 'bg-teal-600',
+    completed: 'bg-teal-600',
   }
 
   const handleOpenModal = (e) => {
@@ -108,11 +112,17 @@ const History = () => {
     }
   };
 
+  const handleReloadStatus = async () => {
+    const newData = await bookings();
+    dispatch(setBook(newData || []))
+  }
+
   const handleApprove = async (id) => {
     try {
       const { data } = await approveUser(id, 'confirmed');
       console.log('response backend:', data);
       setIsModalApprove(true)
+      await handleReloadStatus()
     } catch (err) {
       console.error(err);
       alert('Gagal approve booking');
@@ -124,6 +134,7 @@ const History = () => {
       const { data } = await approveUser(id, 'cancelled');
       console.log('response backend:', data);
       setIsModalCanseled(true)
+      await handleReloadStatus()
     } catch (err) {
       console.error(err);
       alert('Gagal approve booking');
@@ -136,41 +147,57 @@ const History = () => {
       console.log('response backend:', data);
       setIsModalConfrimed(true)
       setStatusState(true)
+      await handleReloadStatus()
     } catch (err) {
       console.error(err);
       alert('Gagal approve booking');
     }
   };
 
+
+  const handleReloadData = async () => {
+    await bookings()
+  }
+
   
   
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const datas = await bookings()
-        dispatch(setBook(datas || []))
-        console.log("data boking history", datas)
-      } catch (error) {
-        console.error(error.message)
-      }
+// Fetching hanya sekali di awal
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const datas = await bookings();
+      dispatch(setBook(datas || []));
+      console.log("data boking history", datas);
+    } catch (error) {
+      console.error(error.message);
     }
+  };
 
-    const handleBoks = () => {
-      return Bookings
-    }
+  handleReloadData()
 
-    handleBoks()
-    fetchData()
-    setDataInput(filterData);
-  }, [dispatch, inputValue]) 
+  fetchData();
+}, [dispatch]);
+
+useEffect(() => {
+  if (inputValue.trim() === '') {
+    setDataInput(filter === 'all' ? dataBook : dataBook.filter(val => val.status === filter));
+  } else {
+    const filtered = dataBook.filter(val =>
+      val.name.toLowerCase().includes(inputValue.toLowerCase()) &&
+      (filter === 'all' || val.status === filter)
+    );
+    setDataInput(filtered);
+  }
+}, [filter, inputValue, Bookings]);
+
   
   return (
       <div className='w-full h-full bg-[#eeee] relative px-4'>
       <TopTitle title={'History'} />
         <div className='flex flex-col pb-20'>
           <div className='w-full gap-3 top-0 z-10 pt-5 flex items-cente'>
-            {['approved', 'rejected', 'pending'].map(type => (
+            {['approved', 'cancelled', 'completed', 'pending'].map(type => (
               <button
                 key={type}
                 onClick={() => setFilter(type)}
@@ -196,7 +223,7 @@ const History = () => {
             <div className={`grid w-full xl:grid-cols-3 md:grid-cols-2 gap-10  `}>
               {dataInput.map((val, index) => (
                 <div
-                className="w-full relative rounded-xl flex flex-col xl:max-w-2xl bg-[#eeee] shadow-md border border-gray-200 py-5 px-4 justify-between transition-all duration-300 ease-in-out hover:shadow-xl  "
+                className="w-full relative rounded-xl flex flex-col xl:max-w-2xl bg-white shadow-md border border-gray-200 py-5 px-4 justify-between transition-all duration-300 ease-in-out hover:shadow-xl  "
               >            
                   <div className="flex items-center gap-3">
                     <div className='w-20 h-20 rounded-md shadow-md flex items-center justify-center' >

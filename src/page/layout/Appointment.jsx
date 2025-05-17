@@ -11,6 +11,7 @@ import ModalComponent from '../../components/ModalComponent'
 const Appointment = () => {
   const [selectedDate, setSelectedDate] = useState()
   const [isOpenModal, setIsOpenModal] = useState(false)
+  const [isOpenModalErr, setIsOpenModalErr] = useState(false)
   const location = useLocation()
   const { doctorId, dataDoc } = location.state || { doctorId : null}
   const API_BASE_URL = "http://localhost:8000";
@@ -26,7 +27,7 @@ const Appointment = () => {
     },
     onError: (error) => {
       console.error('Booking gagal:', error.message);
-      alert('time slot not available');
+      setIsOpenModalErr(true)
     }
   })
 
@@ -116,7 +117,12 @@ const Appointment = () => {
         </p>
         {
           isOpenModal && (
-            <ModalComponent closed={'Close'} close={() => setIsOpenModal(false)} judul={'success'} message={'Booking berhasil!, silahkan lanjutkan pembayaran di rumah sakit medica dan datang maksimal 1 jam sebelum periksa'} />
+            <ModalComponent closed={'Close'} close={() => setIsOpenModal(false)} judul={'success'} message={'Booking berhasil!, silahkan lanjutkan pembayaran di Clinical Psycology dan datang maksimal 1 jam sebelum periksa'} />
+          )
+        }
+        {
+          isOpenModalErr && (
+            <ModalComponent closed={'Close'} close={() => setIsOpenModalErr(false)} judul={'Failed'} message={'time slot not available'} />
           )
         }
         <div className='h-20' ></div>

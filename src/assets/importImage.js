@@ -9,6 +9,7 @@ import image from './image/image.png'
 import users from './image/user.png'
 import doc from './image/doc.png'
 import bgImages from './image/bgImage.png'
+import logo from './icon/logo.png'
 
 
 export {
@@ -22,5 +23,6 @@ export {
     image,
     users,
     doc,
-    bgImages
+    bgImages,
+    logo
 }
