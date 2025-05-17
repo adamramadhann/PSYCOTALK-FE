@@ -223,7 +223,7 @@ useEffect(() => {
             <div className={`grid w-full xl:grid-cols-3 md:grid-cols-2 gap-10  `}>
               {dataInput.map((val, index) => (
                 <div
-                className="w-full relative rounded-xl flex flex-col xl:max-w-2xl bg-white shadow-md border border-gray-200 py-5 px-4 justify-between transition-all duration-300 ease-in-out hover:shadow-xl  "
+                className="w-full relative rounded-xl flex flex-col xl:max-w-2xl bg-white shadow-md border border-gray-200 py-5 px-4 justify-between transition-all duration-300 ease-in-out  "
               >            
                   <div className="flex items-center gap-3">
                     <div className='w-20 h-20 rounded-md shadow-md flex items-center justify-center' >
@@ -260,7 +260,7 @@ useEffect(() => {
                       </div>
                     )
                   }
-                  <button onClick={() => handleOpenModal(val.id)} className=" hover:text-red-500 text-gray-500 w-7 h-7 text-center rounded-full text-base transition-all duration-100 active:scale-75   shadow-[0_5px_8px_rgba(0,0,0,0.2)] active:shadow-neutral-50 flex items-center justify-center font-bold absolute top-2 right-2">x</button>
+                  <button onClick={() => handleOpenModal(val.id)} className=" hover:text-red-500 cursor-pointer hover:scale-105 text-gray-500 w-7 h-7 text-center rounded-full text-base transition-all duration-100 active:scale-75   shadow-[0_5px_8px_rgba(0,0,0,0.2)] active:shadow-neutral-50 flex items-center justify-center font-bold absolute top-2 right-2">x</button>
                 </div>
               ))}
             </div> 

@@ -317,7 +317,7 @@ import { jwtDecode } from 'jwt-decode';
                                 {/* <div className='h-24' ></div> */}
                                 </div>
                                 {/* doctor */}
-                                <div className={`w-full ${user === 'doctor' && 'hidden'}`} >
+                                <div className={`w-full ${user === 'doctor' && 'hidden'} `} >
                                     <div className='space-y-8' >
                                         <div className='w-full mt-5 space-y-5' >  
                                         <span className='flex items-center xl:text-2xl text-lg font-semibold justify-between ' >
@@ -357,7 +357,7 @@ import { jwtDecode } from 'jwt-decode';
                                                                         {val?.categories ? <p>{val.categories}</p> : <p>categories notfound</p>}
                                                                         </p>
                                                                         <p className='text-base text-gray-500' >{val?.bio}</p>
-                                                                        <div className='flex items-center w-full mt-5 justify-between gap-5 '>
+                                                                        <div className='flex items-center w-full absolute bottom-5 justify-between gap-5 '>
                                                                             <p className='flex items-center md:text-lg text-green-700 ' >
                                                                                 $12.00
                                                                             </p>
@@ -374,7 +374,7 @@ import { jwtDecode } from 'jwt-decode';
                                                     <>
                                                         {
                                                             filterDataDoctor?.map(val => (
-                                                                <div className=' shadow-md border-gray-200 mx-auto relative rounded-lg w-[95%]  bg-white flex flex-col pb-2 items-center ' >
+                                                                <div className=' shadow-md border-gray-200 mx-auto relative rounded-lg w-[95%] h-[500px]  bg-white flex flex-col pb-2 items-center ' >
                                                                     <div className='flex-shrink-0 w-full rounded-t-lg shadow-sm h-[250px]'>
                                                                         <img src={val?.avatar ? `${API_BASE_URL}${val?.avatar}` : doc }alt="doctor" className=' h-full rounded-t-lg object-top w-full rounded-md object-cover ' />
                                                                     </div>
@@ -387,7 +387,7 @@ import { jwtDecode } from 'jwt-decode';
                                                                         {val?.categories ? <p>{val.categories}</p> : <p>categories notfound</p>}
                                                                         </p>
                                                                         <p className='text-base text-gray-500' >{val?.bio}</p>
-                                                                        <div className='flex items-center w-full mt-5 justify-between gap-5 '>
+                                                                        <div className='flex items-center w-full absolute bottom-5 left-1/2 -translate-x-1/2 px-5 justify-between gap-5 '>
                                                                             <p className='flex items-center md:text-lg text-green-700 ' >
                                                                                 $12.00
                                                                             </p>
