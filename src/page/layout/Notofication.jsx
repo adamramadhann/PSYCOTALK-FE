@@ -131,7 +131,7 @@ const Notification = () => {
                                                 <div className="space-y-2 ">
                                                     <p className="text-xs md:text-sm">{val.date} - {val.time}</p>
                                                     <p className="text-sm md:text-base">{val.message}</p>
-                                                    <button onClick={(e) => {modalOpens(val.id); e.stopPropagation(); }} className="absolute top-2 right-2 md:text-base font-black text-white border w-6 h-6 md:h-8 md:w-8 text-sm rounded-full bg-red-500" >X</button>
+                                                    <button onClick={(e) => {modalOpens(val.id); e.stopPropagation(); }} className="absolute top-2 right-2 md:text-base font-black hover:text-white text-gray-500 border w-6 h-6 md:h-8 md:w-8 text-sm rounded-full hover:bg-red-500" >X</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -151,7 +151,7 @@ const Notification = () => {
                                     <div className="space-y-2 ">
                                         <p className="text-xs md:text-sm">{val.createdAt} - {val.time}</p>
                                         <p className="text-sm md:text-base">{val.message}</p>
-                                        <button onClick={(e) => {modalOpens(val.id); e.stopPropagation(); }} className="absolute top-2 right-2 md:text-base font-black text-white border w-5 h-5 md:h-7 md:w-7 text-sm rounded-full bg-red-500" >X</button>
+                                        <button onClick={(e) => {modalOpens(val.id); e.stopPropagation(); }} className="absolute top-2 right-2 md:text-base font-black text-white border w-5 h-5 md:h-7 md:w-7 text-sm rounded-full hover:bg-red-500" >X</button>
                                     </div>
                                 </div>
                             </div>
