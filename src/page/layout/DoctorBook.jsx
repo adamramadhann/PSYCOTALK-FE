@@ -49,8 +49,8 @@ const DoctorBook = () => {
         <div className='grid xl:grid-cols-3 gap-12 w-full ' >
             {
                 docProf?.map(val => (
-                    <div className='overflow-x-auto flex gap-5 shadow-[0_0_10px_rgba(0,0,0,0.2)] bg-white rounded-lg' >
-                        <div className='flex flex-col relative w-full bg-white items-center gap-4 p-4 '>
+                    <div className='overflow-x-auto flex gap-5 shadow-[0_0_10px_rgba(0,0,0,0.2)] rounded-lg' >
+                        <div className='flex flex-col relative w-full items-center gap-4 p-4 bg-white'>
                             <FaRegHeart size={20} className="text-red-500 absolute top-3 right-3 cursor-pointer" />
                             <div className='flex-shrink-0 shadow-md rounded-full p-2  mt-5 '>
                                 <img src={val.profile?.avatar ? `${API_BASE_URL}${val?.profile?.avatar}` : doc }alt="doctor" className='xl:w-24 xl:h-24 h-20 object-top w-20 rounded-full object-cover ' />

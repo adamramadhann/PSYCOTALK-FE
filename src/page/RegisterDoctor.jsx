@@ -192,7 +192,7 @@ const RegisterDoctor = () => {
 
               {error && (
                 isModalError  && (
-                 <ModalComponent close={() => setIsModalError(false)} judul={'Failed'} closed={'close'} message={'Input cnnot be empty !! && email ready in useπ'} />
+                 <ModalComponent close={() => setIsModalError(false)} judul={'Failed'} closed={'close'} message={'Input cnnot be empty !! && email ready in use'} />
                 )
               )}
               { 

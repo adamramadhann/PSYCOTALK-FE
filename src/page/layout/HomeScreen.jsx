@@ -44,45 +44,59 @@ import { jwtDecode } from 'jwt-decode';
         {
           id: 1,
           title: "Mengenal Apa Itu Kesehatan Mental",
-          summary: "Menemukan Ruang Aman: Kisah Klien Psychotalk dalam Mengelola Kesehatan Mental",
+          summary: "Kesehatan mental mencakup kondisi emosional, psikologis, dan sosial seseorang yang memengaruhi cara berpikir dan bertindak.",
           image: "https://images.unsplash.com/photo-1493612276216-ee3925520721?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80", // Ilustrasi otak dan hati
-          link: "https://psychotalkjkt.blogspot.com/2025/03/menemukan-ruang-aman-kisah-klien.html"
+          link: "https://www.halodoc.com/kesehatan/kesehatan-mental"
         },
         {
           id: 2,
           title: "Tanda-Tanda Kamu Perlu Bicara dengan Psikolog",
-          summary: "Membangun Kesadaran tentang Kesehatan Mental Melalui Edukasi dan Konseling",
+          summary: "Cemas berlebihan, sulit tidur, atau merasa hampa bisa jadi tanda kamu perlu berbicara dengan profesional.",
           image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80", // Wanita berbicara dengan terapis
-          link: "https://psychotalkjkt.blogspot.com/2025/03/psychotalk-membangun-kesadaran-tentang.html"
+          link: "https://www.halodoc.com/artikel/kenali-7-tanda-seseorang-perlu-segera-pergi-ke-psikolog"
         },
         {
           id: 3,
           title: "Self-Care: Lebih dari Sekadar Me Time",
-          summary: "Menjaga Kesehatan Mental Itu Penting! Inilah Cara Psychotalk Membantu Anda",
+          summary: "Self-care adalah bentuk perhatian diri, mulai dari cukup tidur hingga memberi batasan pada pekerjaan.",
           image: "https://images.unsplash.com/photo-1545205597-3d9d02c29597?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80", // Wanita relaksasi dengan lilin
-          link: "https://psychotalkjkt.blogspot.com/2025/03/menjaga-kesehatan-mental-itu-penting.html"
+          link: "https://www.osfhealthcare.org/blog/self-care/"
         },
         {
           id: 4,
-          title: "Ruang Aman untuk Kesehatan Mental Anda",
+          title: "Bagaimana Stres Mempengaruhi Tubuh dan Pikiran",
           summary: "Stres kronis berdampak negatif pada kesehatan jantung, imun tubuh, dan pikiran.",
           image: "https://images.unsplash.com/photo-1518459031867-a89b944bffe4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80", // Pria memegang kepala stres
-          link: "https://psychotalkjkt.blogspot.com/2025/03/tentang-psychotalk-ruang-aman-untuk.html"
+          link: "https://hellosehat.com/mental/stres/dampak-stres-pada-tubuh-anda/"
         },
-        // {
-        //   id: 5,
-        //   title: "Pentingnya Dukungan Sosial dalam Penyembuhan Mental",
-        //   summary: "Teman dan keluarga bisa berperan besar dalam proses pemulihan kesehatan mental.",
-        //   image: "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80", // Grup saling mendukung
-        //   link: "https://deepapsikologi.com/efektivitas-dukungan-sosial-untuk-membangun-kesehatan-mental-pada-generasi-z"
-        // },
-        // {
-        //   id: 6,
-        //   title: "Burnout Bukan Malas: Kenali dan Atasi",
-        //   summary: "Burnout adalah kelelahan emosional akibat tekanan terus-menerus dalam pekerjaan atau kehidupan.",
-        //   image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80", // Pekerja lelah di meja
-        //   link: "https://believeperform.com/product/10-ways-to-combat-work-burnout/"
-        // }
+        {
+          id: 5,
+          title: "Pentingnya Dukungan Sosial dalam Penyembuhan Mental",
+          summary: "Teman dan keluarga bisa berperan besar dalam proses pemulihan kesehatan mental.",
+          image: "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80", // Grup saling mendukung
+          link: "https://deepapsikologi.com/efektivitas-dukungan-sosial-untuk-membangun-kesehatan-mental-pada-generasi-z"
+        },
+        {
+          id: 6,
+          title: "Burnout Bukan Malas: Kenali dan Atasi",
+          summary: "Burnout adalah kelelahan emosional akibat tekanan terus-menerus dalam pekerjaan atau kehidupan.",
+          image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80", // Pekerja lelah di meja
+          link: "https://believeperform.com/product/10-ways-to-combat-work-burnout/"
+        },
+        {
+          id: 7,
+          title: "Kenapa Tidak Apa-Apa untuk Merasa Tidak Baik-Baik Saja",
+          summary: "Emosi negatif adalah bagian alami dari hidup. Mengenali dan menerimanya adalah langkah penyembuhan.",
+          image: "https://images.unsplash.com/photo-1491349174775-aaafddd81942?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80", // Wanita duduk sendirian
+          link: "https://danacita.co.id/blog/menerima-emosi-negatif-dalam-diri/"
+        },
+        {
+          id: 8,
+          title: "Membangun Kebiasaan Sehat untuk Mental Lebih Kuat",
+          summary: "Kebiasaan seperti olahraga, journaling, dan istirahat cukup sangat bermanfaat untuk mental.",
+          image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80", // Yoga di alam
+          link: "https://unair.ac.id/infografik-amankah-self-diagnosis-terhadap-kesehatan-mental/"
+        }
     ];
       
 
@@ -289,124 +303,123 @@ import { jwtDecode } from 'jwt-decode';
                                 <div className="flex items-center justify-between">
                                     <h1 className="text-2xl font-bold text-gray-800">Mental Health Articles</h1>
                                 </div>
-                                <div className='md:grid-cols-3 grid w-full gap-10' >
-                                    {
-                                        mentalHealthArticles.map((val) => (
-                                            <div
-                                                key={val.id}
-                                                className="rounded-2xl shadow-md overflow-hidden bg-white transition hover:shadow-lg"
-                                            >
-                                            <img
-                                                src={val.image}
-                                                alt={val.title}
-                                                className="w-full h-[200px] object-cover"
-                                            />
-                                            <div className="p-4 space-y-2">
-                                                <h2 className="text-xl font-semibold text-gray-900">{val.title}</h2>
-                                                <p className="text-gray-600 text-sm leading-relaxed line-clamp-3">
-                                                    {val.summary}
-                                                </p>
-                                                <div className="text-right">
-                                                    <Link to={val.link} className="text-blue-600 text-sm hover:underline">Read more</Link>
-                                                </div>
-                                            </div>
-                                            </div>
-                                        ))
-                                    }
-                                </div>
-                                {/* <div className='h-24' ></div> */}
-                                </div>
-                                {/* doctor */}
-                                <div className={`w-full ${user === 'doctor' && 'hidden'}`} >
-                                    <div className='space-y-8' >
-                                        <div className='w-full mt-5 space-y-5' >  
-                                        <span className='flex items-center xl:text-2xl text-lg font-semibold justify-between ' >
-                                            <h1 className='text-xl' >Doctors</h1>
-                                        </span>
-                                            <div className='grid grid-cols-3 overflow-hidden xl:flex gap-5 pb-3' >
-                                                {
-                                                    teksBtn.map(val => (
-                                                        <button onClick={() =>{ setActive(val.teks); setDataDoc(val.teks)}} className={`rounded-md cursor-pointer xl:flex-1  py-2 xl:w-[10%] flex-none text-white text-lg ${active === val.teks ? 'bg-teal-600' : 'bg-teal-500'}`} >{val.teks}</button>
-                                                    ))
-                                                }
+                            <div className='md:grid-cols-3 grid w-full gap-10' >
+                                {mentalHealthArticles.map((val) => (
+                                        <div
+                                        key={val.id}
+                                        className="rounded-2xl shadow-md overflow-hidden bg-white transition hover:shadow-lg"
+                                        >
+                                        <img
+                                            src={val.image}
+                                            alt={val.title}
+                                            className="w-full h-[200px] object-cover"
+                                        />
+                                        <div className="p-4 space-y-2">
+                                            <h2 className="text-xl font-semibold text-gray-900">{val.title}</h2>
+                                            <p className="text-gray-600 text-sm leading-relaxed line-clamp-3">
+                                            {val.summary}
+                                            </p>
+                                            <div className="text-right">
+                                            <Link to={val.link} className="text-blue-600 text-sm hover:underline">Read more</Link>
                                             </div>
                                         </div>
-                                        {/* doctor */}
-                                        <div className='w-full space-y-5' >
-                                        <div className='md:flex items-center hidden  justify-end ' >
-                                            <div className='flex items-center md:w-[20%] w-full px-3 py-3 gap-1 rounded-full border' >
-                                                <CiSearch className='w-4 xl:w-5' />
-                                                <input type="search" name="" id="" onChange={inputChange} placeholder='search doctor' className='w-full text-sm outline-none' />
-                                            </div>
                                         </div>
-                                        <div className='grid grid-cols-1 xl:grid-cols-4 md:grid-cols-3 gap-8 md:mt-10 w-full ' >
+                                    ))}
+                            </div>
+                            {/* <div className='h-24' ></div> */}
+                            </div>
+                            {/* doctor */}
+                            <div className={`w-full ${user === 'doctor' && 'hidden'}`} >
+                                <div className='space-y-8' >
+                                    <div className='w-full mt-5 space-y-5' >  
+                                    <span className='flex items-center xl:text-2xl text-lg font-semibold justify-between ' >
+                                        <h1 className='text-xl' >Doctors</h1>
+                                    </span>
+                                        <div className='grid grid-cols-3 overflow-hidden xl:flex gap-5 pb-3' >
                                             {
-                                                dataInput.length ? (
-                                                    <>
-                                                        {
-                                                            dataInput?.map(val => (
-                                                                <div className=' shadow-md border-gray-200 mx-auto relative rounded-lg w-[95%]  bg-white flex flex-col pb-2 items-center ' >
-                                                                    <div className='flex-shrink-0 w-full rounded-t-lg shadow-sm h-[250px]'>
-                                                                        <img src={val?.avatar ? `${API_BASE_URL}${val?.avatar}` : doc }alt="doctor" className=' h-full rounded-t-lg  w-full rounded-md object-cover object-center ' />
-                                                                    </div>
-                                                                    <div className='flex-1 w-full p-3'>
-                                                                        <div className='flex items-center justify-between'>
-                                                                            <h1 className='text-xl font-semibold'>Dr. {val.name}</h1> 
-                                                                        </div>
-                                                                        <p className='text-sm md:text-  text-gray-500 xl mb-3'>
-                                                                        {val?.categories ? <p>{val.categories}</p> : <p>categories notfound</p>}
-                                                                        </p>
-                                                                        <p className='text-base text-gray-500' >{val?.bio}</p>
-                                                                        <div className='flex items-center w-full mt-5 justify-between gap-5 '>
-                                                                            <p className='flex items-center md:text-lg text-green-700 ' >
-                                                                                $12.00
-                                                                            </p>
-                                                                            <Link to={`/appointment`} state={{ doctorId : val.id, dataDoc : docProf}} className='px-10 py-2 md:px-7 hover:scale-105 text-center text-sm text-white rounded-md shadow-sm bg-[#0B8FAC]  transition-all duration-300'>
-                                                                                Book Now
-                                                                            </Link>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            ))
-                                                        }
-                                                    </>
-                                                ) : (
-                                                    <>
-                                                        {
-                                                            filterDataDoctor?.map(val => (
-                                                                <div className=' shadow-md border-gray-200 mx-auto relative rounded-lg w-[95%]  bg-white flex flex-col pb-2 items-center ' >
-                                                                    <div className='flex-shrink-0 w-full rounded-t-lg shadow-sm h-[250px]'>
-                                                                        <img src={val?.avatar ? `${API_BASE_URL}${val?.avatar}` : doc }alt="doctor" className=' h-full rounded-t-lg object-top w-full rounded-md object-cover ' />
-                                                                    </div>
-                                                                    <div className='flex-1 w-full p-3'>
-                                                                        <div className='flex items-center justify-between'>
-                                                                            <h1 className='text-xl font-semibold'>Dr. {val.name}</h1>
-                                                                            {/* <FaRegHeart size={20} className='text-red-500 absolute top-3 right-3 cursor-pointer' />  */}
-                                                                        </div>
-                                                                        <p className='text-sm md:text-  text-gray-500 xl mb-3'>
-                                                                        {val?.categories ? <p>{val.categories}</p> : <p>categories notfound</p>}
-                                                                        </p>
-                                                                        <p className='text-base text-gray-500' >{val?.bio}</p>
-                                                                        <div className='flex items-center w-full mt-5 justify-between gap-5 '>
-                                                                            <p className='flex items-center md:text-lg text-green-700 ' >
-                                                                                $12.00
-                                                                            </p>
-                                                                            <Link to={`/appointment`} state={{ doctorId : val.id, dataDoc : docProf}} className='px-10 py-2 md:px-7 text-center text-sm text-white rounded-md shadow-sm bg-[#0B8FAC]  transition'>
-                                                                                Book Now
-                                                                            </Link>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            ))
-                                                        }
-                                                    </>
-                                                )
+                                                teksBtn.map(val => (
+                                                    <button onClick={() =>{ setActive(val.teks); setDataDoc(val.teks)}} className={`rounded-md cursor-pointer xl:flex-1  py-2 xl:w-[10%] flex-none text-white text-lg ${active === val.teks ? 'bg-teal-600' : 'bg-teal-500'}`} >{val.teks}</button>
+                                                ))
                                             }
                                         </div>
+                                    </div>
+                                    {/* doctor */}
+                                    <div className='w-full space-y-5' >
+                                    <div className='md:flex items-center hidden  justify-end ' >
+                                        <div className='flex items-center md:w-[20%] w-full px-3 py-2 xl:py-2 gap-1 rounded-full border' >
+                                            <CiSearch className='w-4 xl:w-5' />
+                                            <input type="search" name="" id="" onChange={inputChange} placeholder='search doctor' className='w-full text-sm outline-none' />
                                         </div>
                                     </div>
-                                    <div className='h-24' ></div>
+                                    <div className='grid grid-cols-1 xl:grid-cols-4 md:grid-cols-3 gap-8 md:mt-10 w-full ' >
+                                        {
+                                            dataInput.length ? (
+                                                <>
+                                                    {
+                                                        dataInput?.map(val => (
+                                                            <div className=' shadow-md border-gray-200 mx-auto relative rounded-lg w-[95%]  bg-white flex flex-col pb-2 items-center ' >
+                                                                <div className='flex-shrink-0 w-full rounded-t-lg shadow-sm h-[250px]'>
+                                                                    <img src={val?.avatar ? `${API_BASE_URL}${val?.avatar}` : doc }alt="doctor" className=' h-full rounded-t-lg object-top w-full rounded-md object-cover ' />
+                                                                </div>
+                                                                <div className='flex-1 w-full p-3'>
+                                                                    <div className='flex items-center justify-between'>
+                                                                        <h1 className='text-xl font-semibold'>Dr. {val.name}</h1>
+                                                                        {/* <FaRegHeart size={20} className='text-red-500 absolute top-3 right-3 cursor-pointer' />  */}
+                                                                    </div>
+                                                                    <p className='text-sm md:text-  text-gray-500 xl mb-3'>
+                                                                    {val?.categories ? <p>{val.categories}</p> : <p>categories notfound</p>}
+                                                                    </p>
+                                                                    <p className='text-base text-gray-500' >{val?.bio}</p>
+                                                                    <div className='flex items-center w-full mt-5 justify-between gap-5 '>
+                                                                        <p className='flex items-center md:text-lg text-green-700 ' >
+                                                                            $12.00
+                                                                        </p>
+                                                                        <Link to={`/appointment`} state={{ doctorId : val.id, dataDoc : docProf}} className='px-10 py-2 md:px-7 hover:scale-105 text-center text-sm text-white rounded-md shadow-sm bg-[#0B8FAC]  transition-all duration-300'>
+                                                                            Book Now
+                                                                        </Link>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        ))
+                                                    }
+                                                </>
+                                            ) : (
+                                                <>
+                                                    {
+                                                        filterDataDoctor?.map(val => (
+                                                            <div className=' shadow-md border-gray-200 mx-auto relative rounded-lg w-[95%]  bg-white flex flex-col pb-2 items-center ' >
+                                                                <div className='flex-shrink-0 w-full rounded-t-lg shadow-sm h-[250px]'>
+                                                                    <img src={val?.avatar ? `${API_BASE_URL}${val?.avatar}` : doc }alt="doctor" className=' h-full rounded-t-lg object-top w-full rounded-md object-cover ' />
+                                                                </div>
+                                                                <div className='flex-1 w-full p-3'>
+                                                                    <div className='flex items-center justify-between'>
+                                                                        <h1 className='text-xl font-semibold'>Dr. {val.name}</h1>
+                                                                        {/* <FaRegHeart size={20} className='text-red-500 absolute top-3 right-3 cursor-pointer' />  */}
+                                                                    </div>
+                                                                    <p className='text-sm md:text-  text-gray-500 xl mb-3'>
+                                                                    {val?.categories ? <p>{val.categories}</p> : <p>categories notfound</p>}
+                                                                    </p>
+                                                                    <p className='text-base text-gray-500' >{val?.bio}</p>
+                                                                    <div className='flex items-center w-full mt-5 justify-between gap-5 '>
+                                                                        <p className='flex items-center md:text-lg text-green-700 ' >
+                                                                            $12.00
+                                                                        </p>
+                                                                        <Link to={`/appointment`} state={{ doctorId : val.id, dataDoc : docProf}} className='px-10 py-2 md:px-7 text-center text-sm text-white rounded-md shadow-sm bg-[#0B8FAC]  transition'>
+                                                                            Book Now
+                                                                        </Link>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        ))
+                                                    }
+                                                </>
+                                            )
+                                        }
+                                    </div>
+                                    </div>
                                 </div>
+                                <div className='h-24' ></div>
+                            </div>
                         </div>
                     )
                 }

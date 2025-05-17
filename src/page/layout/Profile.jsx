@@ -23,7 +23,7 @@ const Profile = () => {
 
   const handleLogOut = () => {
     dispatch(logout());
-    navigate("/");
+    navigate("/login");
   };
 
   const dataMenuProfile = [
@@ -42,7 +42,7 @@ const Profile = () => {
   return (
     <div className="w-full min-h-[100dvh] xl:h-full bg-gray-50 px-4 flex justify-center items-start">
       <div className="w-full max-w-xl bg-white md:p-6 md:fixed top-1/2 left-1/2 md:-translate-1/2 rounded-2xl md:border border-gray-200 md:shadow-md">
-        {/* <TopTitle title="Profile" /> */}
+        <TopTitle title="Profile" />
 
         {/* Profile Picture */}
         <div className="flex justify-center mt-6">

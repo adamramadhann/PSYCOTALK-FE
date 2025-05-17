@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useRegister } from "../hook/useAuth";
-import { logo, users } from "../assets/importImage";
+import { users } from "../assets/importImage";
 import ModalComponent from "../components/ModalComponent";
 
 const Register = () => {
@@ -12,7 +12,6 @@ const Register = () => {
   const [isModalError, setIsModalError] = useState(false);
   const [preview, setPreview] = useState(users);
   const fileInputRef = useRef(null)
-  const navigate = useNavigate()
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -54,12 +53,12 @@ const Register = () => {
   };
 
   return (
-    <div className="w-screen min-h-screen bg-gradient-to-bl to-[#BDE0FE] from-[#add1f1] sm:h-[100dvh] object-fill flex flex-col items-center justify-center p-3">
-      <div className="bg-white/15 rounded-md backdrop-blur-sm w-full max-w-4xl p-3"> 
-        <img src={logo} alt="logo" width={120} height={120} className="float-right absolute right-5" />
-        <div className="w-full mt-5 mx-auto">
-          <form className="w-full grid gap-5 p-5" onSubmit={handleSubmit}>
-            <div className="relative mx-auto w-32 h-32 ">
+    <div className="w-screen min-h-screen bg-image sm:h-[100dvh] object-fill flex flex-col items-center justify-center p-3">
+      <div className="bg-white/10 rounded-md backdrop-blur-sm w-full space-y-5 max-w-2xl p-3">
+        <h1 className="text-[#540b03] font-bold text-center text-4xl mt-2">Sign Up</h1>
+        <div className="w-full max-w-md mx-auto">
+          <form className="w-full space-y-5 mt-5" onSubmit={handleSubmit}>
+            <div className="relative m-auto mt-5 w-32 h-32 ">
                 <img
                   src={preview}
                   alt="profile"
@@ -86,62 +85,59 @@ const Register = () => {
                   ref={fileInputRef}
                 />
               </div>
+              <label className="text-lg grid font-semibold text-white md:text-[#8D2C22] gap-2">
+                Full Name
+                <input
+                  type="text"
+                  name="name"
+                  value={form.name}
+                  onChange={handleChange}
+                  className="py-4 px-2 w-full text-base border-gray-200 border rounded-lg text-[#8B302D] bg-white"
+                  placeholder="Enter your name"
+                />
+              </label>
+              <label className="text-lg grid font-semibold text-white md:text-[#8D2C22] gap-2">
+                Gender
+                <select
+                  type="text"
+                  name="gender"
+                  value={form.gender}
+                  onChange={handleChange}
+                  className="py-4 px-2 w-full text-base border-gray-200 border rounded-lg text-[#8B302D] bg-white"
+                  placeholder="Enter your name"
+                >
+                  <option value="male">Male</option>
+                  <option value="famale">Famale</option>
+                </select>
+              </label>
 
-              <div className="w-full grid grid-cols-2 mt-5 gap-5" > 
-                <label className="text-lg grid font-semibold text-white md:text-gray-600 gap-2">
-                  Full Name
-                  <input
-                    type="text"
-                    name="name"
-                    value={form.name}
-                    onChange={handleChange}
-                    className="py-4 px-2 w-full text-base border-gray-200 border rounded-lg text-gray-500 bg-white"
-                    placeholder="Enter your name"
-                  />
-                </label>
-                <label className="text-lg grid font-semibold text-white md:text-gray-600 gap-2">
-                  Gender
-                  <select
-                    type="text"
-                    name="gender"
-                    value={form.gender}
-                    onChange={handleChange}
-                    className="py-4 px-2 w-full text-base border-gray-200 border rounded-lg text-gray-500 bg-white"
-                    placeholder="Enter your name"
-                  >
-                    <option value="male">Male</option>
-                    <option value="famale">Famale</option>
-                  </select>
-                </label>
+              <label className="text-lg grid font-semibold text-white md:text-[#8D2C22] gap-2">
+                Email
+                <input
+                  type="email"
+                  name="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  className="py-4 px-2 w-full text-base border-gray-200 border rounded-lg text-[#8B302D] bg-white"
+                  placeholder="Enter your email"
+                />
+              </label>
 
-              </div>
-              <label className="text-lg grid font-semibold text-white md:text-gray-600 gap-2">
-                  Email
-                  <input
-                    type="email"
-                    name="email"
-                    value={form.email}
-                    onChange={handleChange}
-                    className="py-4 px-2 w-full text-base border-gray-200 border rounded-lg text-gray-500 bg-white"
-                    placeholder="Enter your email"
-                  />
-                </label>
-
-                <label className="text-lg grid font-semibold text-white md:text-gray-600 gap-2">
-                  Password
-                  <input
-                    type="password"
-                    name="password"
-                    value={form.password}
-                    onChange={handleChange}
-                    className="py-4 px-2 w-full text-base border-gray-200 border rounded-lg text-gray-500 bg-white"
-                    placeholder="Enter your password"
-                  />
-                </label>
+              <label className="text-lg grid font-semibold text-white md:text-[#8D2C22] gap-2">
+                Password
+                <input
+                  type="password"
+                  name="password"
+                  value={form.password}
+                  onChange={handleChange}
+                  className="py-4 px-2 w-full text-base border-gray-200 border rounded-lg text-[#8B302D] bg-white"
+                  placeholder="Enter your password"
+                />
+              </label>
 
               <button
                 type="submit"
-                className="w-full py-3 text-lg bg-blue-500 mt-5 text-white rounded-md"
+                className="w-full py-3 text-lg bg-[#8D2C22] mt-5 text-white rounded-md"
                 disabled={isPending}
               >
                 {isPending ? "Signing Up..." : "Sign Up"}
@@ -162,7 +158,7 @@ const Register = () => {
 
         <p className="text-center text-sm pb-5">
           Already have an account?{" "}
-          <Link to={"/"} className="text-blue-700 font-semibold">
+          <Link to={"/login"} className="text-[#0B8FAC] font-semibold">
             Sign In
           </Link>
         </p>

@@ -5,7 +5,6 @@ import { useMutation } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { editedProfile, getProfileAuth } from '../../hook/fetchApi'
 import ModalComponent from '../../components/ModalComponent'
-import { Link } from 'react-router-dom'
 
 // efect input peer
 {/* <div className="flex flex-1 flex-col gap-1">
@@ -84,18 +83,12 @@ const DetailProfile = () => {
   }, [setValue])
 
   return (
-    <div className="w-full min-h-[100dvh] xl:h-full bg-[#eeee] px-4 md:flex justify-center items-center">
-      <div className="w-full md:p-6 max-w-4xl rounded-2xl md:border py-5 border-gray-200 md:shadow-md">
-        {/* <TopTitle title="Detail Profile" /> */}
-        <div>
-          <div className='flex items-center justify-between  relative' >
-            <Link className='' to={'/'} >{"<"} Home</Link>
-            <p className='text-lg font-bold absolute left-1/2 -translate-x-1/2' >Detail Profile</p>
-          </div>
-        </div>
+    <div className="w-full min-h-[100dvh] xl:h-full bg-[#eeee]  py-6 px-4 flex justify-center items-start">
+      <div className="w-full md:p-6 max-w-4xl rounded-2xl md:border border-gray-200 md:shadow-md">
+        <TopTitle title="Detail Profile" />
         <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-6">
           <div className="flex justify-center">
-            <div className="relative pt-2">
+            <div className="relative ">
               <img
                 src={preview}
                 alt="profile"
@@ -171,7 +164,7 @@ const DetailProfile = () => {
                 {...register('about', { required: 'About wajib diisi' })}
                 rows={2}
                 placeholder="About you"
-                className="rounded-md h-[100px] px-3 border focus:ring-1 transition-all duration-300 focus:ring-teal-500 outline-none"
+                className="rounded-md py-2.5 px-3 border focus:ring-1 transition-all duration-300 focus:ring-teal-500 outline-none"
               />
               {errors.about && <span className="text-sm text-red-500">{errors.about.message}</span>}
             </div>
