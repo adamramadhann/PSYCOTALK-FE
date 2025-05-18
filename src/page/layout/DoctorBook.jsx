@@ -26,7 +26,7 @@ const DoctorBook = () => {
         <TopTitle title={'Doctor'} key={'doctor'}/>
         <div className='w-full mt-5 space-y-5' >
             <span className='flex items-center font-semibold xl:text-2xl text-lg justify-between' >
-                <h1>Gander</h1>
+                <h1>Gender</h1>
             </span>
             <div className='grid grid-cols-3 overflow-hidden xl:flex gap-5 pb-3' >
                 {
