@@ -93,7 +93,7 @@ const Login = () => {
         </p>
         {error && (
           isModalError  && (
-            <ModalComponent close={() => setIsModalError(false)} judul={'Failed'} closed={'close'} message={'Input cannot be empty !! and check your password !'} />
+            <ModalComponent close={() => setIsModalError(false)} judul={'Failed'} closed={'close'} message={'Input cannot be empty !! or check your password and email !'} />
           )
         )} 
          { 

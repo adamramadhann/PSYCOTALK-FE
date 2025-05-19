@@ -109,6 +109,7 @@ const Register = () => {
                     className="py-4 px-2 w-full text-base border-gray-200 border rounded-lg text-gray-500 bg-white"
                     placeholder="Enter your name"
                   >
+                    <option value="">Gender</option>
                     <option value="male">Male</option>
                     <option value="famale">Famale</option>
                   </select>
