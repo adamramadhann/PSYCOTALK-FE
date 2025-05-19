@@ -61,10 +61,19 @@ const Notification = () => {
                 }),
                 customMessage,
             };
-        });
+        }); 
 
-        const NotoficationDoc = notification.map((val) => {
-            
+        const NotoficationUser = notification.map((val) => {
+            const date = new Date(val.createdAt)
+
+            return {
+                id : val.id,
+                message : val.message,
+                date : date.toLocaleDateString("id-ID", {
+                    hour : "2-digit",
+                    minute : "2-digit"
+                })
+            }
         })
 
     const selectedBooking = booking.find((b) => b.id === selectedBookingId);
@@ -80,11 +89,6 @@ const Notification = () => {
             await deleteNotification(idModal)
             dispatch(deletedNotif(idModal))
             setIsModalOpenSucces(true)
-
-            setTimeout(() => {
-                setIsModalOpenSucces(false)
-            }, 1000)
-
             setIsModalOpen(false)
         } catch (error) {
             console.error(error.message)
@@ -140,18 +144,18 @@ const Notification = () => {
                             }
                         </>
                     ) : (
-                        notification.map((val) => (
+                        NotoficationUser.map((val) => (
                             <div
                                 onClick={(e) => setSelectedBookingId(val.bookingId)}
                                 key={val.id}
-                                className="w-full py-5 relative flex items-center shadow-md  border border-gray-200 bg-white  rounded-md p-3 justify-between cursor-pointer"
+                                className="w-full py-5 relative flex items-center shadow-md  border border-gray-200 bg-white  rounded-md p-3 justify-between "
                             >
                                 <div className="flex items-center gap-7">
                                     <IoMdNotificationsOutline size={35} />
                                     <div className="space-y-2 ">
-                                        <p className="text-xs md:text-sm">{val.createdAt} - {val.time}</p>
+                                        <p className="text-xs md:text-sm">{val.date}</p>
                                         <p className="text-sm md:text-base">{val.message}</p>
-                                        <button onClick={(e) => {modalOpens(val.id); e.stopPropagation(); }} className="absolute top-2 right-2 md:text-base font-black text-white border w-5 h-5 md:h-7 md:w-7 text-sm rounded-full hover:bg-red-500" >X</button>
+                                        <button onClick={(e) => {modalOpens(val.id); e.stopPropagation(); }} className="absolute top-2 right-2 md:text-base font-black hover:text-white border border-gray-400 text-gray-500 w-5 h-5 md:h-7 md:w-7 text-sm rounded-full hover:bg-red-500" >X</button>
                                     </div>
                                 </div>
                             </div>
@@ -181,10 +185,10 @@ const Notification = () => {
                         </p>
                         <button
                             onClick={() => setSelectedBookingId(null)}
-                            className="text-red-500 xl:px-5 xl:py-1 xl:text-xl font-black absolute top-2 right-3 cursor-pointer"
+                            className="text-red-500 xl:px-5 xl:py-1 xl:text-xl border z-50 font-black absolute top-2 right-3 cursor-pointer"
                         >
                             X
-                        </button>
+                        </button> 
                     </div>
                 </div>
             )}

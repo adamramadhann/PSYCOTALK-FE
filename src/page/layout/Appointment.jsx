@@ -117,7 +117,7 @@ const Appointment = () => {
         </p>
         {
           isOpenModal && (
-            <ModalComponent closed={'Close'} close={() => setIsOpenModal(false)} judul={'success'} message={'Booking berhasil!, silahkan lanjutkan pembayaran di Clinical Psycology dan datang maksimal 1 jam sebelum periksa'} />
+            <ModalComponent closed={'Close'} close={() => setIsOpenModal(false)} judul={'success'} message={'Booking confirmed! Don’t forget to pay or re-register at the Clinical Psychology department at least 1 hour before your session starts.'} />
           )
         }
         {
