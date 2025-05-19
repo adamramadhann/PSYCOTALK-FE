@@ -70,14 +70,14 @@ const History = () => {
     : dataBook.filter(val => val.status === filter)
 
   const buttonStyles = {
-    approved: 'bg-teal-500 hover:bg-teal-500',
+    confirmed: 'bg-teal-500 hover:bg-teal-500',
     cancelled: 'bg-teal-500 hover:bg-teal-500',
     pending: 'bg-teal-500 hover:bg-teal-500',
     completed: 'bg-teal-500 hover:bg-teal-500',
   }
 
   const activeButtonStyles = {    
-    approved: 'bg-teal-600',
+    confirmed: 'bg-teal-600',
     cancelled: 'bg-teal-600',
     pending: 'bg-teal-600',
     completed: 'bg-teal-600',
@@ -197,7 +197,7 @@ useEffect(() => {
       <TopTitle title={'History'} />
         <div className='flex flex-col pb-20'>
           <div className='w-full gap-3 top-0 z-10 pt-5 flex items-cente'>
-            {['approved', 'cancelled', 'completed', 'pending'].map(type => (
+            {['confirmed', 'cancelled', 'completed', 'pending'].map(type => (
               <button
                 key={type}
                 onClick={() => setFilter(type)}

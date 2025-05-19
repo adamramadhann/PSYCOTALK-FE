@@ -110,6 +110,7 @@ const RegisterDoctor = () => {
                             className="py-4 px-2 w-full text-base border-gray-200 border rounded-lg text-[#8B302D] bg-white"
                             placeholder="Enter your name"
                         >
+                            <option value="">Gender</option>
                             <option value="male">Male</option>
                             <option value="famale">Famale</option>
                         </select>
@@ -125,6 +126,7 @@ const RegisterDoctor = () => {
                         className="py-4 px-2 w-full text-base border-gray-200 border rounded-lg text-[#8B302D] bg-white"
                         placeholder="Enter your name"
                         >
+                        <option value="">Categories </option>
                         <option value="Mental Health Psychologist">Mental Health Psychologist</option>
                         <option value="Child & Adolescent Psychologist">Child & Adolescent Psychologist </option>
                         <option value="Educational Psychologist">Educational Psychologist</option>
@@ -134,7 +136,7 @@ const RegisterDoctor = () => {
 
                 <div className="flex items-center gap-2.5 " >
                     <div className="flex flex-1 flex-col gap-1">
-                    <label htmlFor="bio" className="text-sm font-semibold">Bio:</label>
+                    <label htmlFor="bio" className="text-sm font-semibold">Bio :</label>
                     <textarea
                         name="bio"
                         value={form.bio}
@@ -145,7 +147,7 @@ const RegisterDoctor = () => {
                     />
                 </div>
                 <div className="flex flex-col flex-1 gap-1">
-                    <label htmlFor="about" className="text-sm font-semibold">About:</label>
+                    <label htmlFor="about" className="text-sm font-semibold">About :</label>
                     <textarea
                         name="about"
                         value={form.about}
@@ -192,7 +194,7 @@ const RegisterDoctor = () => {
 
               {error && (
                 isModalError  && (
-                 <ModalComponent close={() => setIsModalError(false)} judul={'Failed'} closed={'close'} message={'Input cnnot be empty !! && email ready in useπ'} />
+                 <ModalComponent close={() => setIsModalError(false)} judul={'Failed'} closed={'close'} message={'Input cnnot be empty !! '} />
                 )
               )}
               { 
@@ -204,9 +206,9 @@ const RegisterDoctor = () => {
         </div>
 
         <p className="text-center text-sm pb-5">
-          Already have an account?{" "}
-          <Link to={"/login"} className="text-[#0B8FAC] font-semibold">
-            Sign In
+          Route to Login Page{" "}
+          <Link to={"/"} className="text-[#0B8FAC] font-semibold">
+              Login Page 
           </Link>
         </p>
       </div>
