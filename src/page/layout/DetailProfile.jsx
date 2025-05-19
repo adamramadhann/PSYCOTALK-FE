@@ -85,7 +85,7 @@ const DetailProfile = () => {
 
   return (
     <div className="w-full min-h-[100dvh] xl:h-full bg-[#eeee] px-4 md:flex justify-center items-center">
-      <div className="w-full md:p-6 max-w-4xl rounded-2xl md:border py-5 border-gray-200 md:shadow-md">
+      <div className="w-full md:p-6 max-w-4xl rounded-2xl md:border py-5 bg-white border-gray-200 md:shadow-md">
         {/* <TopTitle title="Detail Profile" /> */}
         <div>
           <div className='flex items-center justify-between  relative' >
