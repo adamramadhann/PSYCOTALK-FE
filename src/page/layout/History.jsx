@@ -197,7 +197,7 @@ useEffect(() => {
       <TopTitle title={'History'} />
         <div className='flex flex-col pb-20'>
           <div className='w-full gap-3 top-0 z-10 pt-5 flex items-cente'>
-            {['confirmed', 'cancelled', 'completed', 'pending'].map(type => (
+            {[ 'pending', 'confirmed', 'cancelled', 'completed'].map(type => (
               <button
                 key={type}
                 onClick={() => setFilter(type)}
@@ -217,7 +217,7 @@ useEffect(() => {
             <h1 className='font-semibold md:text-xl text-lg ' >{filterData.length ? "History Booking" : "No bookings available"}</h1>
             <div className={`flex items-center md:w-[20%] ${!filterData.length && 'hidden'} w-full px-3 py-2 xl:py-2 gap-1 rounded-full border`} >
                 <CiSearch className='w-4 xl:w-5' />
-                <input type="search" name="" id="" onChange={handleSerch} placeholder='search ' className='w-full text-sm outline-none' />
+                <input type="search" name="" id="" onChange={handleSerch} placeholder='Search Name ' className='w-full text-sm outline-none' />
             </div>
           </div>  
             <div className={`grid w-full xl:grid-cols-3 md:grid-cols-2 gap-10  `}>
